@@ -1,7 +1,7 @@
 var DEGREE_TO_RAD = Math.PI / 180;
 
 // Order of the groups in the XML document.
-var SCENES_INDEX = 0;
+var SCENE_INDEX = 0;
 var VIEWS_INDEX = 1;
 var AMBIENT_INDEX = 2;
 var LIGHTS_INDEX = 3;
@@ -51,7 +51,7 @@ class MySceneGraph {
      * Callback to be executed after successful reading
      */
     onXMLReady() {
-        this.log("XML Loading finished.");
+        this.info("XML Loading finished.");
         var rootElement = this.reader.xmlDoc.documentElement;
 
         // Here should go the calls for different functions to parse the various blocks
@@ -73,8 +73,8 @@ class MySceneGraph {
      * @param {XML root element} rootElement
      */
     parseXMLFile(rootElement) {
-        if (rootElement.nodeName != "SCENE")
-            return "root tag <SCENE> missing";
+        if (rootElement.nodeName != "yas")
+            return "root tag <yas> missing";
 
         var nodes = rootElement.children;
 
@@ -88,9 +88,21 @@ class MySceneGraph {
         var error;
 
         // Processes each node, verifying errors.
-
-        // <views>
+        
+        // <scene>
         var index;
+        if ((index = nodeNames.indexOf("scene")) == -1)
+            return "tag <scene> missing";
+        else {
+            if (index != SCENE_INDEX)
+                this.onXMLMinorError("tag <scene> out of order");
+
+            //Parse scene block
+            if ((error = this.parseScene(nodes[index])) != null)
+                return error;
+        }
+        
+        // <views>
         if ((index = nodeNames.indexOf("views")) == -1)
             return "tag <views> missing";
         else if (index != VIEWS_INDEX) {
@@ -162,6 +174,37 @@ class MySceneGraph {
         }
     }
 
+    /**
+     * Parses the <scene> block.
+     */
+    parseScene(mynode) {
+
+        // É PRECISO TIRAR ESTAS VARIÁVEIS PARA FORA DA FUNÇÃO ASSIM QUE NECESSÁRIO
+
+
+        var axis_length = this.reader.getFloat(mynode, "axis_length", false);
+        if (this.ocurredGetError(axis_length)) {
+            this.onXMLMinorError("unable to parse axis_length of the scene, using the default value (1.0)");
+            axis_length = 1.0;
+        } else {
+            this.debug("Read axis_length as " + axis_length + ".");
+        }
+
+        this.referenceLength = axis_length;
+
+
+        var root_object = this.reader.getString(mynode, "root", false);
+        if (root_object == null || root_object == "") {
+            this.onXMLError("unable to parse root of the scene, cannot proceed.");
+        } else {
+            this.debug("Read scene root as " + root_object + ".");
+        }
+
+        this.info("Parsed scene");
+
+        return null;
+    }
+    
     /**
      * Parses the <views> block.
      */
@@ -426,6 +469,30 @@ class MySceneGraph {
      */
     log(message) {
         console.log("   " + message);
+    }
+
+    /**
+     * Callback to be executed on any info message.
+     * @param {string} message
+     */
+    info(message) {
+        console.info("%c" + message, "color: blue; font-size: inherit");
+    }
+
+    /**
+     * Callback to be executed on any debug message.
+     * @param {string} message
+     */
+    debug(message) {
+        console.info("%c" + message, "color: lightgreen; background:black; padding:0.2em; font-size: inherit");
+    }
+
+    /**
+     * Attribute read error detector wrapper.
+     * @param {string} message
+     */
+    ocurredGetError(arg) {
+        return (!(arg != null && !isNaN(arg)))
     }
 
     /**
