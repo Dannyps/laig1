@@ -474,6 +474,30 @@ class MySceneGraph {
     }
 
     /**
+     * Callback to be executed on any info message.
+     * @param {string} message
+     */
+    info(message) {
+        console.info("%c"+message, "color: blue; font-size: inherit");
+    }
+
+    /**
+     * Callback to be executed on any debug message.
+     * @param {string} message
+     */
+    debug(message) {
+        console.info("%c"+message, "color: lightgreen; background:black; padding:0.2em; font-size: inherit");
+    }
+
+    /**
+     * Attribute read error detector wrapper.
+     * @param {string} message
+     */
+    ocurredGetError(arg) {
+        return (!(arg != null && !isNaN(arg)))
+    }
+
+    /**
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
