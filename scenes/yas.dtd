@@ -1,0 +1,256 @@
+<?xml encoding="UTF-8"?>
+
+<!ELEMENT yas (scene,views,ambient,lights,textures,materials,
+               transformations,primitives,components)>
+<!ATTLIST yas
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT scene EMPTY>
+<!ATTLIST scene
+  xmlns CDATA #FIXED ''
+  axis_length CDATA #REQUIRED
+  root NMTOKEN #REQUIRED>
+
+<!ELEMENT views (perspective,ortho)>
+<!ATTLIST views
+  xmlns CDATA #FIXED ''
+  default NMTOKEN #REQUIRED>
+
+<!ELEMENT lights (omni,spot)>
+<!ATTLIST lights
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT textures (texture)>
+<!ATTLIST textures
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT transformations (transformation)>
+<!ATTLIST transformations
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT primitives (primitive)>
+<!ATTLIST primitives
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT components (component)>
+<!ATTLIST components
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT perspective (from,to)>
+<!ATTLIST perspective
+  xmlns CDATA #FIXED ''
+  angle NMTOKEN #REQUIRED
+  far NMTOKEN #REQUIRED
+  id NMTOKEN #REQUIRED
+  near NMTOKEN #REQUIRED>
+
+<!ELEMENT ortho EMPTY>
+<!ATTLIST ortho
+  xmlns CDATA #FIXED ''
+  bottom NMTOKEN #REQUIRED
+  far NMTOKEN #REQUIRED
+  id NMTOKEN #REQUIRED
+  left NMTOKEN #REQUIRED
+  near NMTOKEN #REQUIRED
+  right NMTOKEN #REQUIRED
+  top NMTOKEN #REQUIRED>
+
+<!ELEMENT omni (location,ambient,diffuse,specular)>
+<!ATTLIST omni
+  xmlns CDATA #FIXED ''
+  enabled NMTOKEN #REQUIRED
+  id NMTOKEN #REQUIRED>
+
+<!ELEMENT spot (location,target,ambient,diffuse,specular)>
+<!ATTLIST spot
+  xmlns CDATA #FIXED ''
+  angle NMTOKEN #REQUIRED
+  enabled NMTOKEN #REQUIRED
+  exponent NMTOKEN #REQUIRED
+  id NMTOKEN #REQUIRED>
+
+<!ELEMENT primitive (rectangle,triangle,cylinder,sphere,torus)>
+<!ATTLIST primitive
+  xmlns CDATA #FIXED ''
+  id NMTOKEN #REQUIRED>
+
+<!ELEMENT component (transformation,materials,texture,children)>
+<!ATTLIST component
+  xmlns CDATA #FIXED ''
+  id NMTOKEN #REQUIRED>
+
+<!ELEMENT from EMPTY>
+<!ATTLIST from
+  xmlns CDATA #FIXED ''
+  x NMTOKEN #REQUIRED
+  y NMTOKEN #REQUIRED
+  z NMTOKEN #REQUIRED>
+
+<!ELEMENT to EMPTY>
+<!ATTLIST to
+  xmlns CDATA #FIXED ''
+  x NMTOKEN #REQUIRED
+  y NMTOKEN #REQUIRED
+  z NMTOKEN #REQUIRED>
+
+<!ELEMENT target EMPTY>
+<!ATTLIST target
+  xmlns CDATA #FIXED ''
+  x NMTOKEN #REQUIRED
+  y NMTOKEN #REQUIRED
+  z NMTOKEN #REQUIRED>
+
+<!ELEMENT rectangle EMPTY>
+<!ATTLIST rectangle
+  xmlns CDATA #FIXED ''
+  x1 NMTOKEN #REQUIRED
+  x2 NMTOKEN #REQUIRED
+  y1 NMTOKEN #REQUIRED
+  y2 NMTOKEN #REQUIRED>
+
+<!ELEMENT triangle EMPTY>
+<!ATTLIST triangle
+  xmlns CDATA #FIXED ''
+  x1 NMTOKEN #REQUIRED
+  x2 NMTOKEN #REQUIRED
+  x3 NMTOKEN #REQUIRED
+  y1 NMTOKEN #REQUIRED
+  y2 NMTOKEN #REQUIRED
+  y3 NMTOKEN #REQUIRED
+  z1 NMTOKEN #REQUIRED
+  z2 NMTOKEN #REQUIRED
+  z3 NMTOKEN #REQUIRED>
+
+<!ELEMENT cylinder EMPTY>
+<!ATTLIST cylinder
+  xmlns CDATA #FIXED ''
+  base NMTOKEN #REQUIRED
+  height NMTOKEN #REQUIRED
+  slices NMTOKEN #REQUIRED
+  stacks NMTOKEN #REQUIRED
+  top NMTOKEN #REQUIRED>
+
+<!ELEMENT sphere EMPTY>
+<!ATTLIST sphere
+  xmlns CDATA #FIXED ''
+  radius NMTOKEN #REQUIRED
+  slices NMTOKEN #REQUIRED
+  stacks NMTOKEN #REQUIRED>
+
+<!ELEMENT torus EMPTY>
+<!ATTLIST torus
+  xmlns CDATA #FIXED ''
+  inner NMTOKEN #REQUIRED
+  loops NMTOKEN #REQUIRED
+  outer NMTOKEN #REQUIRED
+  slices NMTOKEN #REQUIRED>
+
+<!ELEMENT children (componentref,primitiveref)>
+<!ATTLIST children
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT componentref EMPTY>
+<!ATTLIST componentref
+  xmlns CDATA #FIXED ''
+  id NMTOKEN #REQUIRED>
+
+<!ELEMENT primitiveref EMPTY>
+<!ATTLIST primitiveref
+  xmlns CDATA #FIXED ''
+  id NMTOKEN #REQUIRED>
+
+<!ELEMENT ambient (ambient|background)?>
+<!ATTLIST ambient
+  xmlns CDATA #FIXED ''
+  a NMTOKEN #IMPLIED
+  b NMTOKEN #IMPLIED
+  g NMTOKEN #IMPLIED
+  r NMTOKEN #IMPLIED>
+
+<!ELEMENT background EMPTY>
+<!ATTLIST background
+  xmlns CDATA #FIXED ''
+  a NMTOKEN #REQUIRED
+  b NMTOKEN #REQUIRED
+  g NMTOKEN #REQUIRED
+  r NMTOKEN #REQUIRED>
+
+<!ELEMENT location EMPTY>
+<!ATTLIST location
+  xmlns CDATA #FIXED ''
+  w NMTOKEN #REQUIRED
+  x NMTOKEN #REQUIRED
+  y NMTOKEN #REQUIRED
+  z NMTOKEN #REQUIRED>
+
+<!ELEMENT diffuse EMPTY>
+<!ATTLIST diffuse
+  xmlns CDATA #FIXED ''
+  a NMTOKEN #REQUIRED
+  b NMTOKEN #REQUIRED
+  g NMTOKEN #REQUIRED
+  r NMTOKEN #REQUIRED>
+
+<!ELEMENT specular EMPTY>
+<!ATTLIST specular
+  xmlns CDATA #FIXED ''
+  a NMTOKEN #REQUIRED
+  b NMTOKEN #REQUIRED
+  g NMTOKEN #REQUIRED
+  r NMTOKEN #REQUIRED>
+
+<!ELEMENT texture EMPTY>
+<!ATTLIST texture
+  xmlns CDATA #FIXED ''
+  file NMTOKEN #IMPLIED
+  id NMTOKEN #REQUIRED
+  length_s NMTOKEN #IMPLIED
+  length_t NMTOKEN #IMPLIED>
+
+<!ELEMENT materials (material)>
+<!ATTLIST materials
+  xmlns CDATA #FIXED ''>
+
+<!ELEMENT material (emission,ambient,diffuse,specular)?>
+<!ATTLIST material
+  xmlns CDATA #FIXED ''
+  id NMTOKEN #REQUIRED
+  shininess NMTOKEN #IMPLIED>
+
+<!ELEMENT emission EMPTY>
+<!ATTLIST emission
+  xmlns CDATA #FIXED ''
+  a NMTOKEN #REQUIRED
+  b NMTOKEN #REQUIRED
+  g NMTOKEN #REQUIRED
+  r NMTOKEN #REQUIRED>
+
+<!ELEMENT transformation (transformationref?,translate,rotate,scale)>
+<!ATTLIST transformation
+  xmlns CDATA #FIXED ''
+  id NMTOKEN #IMPLIED>
+
+<!ELEMENT transformationref EMPTY>
+<!ATTLIST transformationref
+  xmlns CDATA #FIXED ''
+  id NMTOKEN #REQUIRED>
+
+<!ELEMENT translate EMPTY>
+<!ATTLIST translate
+  xmlns CDATA #FIXED ''
+  x NMTOKEN #REQUIRED
+  y NMTOKEN #REQUIRED
+  z NMTOKEN #REQUIRED>
+
+<!ELEMENT rotate EMPTY>
+<!ATTLIST rotate
+  xmlns CDATA #FIXED ''
+  angle NMTOKEN #REQUIRED
+  axis NMTOKEN #REQUIRED>
+
+<!ELEMENT scale EMPTY>
+<!ATTLIST scale
+  xmlns CDATA #FIXED ''
+  x NMTOKEN #REQUIRED
+  y NMTOKEN #REQUIRED
+  z NMTOKEN #REQUIRED>
