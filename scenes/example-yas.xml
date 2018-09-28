@@ -12,15 +12,15 @@
 <yas>
     <!-- deve definir-se um objeto para raiz da arvore, assim -->
     <!-- como o comprimento dos tres eixos (cilindros) -->
-    <scene root="ss" axis_length="ff" />
-    <views default="ss">
+    <scene root="the_root" axis_length="5.0" />
+    <views default="rViews">
         <!-- tem de existir, pelo menos, uma vista de -->
         <!-- entre as seguintes (perspective ou ortho) -->
-        <perspective id="ss" near="ff" far="ff" angle="ff">
+        <perspective id="vp1" near="ff" far="ff" angle="ff">
             <from x="ff" y="ff" z="ff" />
             <to x="ff" y="ff" z="ff" />
         </perspective>
-        <ortho id="ss" near="ff" far="ff" left="ff" right="ff" top="ff" bottom="ff" />
+        <ortho id="vo1" near="ff" far="ff" left="ff" right="ff" top="ff" bottom="ff" />
     </views>
     <ambient>
         <ambient r="ff" g="ff" b="ff" a="ff" />
@@ -29,13 +29,13 @@
     <lights>
         <!-- Deve existir um ou mais blocos "omni" ou "spot" -->
         <!-- Os identificadores "id" nao podem ser repetidos -->
-        <omni id="ss" enabled="tt">
+        <omni id="lo1" enabled="tt">
             <location x="ff" y="ff" z="ff" w="ff" />
             <ambient r="ff" g="ff" b="ff" a="ff" />
             <diffuse r="ff" g="ff" b="ff" a="ff" />
             <specular r="ff" g="ff" b="ff" a="ff" />
         </omni>
-        <spot id="ss" enabled="tt" angle="ff" exponent="ff">
+        <spot id="ls1" enabled="tt" angle="ff" exponent="ff">
             <!-- atencao, "target" e' diferente de "direction" -->
             <location x="ff" y="ff" z="ff" w="ff" />
             <target x="ff" y="ff" z="ff" />
@@ -47,12 +47,12 @@
     <textures>
         <!-- Deve existir um ou mais blocos "texture" -->
         <!-- Os identificadores "id" nao podem ser repetidos -->
-        <texture id="ss" file="ss" />
+        <texture id="tt1" file="ss" />
     </textures>
     <materials>
         <!-- Deve existir um ou mais blocos "material" -->
         <!-- Os identificadores "id" nao podem ser repetidos -->
-        <material id="ss" shininess = "ff">
+        <material id="mm1" shininess = "ff">
             <emission r="ff" g="ff" b="ff" a="ff" />
             <ambient r="ff" g="ff" b="ff" a="ff" />
             <diffuse r="ff" g="ff" b="ff" a="ff" />
@@ -63,7 +63,7 @@
         <!-- Deve existir um ou mais blocos "transformation" -->
         <!-- Os identificadores "id" nao podem ser repetidos -->
         <!-- Os angulos sao expressos em graus -->
-        <transformation id="ss">
+        <transformation id="tt1">
             <!-- instrucoes a usar sem limite nem ordem -->
             <!-- deve existir pelo menos uma transformacao -->
             <translate x="ff" y="ff" z="ff" />
@@ -75,7 +75,7 @@
         <!-- Uma "primitive" e' uma primitiva e pode ser usada em nos folha -->
         <!-- Deve existir um ou mais blocos "primitive" -->
         <!-- Os identificadores "id" nao podem ser repetidos -->
-        <primitive id="ss">
+        <primitive id="pp1">
             <!-- apenas pode existir UMA das seguintes tags: -->
             <!-- rectangle, triangle, cylinder, sphere, torus -->
             <!-- os parametros devem ser interpretados, genericamente, -->
@@ -88,14 +88,14 @@
         </primitive >
     </primitives >
     <components>
-        <component id="ss">
+        <component id="cc1">
             <!-- Uma "component" e' um objeto composto e pode ser -->
             <!-- usada em nos intermédios -->
             <!-- bloco "transformation" e' obrigatorio -->
             <transformation>
                 <!-- deve conter uma referencia a uma das "transformation" -->
                 <!-- declaradas anteriormente -->
-                <transformationref id="ss" />
+                <transformationref id="cttref1" />
                 <!-- ou, ALTERNATIVAMENTE, transformacoes explicitas, -->
                 <!-- usando zero ou mais das instrucoes seguintes, sem -->
                 <!-- limite nem ordem -->
@@ -111,7 +111,7 @@
             <!-- o material muda para o proximo material da lista; do -->
             <!-- ultimo material da lista volta ao primeiro -->
             <materials>
-                <material id="ss" />
+                <material id="cmm1" />
             </materials>
             <!-- declaracao obrigatoria de texture -->
             <!-- id="inherit" mantem (herda) a textura do objecto "pai" -->
@@ -128,14 +128,14 @@
             <!-- do tipo escalamento violem esta regra. -->
             <!-- Nao e' necessario aplicar fatores de escala em -->
             <!-- quadricas (esfera, cilindro...) -->
-            <texture id="ss" length_s="ff" length_t="ff" />
+            <texture id="ct1" length_s="ff" length_t="ff" />
             <!-- bloco "children" obrigatorio num "component" -->
             <children>
                 <!-- deve existir uma ou mais tags "componentref" e/ou -->
                 <!-- "primitiveref", identificando outros -->
                 <!-- componentes ou primitivas -->
-                <componentref id="ss" />
-                <primitiveref id="ss" />
+                <componentref id="cccref1" />
+                <primitiveref id="ccpref1" />
             </children>
         </component>
     </components>
