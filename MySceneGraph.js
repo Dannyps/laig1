@@ -204,7 +204,7 @@ class MySceneGraph {
 
         return null;
     }
-    
+
     /**
      * Parses the <views> block.
      */
@@ -235,8 +235,8 @@ class MySceneGraph {
 
                 this.orthoViews.push({
                     id: id,
-                    near: near ? near : undefined,
-                    far: far ? far : undefined,
+                    near: near ? near : 0.1,
+                    far: far ? far : 1000,
                     left: left ? left : undefined,
                     right: right ? right : undefined,
                     top: top ? top : undefined,
