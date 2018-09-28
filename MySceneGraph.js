@@ -172,21 +172,25 @@ class MySceneGraph {
 
 
         var axis_length = this.reader.getFloat(mynode, "axis_length", false);
-        if (this.ocurredGetError(axis_length)){
-            this.onXMLMinorError("unable to parse axis_length of the scene, using the default value (1.0)" );   
+        if (this.ocurredGetError(axis_length)) {
+            this.onXMLMinorError("unable to parse axis_length of the scene, using the default value (1.0)");
             axis_length = 1.0;
         } else {
-            this.debug("Read axis_length as "+axis_length+".");
+            this.debug("Read axis_length as " + axis_length + ".");
         }
 
+        this.referenceLength = axis_length;
+
+
         var root_object = this.reader.getString(mynode, "root", false);
-        if (root_object==null || root_object==""){
-            this.onXMLError("unable to parse root of the scene, cannot proceed." );   
+        if (root_object == null || root_object == "") {
+            this.onXMLError("unable to parse root of the scene, cannot proceed.");
         } else {
-            this.debug("Read scene root as "+root_object+".");
+            this.debug("Read scene root as " + root_object + ".");
         }
 
         this.info("Parsed scene");
+
         return null;
     }
 
@@ -413,7 +417,7 @@ class MySceneGraph {
      * @param {string} message
      */
     info(message) {
-        console.info("%c"+message, "color: blue; font-size: inherit");
+        console.info("%c" + message, "color: blue; font-size: inherit");
     }
 
     /**
@@ -421,7 +425,7 @@ class MySceneGraph {
      * @param {string} message
      */
     debug(message) {
-        console.info("%c"+message, "color: lightgreen; background:black; padding:0.2em; font-size: inherit");
+        console.info("%c" + message, "color: lightgreen; background:black; padding:0.2em; font-size: inherit");
     }
 
     /**
