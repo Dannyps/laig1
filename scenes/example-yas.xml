@@ -13,7 +13,7 @@
     <!-- deve definir-se um objeto para raiz da arvore, assim -->
     <!-- como o comprimento dos tres eixos (cilindros) -->
     <scene root="the_root" axis_length="5.0" />
-    <views default="rViews">
+    <views default="vp1">
         <!-- tem de existir, pelo menos, uma vista de -->
         <!-- entre as seguintes (perspective ou ortho) -->
         <perspective id="vp1" near="ff" far="ff" angle="ff">
