@@ -217,13 +217,13 @@ class MySceneGraph {
 
         // el is an interface for Element
         // https://developer.mozilla.org/en-US/docs/Web/API/Element
-        Array.prototype.forEach((el) => {
+        Array.prototype.forEach.call(ambientNode.children, ((el) => {
             if(el.tagName === 'ambient') {
                 ambient = el;
             } else if(el.tagName === 'background') {
                 background = el;
             }
-        }, ambientNode.children);
+        }));
 
         // check if both required children nodes are present and parse them
         if(ambient === null) {
