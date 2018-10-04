@@ -124,54 +124,6 @@ class MySceneGraph {
             if ((error = this.parseIllumination(nodes[index])) != null)
                 return error;
         }
-
-        // <LIGHTS>
-        if ((index = nodeNames.indexOf("LIGHTS")) == -1)
-            return "tag <LIGHTS> missing";
-        else {
-            if (index != LIGHTS_INDEX)
-                this.onXMLMinorError("tag <LIGHTS> out of order");
-
-            //Parse LIGHTS block
-            if ((error = this.parseLights(nodes[index])) != null)
-                return error;
-        }
-
-        // <TEXTURES>
-        if ((index = nodeNames.indexOf("TEXTURES")) == -1)
-            return "tag <TEXTURES> missing";
-        else {
-            if (index != TEXTURES_INDEX)
-                this.onXMLMinorError("tag <TEXTURES> out of order");
-
-            //Parse TEXTURES block
-            if ((error = this.parseTextures(nodes[index])) != null)
-                return error;
-        }
-
-        // <MATERIALS>
-        if ((index = nodeNames.indexOf("MATERIALS")) == -1)
-            return "tag <MATERIALS> missing";
-        else {
-            if (index != MATERIALS_INDEX)
-                this.onXMLMinorError("tag <MATERIALS> out of order");
-
-            //Parse MATERIALS block
-            if ((error = this.parseMaterials(nodes[index])) != null)
-                return error;
-        }
-
-        // <NODES>
-        if ((index = nodeNames.indexOf("NODES")) == -1)
-            return "tag <NODES> missing";
-        else {
-            if (index != NODES_INDEX)
-                this.onXMLMinorError("tag <NODES> out of order");
-
-            //Parse NODES block
-            if ((error = this.parseNodes(nodes[index])) != null)
-                return error;
-        }
     }
 
     /**
