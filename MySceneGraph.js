@@ -225,17 +225,17 @@ class MySceneGraph {
             }
         }));
 
-        // check if both required children nodes are present and parse them
+        // parse ambient light
+        this.ambientLight = {
+            r: 0.5,
+            g: 0.5,
+            b: 0.5,
+            a: 1
+        };
+
         if(ambient === null) {
             this.onXMLMinorError("element <ambient>/<ambient> not set. Using default ambient light");
-            this.ambientLight = {
-                r: 0.5,
-                g: 0.5,
-                b: 0.5,
-                a: 1
-            };
         } else {
-            this.ambientLight = {};
             let requiredAttrsNames = ['r', 'g', 'b', 'a'];
 
             requiredAttrsNames.forEach(attrName => {
@@ -243,26 +243,27 @@ class MySceneGraph {
                     let attrValue = Number.parseFloat(ambient.getAttribute(attrName));
 
                     if (isNaN(attrValue))
-                        this.onXMLError(`Attribute ${attrName} for ambient light should be float type`);
+                        this.onXMLMinorError(`Attribute ${attrName} for ambient light should be float type, using fallback value`);
                     else
                         this.ambientLight[attrName] = attrValue;
+
                 } else {
-                    this.onXMLError(`Attribute ${attrName} for ambient light is not set`);
+                    this.onXMLMinorError(`Attribute ${attrName} for ambient light is not set, using fallback value`);
                 }
             });
         }
 
+        // parse scene's background color
+        this.backgroundScene = {
+            r: 0.5,
+            g: 0.5,
+            b: 0.5,
+            a: 1
+        };
+
         if(background === null) {
             this.onXMLMinorError("element <ambient>/<background> not set. Using default background");
-            this.backgroundScene = {
-                r: 0.5,
-                g: 0.5,
-                b: 0.5,
-                a: 1
-            };
         } else {
-            this.backgroundScene = {};
-
             let requiredAttrsNames = ['r', 'g', 'b', 'a'];
 
             requiredAttrsNames.forEach(attrName => {
@@ -270,17 +271,16 @@ class MySceneGraph {
                     let attrValue = Number.parseFloat(background.getAttribute(attrName));
 
                     if (isNaN(attrValue))
-                        this.onXMLError(`Attribute ${attrName} for background should be float type`);
+                        this.onXMLMinorError(`Attribute ${attrName} for background should be float type, using fallback value`);
                     else
                         this.backgroundScene[attrName] = attrValue;
                 } else {
-                    this.onXMLError(`Attribute ${attrName} for background is not set`);
+                    this.onXMLMinorError(`Attribute ${attrName} for background is not set, using fallback value`);
                 }
             });
         }
 
-        // expect two 
-        this.log("Parsed ambient");
+        this.info("Parsed ambient");
 
         return null;
     }
