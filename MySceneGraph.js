@@ -242,12 +242,12 @@ class MySceneGraph {
                 if(ambient.hasAttribute(attrName)) {
                     let attrValue = Number.parseFloat(ambient.getAttribute(attrName));
 
-                    if (attrValue === null)
-                        this.onXMLError(`Attribute ${attrValue} for ambient light should be float type`);
-
-                    this.ambientLight[attrName] = attrValue;
+                    if (isNaN(attrValue))
+                        this.onXMLError(`Attribute ${attrName} for ambient light should be float type`);
+                    else
+                        this.ambientLight[attrName] = attrValue;
                 } else {
-                    this.onXMLError(`Attribute ${attrValue} for ambient light is not set`);
+                    this.onXMLError(`Attribute ${attrName} for ambient light is not set`);
                 }
             });
         }
@@ -269,12 +269,12 @@ class MySceneGraph {
                 if(background.hasAttribute(attrName)) {
                     let attrValue = Number.parseFloat(background.getAttribute(attrName));
 
-                    if (attrValue === null)
-                        this.onXMLError(`Attribute ${attrValue} for background should be float type`);
-
-                    this.backgroundScene[attrName] = attrValue;
+                    if (isNaN(attrValue))
+                        this.onXMLError(`Attribute ${attrName} for background should be float type`);
+                    else
+                        this.backgroundScene[attrName] = attrValue;
                 } else {
-                    this.onXMLError(`Attribute ${attrValue} for background is not set`);
+                    this.onXMLError(`Attribute ${attrName} for background is not set`);
                 }
             });
         }
