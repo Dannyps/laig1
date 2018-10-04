@@ -121,8 +121,8 @@ class MySceneGraph {
                 this.onXMLMinorError("tag <ambient> out of order");
 
             //Parse ambient block
-            if ((error = this.parseAmbient(nodes[index])) != null)
-                return error;
+            this.ambient = new Ambient(this);
+            this.ambient.parse(nodes[index]);
         }
     }
 
