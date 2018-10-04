@@ -113,15 +113,15 @@ class MySceneGraph {
                 return error;
         }
 
-        // <ILLUMINATION>
-        if ((index = nodeNames.indexOf("ILLUMINATION")) == -1)
-            return "tag <ILLUMINATION> missing";
+        // <ambient>
+        if ((index = nodeNames.indexOf("ambient")) == -1)
+            return "tag <ambient> missing";
         else {
-            if (index != ILLUMINATION_INDEX)
-                this.onXMLMinorError("tag <ILLUMINATION> out of order");
+            if (index != AMBIENT_INDEX)
+                this.onXMLMinorError("tag <ambient> out of order");
 
-            //Parse ILLUMINATION block
-            if ((error = this.parseIllumination(nodes[index])) != null)
+            //Parse ambient block
+            if ((error = this.parseAmbient(nodes[index])) != null)
                 return error;
         }
     }
@@ -162,7 +162,7 @@ class MySceneGraph {
      */
     parseViews(viewsNode) {
         
-        var children = viewsNode.children;
+        let children = viewsNode.children;
 
         // Ensure there's at least one view
         if(children.length === 0) {
@@ -205,14 +205,82 @@ class MySceneGraph {
         return null;
     }
 
-    /**
-     * Parses the <ILLUMINATION> block.
-     * @param {illumination block element} illuminationNode
-     */
-    parseIllumination(illuminationNode) {
-        // TODO: Parse Illumination node
 
-        this.log("Parsed illumination");
+
+    /**
+     * Parses the <ambient> block.
+     * @param {Element} ambientNode 
+     */
+    parseAmbient(ambientNode) {
+        let ambient = null;
+        let background = null;
+
+        // el is an interface for Element
+        // https://developer.mozilla.org/en-US/docs/Web/API/Element
+        Array.prototype.forEach((el) => {
+            if(el.tagName === 'ambient') {
+                ambient = el;
+            } else if(el.tagName === 'background') {
+                background = el;
+            }
+        }, ambientNode.children);
+
+        // check if both required children nodes are present and parse them
+        if(ambient === null) {
+            this.onXMLMinorError("element <ambient>/<ambient> not set. Using default ambient light");
+            this.ambientLight = {
+                r: 0.5,
+                g: 0.5,
+                b: 0.5,
+                a: 1
+            };
+        } else {
+            this.ambientLight = {};
+            let requiredAttrsNames = ['r', 'g', 'b', 'a'];
+
+            requiredAttrsNames.forEach(attrName => {
+                if(ambient.hasAttribute(attrName)) {
+                    let attrValue = Number.parseFloat(ambient.getAttribute(attrName));
+
+                    if (attrValue === null)
+                        this.onXMLError(`Attribute ${attrValue} for ambient light should be float type`);
+
+                    this.ambientLight[attrName] = attrValue;
+                } else {
+                    this.onXMLError(`Attribute ${attrValue} for ambient light is not set`);
+                }
+            });
+        }
+
+        if(background === null) {
+            this.onXMLMinorError("element <ambient>/<background> not set. Using default background");
+            this.backgroundScene = {
+                r: 0.5,
+                g: 0.5,
+                b: 0.5,
+                a: 1
+            };
+        } else {
+            this.backgroundScene = {};
+
+            let requiredAttrsNames = ['r', 'g', 'b', 'a'];
+
+            requiredAttrsNames.forEach(attrName => {
+                if(background.hasAttribute(attrName)) {
+                    let attrValue = Number.parseFloat(background.getAttribute(attrName));
+
+                    if (attrValue === null)
+                        this.onXMLError(`Attribute ${attrValue} for background should be float type`);
+
+                    this.backgroundScene[attrName] = attrValue;
+                } else {
+                    this.onXMLError(`Attribute ${attrValue} for background is not set`);
+                }
+            });
+        }
+
+        // expect two 
+        this.log("Parsed ambient");
 
         return null;
     }
