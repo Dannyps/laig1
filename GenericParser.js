@@ -30,7 +30,7 @@ class GenericParser {
     _parseAttributes(element, requiredAttrs, defaultValues) {
         let parsedAttrs = {};
 
-        requiredAttrs.getOwnPropertyNames().forEach(requiredAttrName => {
+        Object.getOwnPropertyNames(requiredAttrs).forEach(requiredAttrName => {
             // check if element contains the attribute
             if(element.hasAttribute(requiredAttrName)) {
                 // attempt to parse the attribute and ensure the value is valid
@@ -47,10 +47,10 @@ class GenericParser {
                 // try to get a default as a fallback
                 let val = this._getDefaultValue(requiredAttrName, defaultValues);
                 if(val === null) {
-                    this.onXMLError(`Attribute ${requiredAttrName} is not set!`);
+                    this.sceneGraph.onXMLError(`Attribute ${requiredAttrName} is not set!`);
                     return null;
                 } else {
-                    this.onXMLMinorError(`Attribute ${requiredAttrName} is not set! Using a default value`);
+                    this.sceneGraph.onXMLMinorError(`Attribute ${requiredAttrName} is not set! Using a default value`);
                     parsedAttrs[requiredAttrName] = val;
                 }
             }
@@ -75,7 +75,7 @@ class GenericParser {
             // first attempt to convert to JS Number type. If it fails, it becomes NaN
             let num = Number(attrVal);
 
-            if(!num.isNaN()) {
+            if(!Number.isNaN(num)) {
                 // it's a valid number type, but if 'ii' is expected, is it really integer?
                 if(expectedType == 'ii') {
                     if (Number.isInteger(num)) retVal = num; 
@@ -103,17 +103,21 @@ class GenericParser {
         else throw `Unknown expected type for attribute ${attrName}`;
 
         // at this stage, if retVal is null, it means that the attrVal is not of the expected type, thus we attemp to get the default value
-        retVal = this._getDefaultValue(attrName, defaultValues);
-
-        // if retVal still 'null' then there's no fallback value and the error is displayed
         if(retVal === null) {
-            this.sceneGraph.onXMLError(`Unexpected value for ${attrName}. It's not coherent with expected value type.`);
-            return null;
-        } else {
-            // a default value was found, just display a warning
-            this.sceneGraph.onXMLMinorError(`Unexpected value for ${attrName}. It's not coherent with expected value type. Using default value ${retVal}`);
-            return retVal;
+            retVal = this._getDefaultValue(attrName, defaultValues);
+
+            // if retVal still 'null' then there's no fallback value and the error is displayed
+            if(retVal === null) {
+                this.sceneGraph.onXMLError(`Unexpected value for ${attrName}. It's not coherent with expected value type.`);
+                return null;
+            } else {
+                // a default value was found, just display a warning
+                this.sceneGraph.onXMLMinorError(`Unexpected value for ${attrName}. It's not coherent with expected value type. Using default value ${retVal}`);
+                return retVal;
+            }
         }
+        
+        return retVal;
         
     }
 
