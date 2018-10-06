@@ -133,6 +133,46 @@ class GenericParser {
     }
 
     /**
+     * Given an element, it fetches required child elements and parses it's attributes.
+     * 
+     * For each required element, this method assumes it must be unique.
+     * 
+     * If the same required element is defined multiple times it displays a warning and returns the first match on the tree
+     * If the element can't be found, it shows an error
+     * @param {Element} parentElement The parent element to be processed
+     * @param {Map} requiredElements A Map object where for each key/value pair, the key is a string matching the element tagName and the value is an object that describes the required attributes and the default values.
+     * 
+     * Here's an example of how each map entry looks like:
+     * 
+     * ('elementTagName', {
+     *   requiredAttrs: {a: 'tt', b: 'ff'},
+     *   defaultValues: {a: 'false'}
+     * })
+     * 
+     * @return {Map} A map whith entries for each required element. Elements that couldn't be found or properly parsed are not available on the Map
+     */
+    _parseUniqueChildElements(parentElement, requiredElements) {
+        let parsedElements = new Map();
+
+        requiredElements.forEach((elementProperties, elementTagName) => {
+            // find the element
+            let elementCollection = parentElement.getElementsByTagName(elementTagName);
+
+            if(elementCollection.length > 1) {
+                this._showElementMultipleDefinitions(parentElement.tagName, elementTagName);
+            } else if (elementCollection.length === 0) {
+                this._showElementNotFound(parentElement.tagName, elementTagName);
+                return; // cannot proceed ? TODO
+            }
+
+            let parsedAttrs = this._parseAttributes(elementCollection[0], elementProperties.requiredAttrs, elementProperties.defaultValues);
+            parsedElements.set(elementTagName, parsedAttrs);
+        });
+
+        return parsedElements;
+    }
+
+    /**
      * Gets the default value for a given attribute.
      * @param {*} attrName 
      * @param {*} defaultValues @see {@link _parseAttributes}
@@ -177,5 +217,13 @@ class GenericParser {
             // error
             this.sceneGraph.onXMLError(`[${this.constructor.name.toUpperCase()}] Unexpected value type for attribute '${attrName}' in element <${elementName}>. Cannot proceed`);
         }
+    }
+
+    _showElementMultipleDefinitions(parentElementName, childElementName) {
+        this.sceneGraph.onXMLMinorError(`[${this.constructor.name.toUpperCase()}] Multiple element definitions for <${childElementName}> were found under <${parentElementName}>, while only one is expected. Using first element on the tree`);
+    }
+
+    _showElementNotFound(parentElementName, childElementName) {
+        this.sceneGraph.onXMLError(`[${this.constructor.name.toUpperCase()}] Required element <${childElementName}> couldn't be found under <${parentElementName}>`);
     }
 }
