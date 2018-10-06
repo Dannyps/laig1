@@ -15,6 +15,7 @@ class Ambient extends GenericParser {
             b: 0.5,
             a: 1
         };
+
         // default ambient light
         this.ambientLight = {
             r: 0.5,
@@ -30,69 +31,34 @@ class Ambient extends GenericParser {
      * @return {null}
      */
     parse(ambientNode) {
-        let ambient = null;
-        let background = null;
-
-        // el is an interface for Element
-        // https://developer.mozilla.org/en-US/docs/Web/API/Element
-        Array.prototype.forEach.call(ambientNode.children, ((el) => {
-            if(el.tagName === 'ambient') {
-                ambient = el;
-            } else if(el.tagName === 'background') {
-                background = el;
-            }
-        }));
-
-        if(background === null) {
-            this.sceneGraph.onXMLMinorError("element <ambient>/<background> not set. Using default background");
+        // find ambient child element
+        let ambientCollection = ambientNode.getElementsByTagName('ambient');
+        if (ambientCollection.length === 0) {
+            this.sceneGraph.onXMLMinorError("[AMBIENT]: Tag <ambient> is not set. Using default values");
         } else {
-            this._parseChilds(background);
+            if(ambientCollection.length > 1) 
+                this.sceneGraph.onXMLMinorError("[AMBIENT]: Tag <ambient> defined multiple times. Using first definition.");
+
+            // parse attributes
+            this.ambientLight = this._parseAttributes(ambientCollection[0], {r: 'ff', g: 'ff', b: 'ff', a: 'ff'}, this.ambientLight);
+        }  
+
+        // find background child element
+        let backgroundCollection = ambientNode.getElementsByTagName('background');
+        if (backgroundCollection.length === 0) {
+            this.sceneGraph.onXMLMinorError("[AMBIENT]: Tag <background> is not set. Using default values");
+        } else {
+            if(backgroundCollection.length > 1) 
+                this.sceneGraph.onXMLMinorError("[AMBIENT]: Tag <background> defined multiple times. Using first definition.");
+            
+            // parse attributes
+            this.backgroundScene = this._parseAttributes(backgroundCollection[0], {r: 'ff', g: 'ff', b: 'ff', a: 'ff'}, this.backgroundScene);
         }
 
-        if(ambient == null) {
-            this.sceneGraph.onXMLMinorError("element <ambient>/<background> not set. Using default background");
-        } else {
-            this._parseChilds(ambient);
-        }
-
+        // declare that ambient was parsed
         this.sceneGraph.info("Parsed ambient");
 
         return null; // the errors are handled with fallback values
-    }
-
-    /**
-     * Parses the child nodes of <ambient> tag
-     * @param {Element} ambientNode 
-     */
-    _parseChilds(childElement) {
-        // aux references the internal structure to update, already initialized with default values
-        let aux;
-
-        // determine the type of child to parse
-        if(childElement.tagName === 'ambient') this.ambientLight = this._parseAttributes(childElement, {r: 'ff', g: 'ff', b: 'ff', a: 'ff', teste: 'ii'}, this.backgroundScene);
-        else if(childElement.tagName === 'background') this.backgroundScene =  this._parseAttributes(childElement, {r: 'ff', g: 'ff', b: 'ff', a: 'ff', teste:'ii'}, this.backgroundScene);
-        else throw 'Unexpected ambient child element to parse';
-
-        /*
-        // the required attributes
-        let requiredAttrsNames = ['r', 'g', 'b', 'a'];
-        
-        requiredAttrsNames.forEach(attrName => {
-            // check if required attribute exists
-            if(childElement.hasAttribute(attrName)) {
-                // attempt to parse. All attribute values must be float. If it's not a valid float, attrValue = NaN
-                let attrValue = Number.parseFloat(childElement.getAttribute(attrName));
-
-                if (isNaN(attrValue))
-                    this.sceneGraph.onXMLMinorError(`Attribute ${attrName} for ${childElement.tagName} should be float type, using fallback value`);
-                else
-                    aux[attrName] = attrValue;
-
-            } else {
-                this.sceneGraph.onXMLMinorError(`Attribute ${attrName} for ${childElement.tagName} ambient light is not set, using fallback value`);
-            }
-        });
-        */
     }
 
     /**
