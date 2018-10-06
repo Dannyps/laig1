@@ -98,8 +98,11 @@ class MySceneGraph {
                 this.onXMLMinorError("tag <scene> out of order");
 
             //Parse scene block
-            if ((error = this.parseScene(nodes[index])) != null)
+            let scene = new Scene(this);
+            if((error = scene.parse(nodes[index])) != null)
                 return error;
+
+            this.info('Parsed scene');
         }
         
         // <views>
@@ -109,8 +112,8 @@ class MySceneGraph {
             this.onXMLMinorError("tag <views> out of order");
         } else {
             // Parse the views block 
-            if ((error = this.parseViews(nodes[index])) != null)
-                return error;
+            //if ((error = this.parseViews(nodes[index])) != null)
+                //return error;
         }
 
         // <ambient>
@@ -123,6 +126,22 @@ class MySceneGraph {
             //Parse ambient block
             this.ambient = new Ambient(this);
             this.ambient.parse(nodes[index]);
+
+            this.info('Parsed ambient');
+        }
+
+        // lights
+        if ((index = nodeNames.indexOf("lights")) == -1)
+            return "tag <lights> missing";
+        else {
+            if (index != LIGHTS_INDEX)
+                this.onXMLMinorError("tag <lights> out of order");
+
+            //Parse ambient block
+            this.parsedLights = new Lights(this);
+            this.parsedLights.parse(nodes[index]);
+
+            this.info('Parsed lights');
         }
     }
 
@@ -200,8 +219,11 @@ class MySceneGraph {
         // check if default perspective is defined
         if(!this.reader.hasAttribute(viewsNode, 'default')) {
             this.onXMLMinorError("Default view isn't set. Assuming TODO");
+        } else {
+            this.defaultView = this.reader.getString(viewsNode, 'default', true);
         }
 
+        this.log("Parsed views");
         return null;
     }
 

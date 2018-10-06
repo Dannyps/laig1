@@ -46,6 +46,7 @@ class XMLscene extends CGFscene {
      * Initializes the scene lights with the values read from the XML file.
      */
     initLights() {
+        /*
         var i = 0;
         // Lights index.
 
@@ -73,7 +74,20 @@ class XMLscene extends CGFscene {
 
                 i++;
             }
-        }
+        }*/
+        let i = 0;
+        this.graph.parsedLights.omniLights.forEach((omniLight, id) => {
+            this.lights[i].setPosition(omniLight.location.x, omniLight.location.y, omniLight.location.z, omniLight.location.w);
+            this.lights[i].setAmbient(omniLight.ambient.r, omniLight.ambient.g, omniLight.ambient.b, omniLight.ambient.a);
+            this.lights[i].setDiffuse(omniLight.diffuse.r, omniLight.diffuse.g, omniLight.diffuse.b, omniLight.diffuse.a);
+            this.lights[i].setSpecular(omniLight.specular.r, omniLight.specular.g, omniLight.specular.b, omniLight.specular.a);
+            this.lights[i].setVisible(true);
+
+            if(omniLight.enabled) this.lights[i].enable(); 
+            else this.lights[i].disable();
+
+            i++;
+        });
     }
 
 
@@ -81,10 +95,11 @@ class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
-        this.camera.near = this.graph.near;
-        this.camera.far = this.graph.far;
+        //this.camera.near = this.graph.orthoViews[0].near;
+        //this.camera.far = this.graph.orthoViews[0].near;
+        //this.camera.position = vec4.fromValues(this.graph.orthoViews[0])
 
-        //TODO: Change reference length according to parsed graph
+        // Change reference length according to parsed graph
         this.axis = new CGFaxis(this, this.graph.referenceLength);
 
         // Change ambient and background details according to parsed graph
@@ -97,7 +112,7 @@ class XMLscene extends CGFscene {
         this.initLights();
 
         // Adds lights group.
-        this.interface.addLightsGroup(this.graph.lights);
+        this.interface.addLightsGroup(this.graph.parsedLights);
 
         this.sceneInited = true;
     }
