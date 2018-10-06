@@ -9,23 +9,28 @@ class GenericParser {
      * The method to be called in order to parse a main XML element (lights, views, ambient, etc.) 
      */
     parse() {
-        throw 'parse() must be implement on sub-classes';
+        throw 'parse() must be implemented on sub-classes';
     }
 
     /**
-     * Generic method that parses the attributes of an element
-     * Note: It won't touch any of the child nodes of the element
+     * Generic method that parses the attributes of an element. It only processes the element itself, not any child elements
      * 
-     * @param {Element} element The XML element to be parsed
-     * @param {Object} requiredAttrs An object where each property is a pair (name, type). The property name/key matches the attribute name, and the type is one of ff||ii||ss||cc||tt
+     * @param {Element} element The element to be parsed
+     * @param {Object} requiredAttrs An object specifying the required attributes for the element and the expected value type
+     * 
+     * Each property key/name matches the attribute name
+     * 
+     * Each property value specifies the expected value type. It must be one of the following: 'ff' || 'ii' || 'ss' || 'cc' || 'tt'
+     * 
      * @param {Object} defaultValues An object with default values, if any, for the attributes. If some attribute is missing, or doesn't have a valid value, but there's a default/fallback value, then the default is used and a minor error is generated. Otherwise, it generates an error and returns.
      * 
      * Example:
+     * 
      * requiredAttrs = {r: 'ff', g: 'ff', b: 'ff'}
+     * 
      * defaultValues = {r: 0.5, g: 0.5, b: 1}
      * 
-     * @returns {null} If some error ocurred
-     * @returns {Object} An object where each property name matches a required attribute and the respective value
+     * @returns {(null|Object)} null If some error ocurred, or an object where each property is a pair (attributeName, Value), similar to defaultValues
      */
     _parseAttributes(element, requiredAttrs, defaultValues) {
         let parsedAttrs = {};
@@ -63,11 +68,14 @@ class GenericParser {
 
     /**
      * Validates a given value of an attribute, ensuring its type is valid. If it's not, displays a warning and attempts to return a default value. It no default value is set, displays an error and returns null.
+     * 
      * @param {Element} element Meh, only used for error messages...
      * @param {String} attrName The attribute name
      * @param {String} attrVal The attribute value in YAS/XML
-     * @param {String} expectedType The expected type for the attribute ff||ii||ss||cc||tt
-     * @param {Object} defaultValues @see {@link _parseAttributes}
+     * @param {String} expectedType The expected type for the attribute 'ff' || 'ii' || 'ss' || 'cc' || 'tt'
+     * @param {Object} defaultValues @see {@link _parseAttributes} for more information
+     * 
+     * @return {*} The parsed value or null upon erros
      */
     _parseAttributeVal(element, attrName, attrVal, expectedType, defaultValues) {
         // retVal is the value to be returned
