@@ -31,32 +31,31 @@ class Ambient extends GenericParser {
      * @return {null}
      */
     parse(ambientNode) {
-        // find ambient child element
-        let ambientCollection = ambientNode.getElementsByTagName('ambient');
-        if (ambientCollection.length === 0) {
-            this.sceneGraph.onXMLMinorError("[AMBIENT]: Tag <ambient> is not set. Using default values");
-        } else {
-            if(ambientCollection.length > 1) 
-                this.sceneGraph.onXMLMinorError("[AMBIENT]: Tag <ambient> defined multiple times. Using first definition.");
+        // specify the required elements and call auxiliary method to parse them
+        let requiredElements = new Map();
+        
+        requiredElements.set('ambient', {
+            hasFallback: true,
+            requiredAttrs: {r: 'ff', g: 'ff', b: 'ff', a: 'ff'},
+            defaultValues: this.ambientLight
+        });
 
-            // parse attributes
-            this.ambientLight = this._parseAttributes(ambientCollection[0], {r: 'ff', g: 'ff', b: 'ff', a: 'ff'}, this.ambientLight);
-        }  
+        requiredElements.set('background', {
+            hasFallback: true,
+            requiredAttrs: {r: 'ff', g: 'ff', b: 'ff', a: 'ff'},
+            defaultValues: this.backgroundScene
+        });
 
-        // find background child element
-        let backgroundCollection = ambientNode.getElementsByTagName('background');
-        if (backgroundCollection.length === 0) {
-            this.sceneGraph.onXMLMinorError("[AMBIENT]: Tag <background> is not set. Using default values");
-        } else {
-            if(backgroundCollection.length > 1) 
-                this.sceneGraph.onXMLMinorError("[AMBIENT]: Tag <background> defined multiple times. Using first definition.");
-            
-            // parse attributes
-            this.backgroundScene = this._parseAttributes(backgroundCollection[0], {r: 'ff', g: 'ff', b: 'ff', a: 'ff'}, this.backgroundScene);
+        let parsedElements = this._parseUniqueChildElements(ambientNode, requiredElements);
+
+        // update internal values with parsed values, if they exist
+        if(parsedElements.has('ambient')) {
+            this.ambientLight = parsedElements.get('ambient');
         }
 
-        // declare that ambient was parsed
-        this.sceneGraph.info("Parsed ambient");
+        if(parsedElements.has('background')) {
+            this.backgroundScene = parsedElements.get('background');
+        }
 
         return null; // the errors are handled with fallback values
     }
