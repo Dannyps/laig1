@@ -1,12 +1,13 @@
 'use strict';
 
-class Ambient {
+class Ambient extends GenericParser {
     /**
      * Constructor
      * @param {*} sceneGraph 
      */
     constructor(sceneGraph) {
-        this.sceneGraph = sceneGraph;
+        super(sceneGraph);
+
         // default for background color
         this.backgroundScene = {
             r: 0.5,
@@ -68,10 +69,11 @@ class Ambient {
         let aux;
 
         // determine the type of child to parse
-        if(childElement.tagName === 'ambient') aux = this.ambientLight;
-        else if(childElement.tagName === 'background') aux = this.backgroundScene;
+        if(childElement.tagName === 'ambient') this.ambientLight = this._parseAttributes(childElement, {r: 'ff', g: 'ff', b: 'ff', a: 'ff', teste: 'ii'}, this.backgroundScene);
+        else if(childElement.tagName === 'background') this.backgroundScene =  this._parseAttributes(childElement, {r: 'ff', g: 'ff', b: 'ff', a: 'ff', teste:'ii'}, this.backgroundScene);
         else throw 'Unexpected ambient child element to parse';
 
+        /*
         // the required attributes
         let requiredAttrsNames = ['r', 'g', 'b', 'a'];
         
@@ -90,6 +92,7 @@ class Ambient {
                 this.sceneGraph.onXMLMinorError(`Attribute ${attrName} for ${childElement.tagName} ambient light is not set, using fallback value`);
             }
         });
+        */
     }
 
     /**
