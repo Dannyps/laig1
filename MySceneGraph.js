@@ -198,7 +198,7 @@ class MySceneGraph {
         }
 
         // check if default perspective is defined
-        if(!this.hasAttribute(viewsNode, 'default')) {
+        if(!this.reader.hasAttribute(viewsNode, 'default')) {
             this.onXMLMinorError("Default view isn't set. Assuming TODO");
         }
 
