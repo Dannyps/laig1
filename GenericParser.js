@@ -35,7 +35,9 @@ class GenericParser {
     _parseAttributes(element, requiredAttrs, defaultValues) {
         let parsedAttrs = {};
 
-        Object.getOwnPropertyNames(requiredAttrs).forEach(requiredAttrName => {
+        let requiredAttrsName = Object.getOwnPropertyNames(requiredAttrs);
+        for(let i = 0; i < requiredAttrsName.length; i++) {
+            let requiredAttrName = requiredAttrsName[i];
             // check if element contains the attribute
             if(element.hasAttribute(requiredAttrName)) {
                 // attempt to parse the attribute and ensure the value is valid
@@ -61,7 +63,7 @@ class GenericParser {
                     parsedAttrs[requiredAttrName] = val;
                 }
             }
-        });
+        }
 
         return parsedAttrs;
     }
