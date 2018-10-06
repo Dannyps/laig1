@@ -34,7 +34,9 @@ class GenericParser {
             // check if element contains the attribute
             if(element.hasAttribute(requiredAttrName)) {
                 // attempt to parse the attribute and ensure the value is valid
-                let val = this._parseAttributeVal(requiredAttrName, 
+                let val = this._parseAttributeVal(
+                    element,
+                    requiredAttrName, 
                     element.getAttribute(requiredAttrName), 
                     requiredAttrs[requiredAttrName],
                     defaultValues);
@@ -47,10 +49,10 @@ class GenericParser {
                 // try to get a default as a fallback
                 let val = this._getDefaultValue(requiredAttrName, defaultValues);
                 if(val === null) {
-                    this.sceneGraph.onXMLError(`Attribute ${requiredAttrName} is not set!`);
+                    this._showAttributeNotFound(element.tagName, requiredAttrName, false);
                     return null;
                 } else {
-                    this.sceneGraph.onXMLMinorError(`Attribute ${requiredAttrName} is not set! Using a default value`);
+                    this._showAttributeNotFound(element.tagName, requiredAttrName, true);
                     parsedAttrs[requiredAttrName] = val;
                 }
             }
@@ -61,12 +63,13 @@ class GenericParser {
 
     /**
      * Validates a given value of an attribute, ensuring its type is valid. If it's not, displays a warning and attempts to return a default value. It no default value is set, displays an error and returns null.
+     * @param {Element} element Meh, only used for error messages...
      * @param {String} attrName The attribute name
      * @param {String} attrVal The attribute value in YAS/XML
      * @param {String} expectedType The expected type for the attribute ff||ii||ss||cc||tt
      * @param {Object} defaultValues @see {@link _parseAttributes}
      */
-    _parseAttributeVal(attrName, attrVal, expectedType, defaultValues) {
+    _parseAttributeVal(element, attrName, attrVal, expectedType, defaultValues) {
         // retVal is the value to be returned
         let retVal = null;
 
@@ -108,11 +111,11 @@ class GenericParser {
 
             // if retVal still 'null' then there's no fallback value and the error is displayed
             if(retVal === null) {
-                this.sceneGraph.onXMLError(`Unexpected value for ${attrName}. It's not coherent with expected value type.`);
+                this._showUnexpectedAttrValue(element.tagName, attrName, false);
                 return null;
             } else {
                 // a default value was found, just display a warning
-                this.sceneGraph.onXMLMinorError(`Unexpected value for ${attrName}. It's not coherent with expected value type. Using default value ${retVal}`);
+                this._showUnexpectedAttrValue(element.tagName, attrName, true);
                 return retVal;
             }
         }
@@ -133,6 +136,38 @@ class GenericParser {
             return defaultValues[attrName];
         } else {
             return null;
+        }
+    }
+
+    /**
+     * Used to display formatted messages when an expected attribute is not found
+     * @param {String} elementName The element's name for which the attribute wasn't found 
+     * @param {String} attrName The expected attribute name
+     * @param {Boolean} hasFallback If true, it means there's a default/fallback value to be used, thus it's a minor issue (warning). Displays an error otherwise
+     */
+    _showAttributeNotFound(elementName, attrName, hasFallback) {
+        if(hasFallback) {
+            // minor issue, it has a fallback value
+            this.sceneGraph.onXMLMinorError(`[${this.constructor.name.toUpperCase()}] Attribute '${attrName}' is not set for element <${elementName}>. Using default value`);
+        } else {
+            // error
+            this.sceneGraph.onXMLError(`[${this.constructor.name.toUpperCase()}] Attribute '${attrName}' is not set for element <${elementName}>. Cannot proceed`);
+        }
+    }
+
+    /**
+     * 
+     * @param {String} elementName The element's name for which the attribute wasn't found 
+     * @param {String} attrName The expected attribute name
+     * @param {Boolean} hasFallback If true, it means there's a default/fallback value to be used, thus it's a minor issue (warning). Displays an error otherwise
+     */
+    _showUnexpectedAttrValue(elementName, attrName, hasFallback) {
+        if(hasFallback) {
+            // minor issue, it has a fallback value
+            this.sceneGraph.onXMLMinorError(`[${this.constructor.name.toUpperCase()}] Unexpected value type for attribute '${attrName}' in element <${elementName}>. Using default value`);
+        } else {
+            // error
+            this.sceneGraph.onXMLError(`[${this.constructor.name.toUpperCase()}] Unexpected value type for attribute '${attrName}' in element <${elementName}>. Cannot proceed`);
         }
     }
 }
