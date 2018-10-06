@@ -140,11 +140,12 @@ class GenericParser {
      * If the same required element is defined multiple times it displays a warning and returns the first match on the tree
      * If the element can't be found, it shows an error
      * @param {Element} parentElement The parent element to be processed
-     * @param {Map} requiredElements A Map object where for each key/value pair, the key is a string matching the element tagName and the value is an object that describes the required attributes and the default values.
+     * @param {Map} requiredElements A Map object where for each key/value pair, the key is a string matching the element tagName and the value is an object that describes the required attributes and the default values. In addition it contains a boolean to tell if the method should display an error when the element is missing or simply show a warning because fallbacks are available.
      * 
      * Here's an example of how each map entry looks like:
      * 
      * ('elementTagName', {
+     *   hasFallback: true,
      *   requiredAttrs: {a: 'tt', b: 'ff'},
      *   defaultValues: {a: 'false'}
      * })
@@ -161,7 +162,7 @@ class GenericParser {
             if(elementCollection.length > 1) {
                 this._showElementMultipleDefinitions(parentElement.tagName, elementTagName);
             } else if (elementCollection.length === 0) {
-                this._showElementNotFound(parentElement.tagName, elementTagName);
+                this._showElementNotFound(parentElement.tagName, elementTagName, elementProperties.hasFallback);
                 return; // cannot proceed ? TODO
             }
 
@@ -223,7 +224,11 @@ class GenericParser {
         this.sceneGraph.onXMLMinorError(`[${this.constructor.name.toUpperCase()}] Multiple element definitions for <${childElementName}> were found under <${parentElementName}>, while only one is expected. Using first element on the tree`);
     }
 
-    _showElementNotFound(parentElementName, childElementName) {
-        this.sceneGraph.onXMLError(`[${this.constructor.name.toUpperCase()}] Required element <${childElementName}> couldn't be found under <${parentElementName}>`);
+    _showElementNotFound(parentElementName, childElementName, hasFallback) {
+        if(hasFallback) {
+            this.sceneGraph.onXMLMinorError(`[${this.constructor.name.toUpperCase()}] Required element <${childElementName}> couldn't be found under <${parentElementName}>. Using default values`);
+        } else {
+            this.sceneGraph.onXMLError(`[${this.constructor.name.toUpperCase()}] Required element <${childElementName}> couldn't be found under <${parentElementName}>`);
+        }
     }
 }
