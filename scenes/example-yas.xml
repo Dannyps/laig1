@@ -55,6 +55,7 @@
         <!-- Deve existir um ou mais blocos "texture" -->
         <!-- Os identificadores "id" nao podem ser repetidos -->
         <texture id="tt1" file="ss" />
+        <texture id="tt2" file="sds" />
     </textures>
     <materials>
         <!-- Deve existir um ou mais blocos "material" -->
@@ -120,7 +121,7 @@
         </primitive>
 
         <!-- Semaphore -->
-        <primitive id="semaphoreHead">
+        <!--<primitive id="semaphoreHead">
             <rectangle x1="-0.5" y1="-2" x2="0.5" y2="2" />
         </primtive>
 
@@ -134,10 +135,112 @@
 
 		<primitive id="semaphoreLight">
             <cylinder base="1" top="1" height="0.1" slices="10" stacks="20" />
-        </primtive>
+        </primtive>-->
 
-    </primitives >
+    </primitives>
     <components>
+        <component id="cubeFrontFace">
+            <transformation>
+                <translate x="0" y="0" z="0.5"/>
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="pQuad"/>
+            </children>
+        </component>
+
+        <component id="cubeBackFace">
+            <transformation>
+                <rotate axis="y" angle="180"/>
+                <translate x="0" y="0" z="0.5"/>
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="pQuad"/>
+            </children>
+        </component>
+
+        <component id="cubeRightFace">
+            <transformation>
+                <rotate axis="y" angle="90"/>
+                <translate x="0" y="0" z="0.5"/>
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="pQuad"/>
+            </children>
+        </component>
+
+        <component id="cubeLeftFace">
+            <transformation>
+                <rotate axis="y" angle="-90"/>
+                <translate x="0" y="0" z="0.5"/>
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="pQuad"/>
+            </children>
+        </component>
+
+        <component id="cubeTopFace">
+            <transformation>
+                <rotate axis="x" angle="-90"/>
+                <translate x="0" y="0" z="0.5"/>
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="pQuad"/>
+            </children>
+        </component>
+
+        <component id="cubeBottomFace">
+            <transformation>
+                <rotate axis="x" angle="90"/>
+                <translate x="0" y="0" z="0.5"/>
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="pQuad"/>
+            </children>
+        </component>
+
+        <component id="cube">
+            <transformation>
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cubeFrontFace"/>
+                <componentref id="cubeBackFace"/>
+                <componentref id="cubeLeftFace"/>
+                <componentref id="cubeRightFace"/>
+                <componentref id="cubeTopFace"/>
+                <componentref id="cubeBottomFace"/>
+
+            </children>
+        </component>
+
+
         <component id="cc1">
             <!-- Uma "component" e' um objeto composto e pode ser -->
             <!-- usada em nos intermédios -->
