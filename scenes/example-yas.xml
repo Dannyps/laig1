@@ -13,13 +13,13 @@
 <yas>
     <!-- deve definir-se um objeto para raiz da arvore, assim -->
     <!-- como o comprimento dos tres eixos (cilindros) -->
-    <scene root="the_root" axis_length="5.0" />
+    <scene root="cc1" axis_length="5.0" />
     <views default="vp1">
         <!-- tem de existir, pelo menos, uma vista de -->
         <!-- entre as seguintes (perspective ou ortho) -->
-        <perspective id="vp1" near="ff" far="ff" angle="ff">
-            <from x="ff" y="ff" z="ff" />
-            <to x="ff" y="ff" z="ff" />
+        <perspective id="vp1" near="0.1" far="500" angle="0.4">
+            <from x="15" y="15" z="15" />
+            <to x="0" y="0" z="0" />
         </perspective>
         <ortho id="vo1" near="ff" far="ff" left="ff" right="ff" top="ff" bottom="ff" />
     </views>
@@ -42,13 +42,13 @@
             <diffuse r="0" g="0.2" b="0" a="1" />
             <specular r="0" g="0" b="0" a="1" />
         </omni>-->
-        <spot id="ls1" enabled="false" angle="ff" exponent="ff">
+        <spot id="ls1" enabled="true" angle="0.5" exponent="2">
             <!-- atencao, "target" e' diferente de "direction" -->
-            <location x="ff" y="ff" z="ff" w="ff" />
-            <target x="ff" y="ff" z="ff" />
-            <ambient r="ff" g="ff" b="ff" a="ff" />
-            <diffuse r="ff" g="ff" b="ff" a="ff" />
-            <specular r="ff" g="ff" b="ff" a="ff" />
+            <location x="0" y="2" z="5" w="1" />
+            <target x="0" y="0" z="0" />
+            <ambient r="0" g="0" b="0" a="0" />
+            <diffuse r="0" g="0.5" b="0.5" a="1" />
+            <specular r="0" g="0" b="0" a="1" />
         </spot>
     </lights>
     <textures>
@@ -59,11 +59,11 @@
     <materials>
         <!-- Deve existir um ou mais blocos "material" -->
         <!-- Os identificadores "id" nao podem ser repetidos -->
-        <material id="mm1" shininess = "ff">
-            <emission r="ff" g="ff" b="ff" a="ff" />
-            <ambient r="ff" g="ff" b="ff" a="ff" />
-            <diffuse r="ff" g="ff" b="ff" a="ff" />
-            <specular r="ff" g="ff" b="ff" a="ff" />
+        <material id="mm1" shininess = "1">
+            <emission r="0" g="0" b="0" a="0" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1" />
+            <diffuse r="0.3" g="0.3" b="0.3" a="1" />
+            <specular r="0" g="0" b="0" a="1" />
         </material>
     </materials>
     <transformations>
@@ -73,9 +73,9 @@
         <transformation id="tt1">
             <!-- instrucoes a usar sem limite nem ordem -->
             <!-- deve existir pelo menos uma transformacao -->
-            <translate x="ff" y="ff" z="ff" />
-            <rotate axis="cc" angle="ff" />
-            <scale x="ff" y="ff" z="ff" />
+            <translate x="2" y="0" z="0" />
+            <rotate axis="z" angle="180" />
+            <scale x="1" y="2" z="1" />
         </transformation>
     </transformations>
     <primitives>
@@ -87,25 +87,25 @@
             <!-- rectangle, triangle, cylinder, sphere, torus -->
             <!-- os parametros devem ser interpretados, genericamente, -->
             <!-- como em WebGL; o cilindro deve adicionalmente ter tampas -->
-            <rectangle x1="ff" y1="ff" x2="ff" y2="ff" />
+            <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
         </primitive >
 
         <primitive id="pTriang">
-            <triangle x1="ff" y1="ff" z1="ff" x2="ff" y2="ff" z2="ff" x3="ff" y3="ff" z3="ff" />
+            <triangle x1="-0.5" y1="-0.5" z1="-0.5" x2="-0.5" y2="-0.5" z2="0.5" x3="0.5" y3="-0.5" z3="-0.5" />
         </primitive>
 
         <primitive id="pCylind">
-            <cylinder base="ff" top="ff" height="ff" slices="ii" stacks="ii" />
+            <cylinder base="1" top="1" height="1" slices="10" stacks="20" />
         </primitive>
 
         <primitive id="pSphere">
-            <sphere radius="ff" slices="ii" stacks="ii" />
+            <sphere radius="1" slices="20" stacks="20" />
         </primitive>
 
         <primitive id="pTorus">
             <torus inner="ff" outer="ff" slices="ii" loops="ii" />
         </primitive>
-        
+
     </primitives >
     <components>
         <component id="cc1">
@@ -117,16 +117,17 @@
                 <!-- declaradas anteriormente -->
                 
                 
-                <!--<transformationref id="cttref1" />-->
+                <transformationref id="tt1" />
 
 
                 <!-- ou, ALTERNATIVAMENTE, transformacoes explicitas, -->
                 <!-- usando zero ou mais das instrucoes seguintes, sem -->
                 <!-- limite nem ordem -->
                 <!-- ex: bloco transformation pode ficar sem conteudo -->
-                <translate x="ff" y="ff" z="ff" />
+                
+                <!--<translate x="ff" y="ff" z="ff" />
                 <rotate axis="cc" angle="ff" />
-                <scale x="ff" y="ff" z="ff" />
+                <scale x="ff" y="ff" z="ff" />-->
             </transformation>
             <!-- declaracao obrigatoria de pelo menos um material; -->
             <!-- o material id="inherit", mantem (herda) material do "pai" -->
@@ -135,7 +136,7 @@
             <!-- o material muda para o proximo material da lista; do -->
             <!-- ultimo material da lista volta ao primeiro -->
             <materials>
-                <material id="cmm1" />
+                <material id="mm1" />
             </materials>
             <!-- declaracao obrigatoria de texture -->
             <!-- id="inherit" mantem (herda) a textura do objecto "pai" -->
@@ -152,14 +153,14 @@
             <!-- do tipo escalamento violem esta regra. -->
             <!-- Nao e' necessario aplicar fatores de escala em -->
             <!-- quadricas (esfera, cilindro...) -->
-            <texture id="ct1" length_s="ff" length_t="ff" />
+            <texture id="tt1" length_s="1" length_t="1" />
             <!-- bloco "children" obrigatorio num "component" -->
             <children>
                 <!-- deve existir uma ou mais tags "componentref" e/ou -->
                 <!-- "primitiveref", identificando outros -->
                 <!-- componentes ou primitivas -->
                 <!--<componentref id="cccref1" />-->
-                <primitiveref id="ccpref1" />
+                <primitiveref id="pRect" />
             </children>
         </component>
     </components>
