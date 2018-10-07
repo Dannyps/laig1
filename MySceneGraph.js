@@ -143,6 +143,20 @@ class MySceneGraph {
 
             this.info('Parsed lights');
         }
+
+        // textures
+        if ((index = nodeNames.indexOf("textures")) == -1)
+            return "tag <textures> missing";
+        else {
+            if (index != TEXTURES_INDEX)
+                this.onXMLMinorError("tag <textures> out of order");
+
+            //Parse ambient block
+            this.parsedTextures = new Textures(this);
+            this.parsedTextures.parse(nodes[index]);
+
+            this.info('Parsed textures');
+        }
     }
 
     /**
