@@ -120,24 +120,7 @@
             <torus inner="ff" outer="ff" slices="ii" loops="ii" />
         </primitive>
 
-        <!-- Semaphore -->
-        <!--<primitive id="semaphoreHead">
-            <rectangle x1="-0.5" y1="-2" x2="0.5" y2="2" />
-        </primtive>
-
-        <primitive id="semaphoreBottom">
-            <rectangle x1="-0.5" y1="-0.25" x2="0.5" y2="0.25" />
-        </primtive>
-
-        <primitive id="semaphoreBody">
-            <cylinder base="1" top="1" height="10" slices="10" stacks="20" />
-        </primtive>
-
-		<primitive id="semaphoreLight">
-            <cylinder base="1" top="1" height="0.1" slices="10" stacks="20" />
-        </primtive>-->
-
-    </primitives>
+    </primitives >
     <components>
         <component id="cubeFrontFace">
             <transformation>
@@ -296,5 +279,80 @@
                 <primitiveref id="pRect" />
             </children>
         </component>
+
+		<component id="semaphoreHead">
+			<transformation>
+				
+			</transformation>
+            <material>
+
+            </material>
+            <texture>
+            
+            </texture>
+            <children>
+                <componentref id="">
+            </children>
+		</component>
+
+        <component id="semaphoreHeadFront">
+			<transformation>
+				
+			</transformation>
+            <material>
+
+            </material>
+            <texture>
+            
+            </texture>
+            <children>
+                <componentref id="">
+            </children>
+		</component>
+
+        <component id="semaphoreHeadBack">
+			<transformation>
+				
+			</transformation>
+            <material>
+
+            </material>
+            <texture>
+            
+            </texture>
+            <children>
+                <componentref id="">
+            </children>
+		</component>
+
+        <component id="semaphoreHeadLeft">
+			<transformation>
+				
+			</transformation>
+            <material>
+
+            </material>
+            <texture>
+            
+            </texture>
+            <children>
+                <componentref id="">
+            </children>
+		</component>
+
+        <component id="semaphoreHeadRight">
+			<transformation>
+				
+			</transformation>
+            <material>
+
+            </material>
+            <texture>
+            
+            </texture>
+            <children>
+                <componentref id="">
+            </children>
+		</component>
     </components>
 </yas>
