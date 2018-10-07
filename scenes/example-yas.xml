@@ -30,19 +30,19 @@
     <lights>
         <!-- Deve existir um ou mais blocos "omni" ou "spot" -->
         <!-- Os identificadores "id" nao podem ser repetidos -->
-        <omni id="lo1" enabled="false">
-            <location x="ff" y="ff" z="ff" w="ff" />
-            <ambient r="ff" g="ff" b="ff" a="ff" />
-            <diffuse r="ff" g="ff" b="ff" a="ff" />
-            <specular r="ff" g="ff" b="ff" a="ff" />
+        <omni id="lo1" enabled="true">
+            <location x="5" y="10" z="5" w="1" />
+            <ambient r="0" g="0" b="0" a="0" />
+            <diffuse r=".5" g="0" b=".3" a="1" />
+            <specular r=".2" g="0" b=".01" a="1" />
         </omni>
-        <omni id="lo2" enabled="true">
+        <!--<omni id="lo2" enabled="true">
             <location x="5" y="5" z="5" w="0" />
             <ambient r="0" g="1" b="0" a="1" />
             <diffuse r="0" g="0.2" b="0" a="1" />
             <specular r="0" g="0" b="0" a="1" />
-        </omni>
-        <spot id="ls1" enabled="tt" angle="ff" exponent="ff">
+        </omni>-->
+        <spot id="ls1" enabled="false" angle="ff" exponent="ff">
             <!-- atencao, "target" e' diferente de "direction" -->
             <location x="ff" y="ff" z="ff" w="ff" />
             <target x="ff" y="ff" z="ff" />
@@ -82,17 +82,30 @@
         <!-- Uma "primitive" e' uma primitiva e pode ser usada em nos folha -->
         <!-- Deve existir um ou mais blocos "primitive" -->
         <!-- Os identificadores "id" nao podem ser repetidos -->
-        <primitive id="pp1">
+        <primitive id="pRect">
             <!-- apenas pode existir UMA das seguintes tags: -->
             <!-- rectangle, triangle, cylinder, sphere, torus -->
             <!-- os parametros devem ser interpretados, genericamente, -->
             <!-- como em WebGL; o cilindro deve adicionalmente ter tampas -->
             <rectangle x1="ff" y1="ff" x2="ff" y2="ff" />
-            <triangle x1="ff" y1="ff" z1="ff" x2="ff" y2="ff" z2="ff" x3="ff" y3="ff" z3="ff" />
-            <cylinder base="ff" top="ff" height="ff" slices="ii" stacks="ii" />
-            <sphere radius="ff" slices="ii" stacks="ii" />
-            <torus inner="ff" outer="ff" slices="ii" loops="ii" />
         </primitive >
+
+        <primitive id="pTriang">
+            <triangle x1="ff" y1="ff" z1="ff" x2="ff" y2="ff" z2="ff" x3="ff" y3="ff" z3="ff" />
+        </primitive>
+
+        <primitive id="pCylind">
+            <cylinder base="ff" top="ff" height="ff" slices="ii" stacks="ii" />
+        </primitive>
+
+        <primitive id="pSphere">
+            <sphere radius="ff" slices="ii" stacks="ii" />
+        </primitive>
+
+        <primitive id="pTorus">
+            <torus inner="ff" outer="ff" slices="ii" loops="ii" />
+        </primitive>
+        
     </primitives >
     <components>
         <component id="cc1">
@@ -102,7 +115,11 @@
             <transformation>
                 <!-- deve conter uma referencia a uma das "transformation" -->
                 <!-- declaradas anteriormente -->
-                <transformationref id="cttref1" />
+                
+                
+                <!--<transformationref id="cttref1" />-->
+
+
                 <!-- ou, ALTERNATIVAMENTE, transformacoes explicitas, -->
                 <!-- usando zero ou mais das instrucoes seguintes, sem -->
                 <!-- limite nem ordem -->
@@ -141,7 +158,7 @@
                 <!-- deve existir uma ou mais tags "componentref" e/ou -->
                 <!-- "primitiveref", identificando outros -->
                 <!-- componentes ou primitivas -->
-                <componentref id="cccref1" />
+                <!--<componentref id="cccref1" />-->
                 <primitiveref id="ccpref1" />
             </children>
         </component>
