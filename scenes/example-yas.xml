@@ -33,8 +33,8 @@
         <omni id="lo1" enabled="true">
             <location x="5" y="10" z="5" w="1" />
             <ambient r="0" g="0" b="0" a="0" />
-            <diffuse r=".5" g="0" b=".3" a="1" />
-            <specular r=".2" g="0" b=".01" a="1" />
+            <diffuse r="0.5" g="0" b="0.3" a="1" />
+            <specular r="0.2" g="0" b="0.1" a="1" />
         </omni>
         <!--<omni id="lo2" enabled="true">
             <location x="5" y="5" z="5" w="0" />
@@ -136,7 +136,18 @@
             <!-- o material muda para o proximo material da lista; do -->
             <!-- ultimo material da lista volta ao primeiro -->
             <materials>
-                <material id="mm1" />
+                <material id="greenLight">
+                    <ambient r="0" g="1" b="0" a="1" />
+                </material>
+                <material id="yellowLight">
+                    <ambient r="1" g="1" b="0" a="1" />
+                </material>
+                <material id="redLight">
+                    <ambient r="1" g="0" b="0" a="1" />
+                </material>
+                <material id="semaphore">
+                    <ambient r="0.4" g="0.4" b="0.4" a="1" /> <!-- dim grey -->
+                </material>
             </materials>
             <!-- declaracao obrigatoria de texture -->
             <!-- id="inherit" mantem (herda) a textura do objecto "pai" -->
