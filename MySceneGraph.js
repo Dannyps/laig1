@@ -157,6 +157,20 @@ class MySceneGraph {
 
             this.info('Parsed textures');
         }
+
+        // material
+        if ((index = nodeNames.indexOf("materials")) == -1)
+            return "tag <materials> missing";
+        else {
+            if (index != MATERIALS_INDEX)
+                this.onXMLMinorError("tag <materials> out of order");
+
+            //Parse ambient block
+            this.parsedMaterials = new Materials(this);
+            this.parsedMaterials.parse(nodes[index]);
+
+            this.info('Parsed materials');
+        }
     }
 
     /**
