@@ -233,4 +233,24 @@ class GenericParser {
             this.sceneGraph.onXMLError(`[${this.constructor.name.toUpperCase()}] Required element <${childElementName}> couldn't be found under <${parentElementName}>`);
         }
     }
+
+    onXMLError(foo){
+        this.sceneGraph.onXMLError(foo);
+    }
+
+    onXMLMinorError(foo){
+        this.sceneGraph.onXMLMinorError(foo);
+    }
+
+    log(foo){
+        this.sceneGraph.log(foo);
+    }
+
+    info(foo){
+        this.sceneGraph.info(foo);
+    }
+
+    debug(foo){
+        this.sceneGraph.debug(foo);
+    }
 }
