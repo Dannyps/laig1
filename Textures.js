@@ -1,6 +1,6 @@
 'use strict';
 
-class Textures extends GenericParser{
+class Textures extends GenericParser {
     constructor(sceneGraph) {
         super(sceneGraph);
 
@@ -16,28 +16,34 @@ class Textures extends GenericParser{
         });
 
         // ensure at least one texture is defined
-        if(this.textures.size === 0) {
+        if (this.textures.size === 0) {
             this.onXMLError('You must set at least one texture!');
             return -1;
         }
     }
 
     _parseTextures(textsEl) {
-        if(textsEl.tagName !== 'texture') throw 'Unexpected element';
+        if (textsEl.tagName !== 'texture') throw 'Unexpected element';
 
         /**
          * Parse the attributes for the omni element
          */
-        let attrs = this._parseAttributes(textsEl, {id: 'ss', file: 'ss'});
+        let attrs = this._parseAttributes(textsEl, {
+            id: 'ss',
+            file: 'ss'
+        });
 
-        if(attrs === null) {
+        if (attrs === null) {
             // some error happened, skip this text
             return;
         }
 
-        this.debug("read a textEL with filename: "+attrs.file);
-        
+        this.debug("read a textEL with filename: " + attrs.file);
+
         // push the texture data
+        if (this.textures.get(attrs.id) != undefined) {
+            this.onXMLError("There are two textures with the same ID! Last will be used.");
+        }
         this.textures.set(attrs.id, {
             file: attrs.file
         });
