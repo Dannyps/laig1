@@ -65,6 +65,19 @@
             <diffuse r="0.3" g="0.3" b="0.3" a="1" />
             <specular r="0" g="0" b="0" a="1" />
         </material>
+		
+        <material id="greenLight">
+            <ambient r="0" g="1" b="0" a="1" />
+        </material>
+        <material id="yellowLight">
+            <ambient r="1" g="1" b="0" a="1" />
+        </material>
+        <material id="redLight">
+            <ambient r="1" g="0" b="0" a="1" />
+        </material>
+        <material id="semaphore">
+            <ambient r="0.4" g="0.4" b="0.4" a="1" /> <!-- dim grey -->
+        </material>
     </materials>
     <transformations>
         <!-- Deve existir um ou mais blocos "transformation" -->
@@ -136,18 +149,7 @@
             <!-- o material muda para o proximo material da lista; do -->
             <!-- ultimo material da lista volta ao primeiro -->
             <materials>
-                <material id="greenLight">
-                    <ambient r="0" g="1" b="0" a="1" />
-                </material>
-                <material id="yellowLight">
-                    <ambient r="1" g="1" b="0" a="1" />
-                </material>
-                <material id="redLight">
-                    <ambient r="1" g="0" b="0" a="1" />
-                </material>
-                <material id="semaphore">
-                    <ambient r="0.4" g="0.4" b="0.4" a="1" /> <!-- dim grey -->
-                </material>
+               
             </materials>
             <!-- declaracao obrigatoria de texture -->
             <!-- id="inherit" mantem (herda) a textura do objecto "pai" -->
