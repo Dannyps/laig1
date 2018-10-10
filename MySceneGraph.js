@@ -171,6 +171,21 @@ class MySceneGraph {
 
             this.info('Parsed materials');
         }
+
+        // primitives
+        if ((index = nodeNames.indexOf("primitives")) == -1)
+            return "tag <primitives> missing";
+        else {
+            if (index != PRIMITIVES_INDEX)
+                this.onXMLMinorError("tag <primitives> out of order");
+
+            //Parse primitives block
+            this.parsedPrimitives = new Primitives(this);
+            if((error = this.parsedPrimitives.parse(nodes[index])) !== null)
+                return error;
+
+            this.info('Parsed primitives');
+        }
     }
 
     /**
@@ -571,5 +586,18 @@ class MySceneGraph {
     displayScene() {
         // entry point for graph rendering
         //TODO: Render loop starting at root of graph
+
+        // TEST for rendering primitives
+        this.parsedPrimitives.getPrimitives().forEach((primitive, id) => {
+            switch (primitive.type) {
+                case 'rectangle':
+                    let rect = new MyRectangle(this.scene, primitive.x1, primitive.y1, primitive.x2, primitive.y2);
+                    rect.display();
+                    break;
+            
+                default:
+                    break;
+            }
+        });
     }
 }

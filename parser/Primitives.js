@@ -15,6 +15,12 @@ class Primitives extends GenericParser {
 		this.primitives = new Map();
 	}
 	
+	/**
+	 * Returns all parsed primitives
+	 * Each item in the Map structure, in addition to the expected values, it contais a property 'type' to distinguish the CGFObjects
+	 * 
+	 * @return {Map<String, Object>}
+	 */
 	getPrimitives() {
 		return this.primitives;
 	}
@@ -23,20 +29,20 @@ class Primitives extends GenericParser {
 	 * Parses a node of type <primitives>
 	 * @param {*} primitivesNode 
 	 */
-    parser(primitivesNode) {
+    parse(primitivesNode) {
 		let childCollection = primitivesNode.children;
 
 		for(let i = 0; i < childCollection.length; i++) {
 			if(this._parsePrimitive(childCollection[i]) === null) {
 				// critical error
-				return null;
+				return -1;
 			}
 		}
 
 		// check if at least one primitive was set
 		if(this.primitives.size === 0){
 			this.onXMLError("You must specify at least one primitive");
-			return null;
+			return -1;
 		}
 	}
 	
@@ -64,12 +70,20 @@ class Primitives extends GenericParser {
 		}
 
 		/**
-		 * Invoke the correct parser for this type of primitive
+		 * Parse child node
 		 */
+
+		if(primitiveNode.children.length != 1) {
+			this.onXMLError("Primitive node must have a single node.");
+			return null;
+		}
+		let childNode = primitiveNode.children[0];
+
+		// Invoke the correct parser for this type of primitive
 		let parsedPrimitive;
-		switch(primitiveNode.tagName) {
+		switch(childNode.tagName) {
 			case 'rectangle':
-				parsedPrimitive = this._parseRectangle(primitiveNode);
+				parsedPrimitive = this._parseRectangle(childNode);
 				break;
 			default:
 				this.onXMLMinorError("Unknown type of primitive");
@@ -81,7 +95,7 @@ class Primitives extends GenericParser {
 			return null;
 
 		// add a type property, for later decide the kind of CGFObject to create
-		parsedPrimitive.type = primitiveNode.tagName;
+		parsedPrimitive.type = childNode.tagName;
 
 		// add primitive to data structure
 		this.primitives.set(attrs.id, parsedPrimitive);
