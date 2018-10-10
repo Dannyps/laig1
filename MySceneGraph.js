@@ -125,7 +125,9 @@ class MySceneGraph {
 
             //Parse ambient block
             this.ambient = new Ambient(this);
-            this.ambient.parse(nodes[index]);
+            if((error = this.ambient.parse(nodes[index])) != null)
+                return error;
+
 
             this.info('Parsed ambient');
         }
@@ -189,37 +191,6 @@ class MySceneGraph {
     }
 
     /**
-     * Parses the <scene> block.
-     */
-    parseScene(mynode) {
-
-        // É PRECISO TIRAR ESTAS VARIÁVEIS PARA FORA DA FUNÇÃO ASSIM QUE NECESSÁRIO
-
-
-        var axis_length = this.reader.getFloat(mynode, "axis_length", false);
-        if (this.ocurredGetError(axis_length)) {
-            this.onXMLMinorError("unable to parse axis_length of the scene, using the default value (1.0)");
-            axis_length = 1.0;
-        } else {
-            this.debug("Read axis_length as " + axis_length + ".");
-        }
-
-        this.referenceLength = axis_length;
-
-
-        var root_object = this.reader.getString(mynode, "root", false);
-        if (root_object == null || root_object == "") {
-            this.onXMLError("unable to parse root of the scene, cannot proceed.");
-        } else {
-            this.debug("Read scene root as " + root_object + ".");
-        }
-
-        this.info("Parsed scene");
-
-        return null;
-    }
-
-    /**
      * Parses the <views> block.
      */
     parseViews(viewsNode) {
@@ -270,88 +241,8 @@ class MySceneGraph {
         return null;
     }
 
-
-
     /**
-     * Parses the <ambient> block.
-     * @param {Element} ambientNode 
-     */
-    parseAmbient(ambientNode) {
-        let ambient = null;
-        let background = null;
-
-        // el is an interface for Element
-        // https://developer.mozilla.org/en-US/docs/Web/API/Element
-        Array.prototype.forEach.call(ambientNode.children, ((el) => {
-            if(el.tagName === 'ambient') {
-                ambient = el;
-            } else if(el.tagName === 'background') {
-                background = el;
-            }
-        }));
-
-        // parse ambient light
-        this.ambientLight = {
-            r: 0.5,
-            g: 0.5,
-            b: 0.5,
-            a: 1
-        };
-
-        if(ambient === null) {
-            this.onXMLMinorError("element <ambient>/<ambient> not set. Using default ambient light");
-        } else {
-            let requiredAttrsNames = ['r', 'g', 'b', 'a'];
-
-            requiredAttrsNames.forEach(attrName => {
-                if(ambient.hasAttribute(attrName)) {
-                    let attrValue = Number.parseFloat(ambient.getAttribute(attrName));
-
-                    if (isNaN(attrValue))
-                        this.onXMLMinorError(`Attribute ${attrName} for ambient light should be float type, using fallback value`);
-                    else
-                        this.ambientLight[attrName] = attrValue;
-
-                } else {
-                    this.onXMLMinorError(`Attribute ${attrName} for ambient light is not set, using fallback value`);
-                }
-            });
-        }
-
-        // parse scene's background color
-        this.backgroundScene = {
-            r: 0.5,
-            g: 0.5,
-            b: 0.5,
-            a: 1
-        };
-
-        if(background === null) {
-            this.onXMLMinorError("element <ambient>/<background> not set. Using default background");
-        } else {
-            let requiredAttrsNames = ['r', 'g', 'b', 'a'];
-
-            requiredAttrsNames.forEach(attrName => {
-                if(background.hasAttribute(attrName)) {
-                    let attrValue = Number.parseFloat(background.getAttribute(attrName));
-
-                    if (isNaN(attrValue))
-                        this.onXMLMinorError(`Attribute ${attrName} for background should be float type, using fallback value`);
-                    else
-                        this.backgroundScene[attrName] = attrValue;
-                } else {
-                    this.onXMLMinorError(`Attribute ${attrName} for background is not set, using fallback value`);
-                }
-            });
-        }
-
-        this.info("Parsed ambient");
-
-        return null;
-    }
-
-
-    /**
+     * @deprecated
      * Parses the <LIGHTS> node.
      * @param {lights block element} lightsNode
      */
@@ -494,39 +385,6 @@ class MySceneGraph {
 
         this.log("Parsed lights");
 
-        return null;
-    }
-
-    /**
-     * Parses the <TEXTURES> block. 
-     * @param {textures block element} texturesNode
-     */
-    parseTextures(texturesNode) {
-        // TODO: Parse block
-
-        console.log("Parsed textures");
-
-        return null;
-    }
-
-    /**
-     * Parses the <MATERIALS> node.
-     * @param {materials block element} materialsNode
-     */
-    parseMaterials(materialsNode) {
-        // TODO: Parse block
-        this.log("Parsed materials");
-        return null;
-
-    }
-
-    /**
-     * Parses the <NODES> block.
-     * @param {nodes block element} nodesNode
-     */
-    parseNodes(nodesNode) {
-        // TODO: Parse block
-        this.log("Parsed nodes");
         return null;
     }
 
