@@ -103,7 +103,7 @@
             <!-- como em WebGL; o cilindro deve adicionalmente ter tampas -->
             <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
         </primitive >
-
+        <!-->
         <primitive id="pTriang">
             <triangle x1="-0.5" y1="-0.5" z1="-0.5" x2="-0.5" y2="-0.5" z2="0.5" x3="0.5" y3="-0.5" z3="-0.5" />
         </primitive>
@@ -119,7 +119,7 @@
         <primitive id="pTorus">
             <torus inner="ff" outer="ff" slices="ii" loops="ii" />
         </primitive>
-
+        -->
     </primitives >
     <components>
         <component id="cubeFrontFace">
