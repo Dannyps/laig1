@@ -27,7 +27,8 @@ class MyRectangle extends CGFobject
 			this.x2, this.y1, 0,
 			this.x2, this.y2, 0
 		];
-
+		// TODO
+		// Fix this
 		this.normals = [
 			0, 0, 1,
 			0, 0, 1,

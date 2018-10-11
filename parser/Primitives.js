@@ -85,6 +85,9 @@ class Primitives extends GenericParser {
 			case 'rectangle':
 				parsedPrimitive = this._parseRectangle(childNode);
 				break;
+			case 'triangle':
+				parsedPrimitive = this._parseTriangle(childNode);
+				break;
 			default:
 				this.onXMLMinorError("Unknown type of primitive");
 				return null;
@@ -114,5 +117,16 @@ class Primitives extends GenericParser {
 		 * Parse attributes
 		 */
 		return this._parseAttributes(rectangleEl, {x1: 'ff', y1: 'ff', x2: 'ff', y2: 'ff'}, this.rectangle);
-    }
+	}
+	
+	_parseTriangle(triangleEl) {
+		if(triangleEl.tagName != 'triangle')
+			throw 'Unexpected element';
+			
+		return this._parseAttributes(triangleEl, {
+			x1: 'ff', y1: 'ff', z1: 'ff',
+			x2: 'ff', y2: 'ff', z2: 'ff',
+			x3: 'ff', y3: 'ff', z3: 'ff',
+		}, this.triangle);
+	}
 }

@@ -452,7 +452,17 @@ class MySceneGraph {
                     let rect = new MyRectangle(this.scene, primitive.x1, primitive.y1, primitive.x2, primitive.y2);
                     rect.display();
                     break;
-            
+                case 'triangle':
+                    let triangle = new MyTriangle(this.scene, {
+                        x:primitive.x1, y:primitive.y1, z:primitive.z1
+                    }, {
+                        x:primitive.x2, y:primitive.y2, z:primitive.z2
+                    }, {
+                        x:primitive.x3, y:primitive.y3, z:primitive.z3
+                    });
+
+                    triangle.display();
+                    break;
                 default:
                     break;
             }
