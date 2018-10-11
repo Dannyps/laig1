@@ -8,7 +8,14 @@ class Primitives extends GenericParser {
             x1: '0', y1: '-0.5', z1: '-0.5',
             x2: '0', y2: '0.5', z3: '-0.5',
             x3: '0', y3: '0', z3: '0.5'
-        };
+		};
+		this.cylinder = {
+			base: 1,
+			top: 1,
+			height: 1,
+			slices: 10,
+			stacks: 20
+		}
 		// TODO
 		
 		// the data container for primitives
@@ -88,6 +95,9 @@ class Primitives extends GenericParser {
 			case 'triangle':
 				parsedPrimitive = this._parseTriangle(childNode);
 				break;
+			case 'cylinder':
+				parsedPrimitive = this._parseCylinder(childNode);
+				break;
 			default:
 				this.onXMLMinorError("Unknown type of primitive");
 				return null;
@@ -128,5 +138,14 @@ class Primitives extends GenericParser {
 			x2: 'ff', y2: 'ff', z2: 'ff',
 			x3: 'ff', y3: 'ff', z3: 'ff',
 		}, this.triangle);
+	}
+
+	_parseCylinder(cylinderEl) {
+		if(cylinderEl.tagName != 'cylinder')
+			throw 'Unexpected element';
+			
+		return this._parseAttributes(cylinderEl, {
+			base: 'ff', top: 'ff', height: 'ff', slices: 'ii', stacks: 'ii'
+		}, this.cylinder); 
 	}
 }

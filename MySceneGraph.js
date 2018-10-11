@@ -463,6 +463,11 @@ class MySceneGraph {
 
                     triangle.display();
                     break;
+                
+                case 'cylinder':
+                    let cylinder = new MyCylinder(this.scene, primitive.base, primitive.top, primitive.height, primitive.slices, primitive.stacks);
+                    cylinder.display();
+                    break;
                 default:
                     break;
             }
