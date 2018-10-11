@@ -33,9 +33,9 @@ class MyCylinder extends CGFobject
 		this.normals = [];
 		this.texCoords = [];
 
-		let radiusPerStack = (this.base - this.top)/this.stacks; // how much the radius changes from stack to stack
-		let heightPerStack = this.height/this.stacks; // the height of each stack
-		let theta = 2.0*Math.PI/this.slices; // External angle
+		const radiusPerStack = (this.top - this.base)/this.stacks; // how much the radius changes from stack to stack
+		const heightPerStack = this.height/this.stacks; // the height of each stack
+		const theta = 2.0*Math.PI/this.slices; // External angle
 
 		for(let i = 0; i <= this.slices; i++) {
 			for(let j = 0; j <= this.stacks; j++) {
