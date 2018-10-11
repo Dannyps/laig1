@@ -183,7 +183,9 @@ class GenericParser {
      * @returns {*|null} Returns the default value. If it doesn't exist, return 'null'
      */
     _getDefaultValue(attrName, defaultValues) {
-        if(defaultValues.hasOwnProperty(attrName)) {
+        if(defaultValues === undefined || defaultValues === null)
+            return null;
+        else if(defaultValues.hasOwnProperty(attrName)) {
             return defaultValues[attrName];
         } else {
             return null;
