@@ -110,7 +110,7 @@
         </primitive>
         <!-->
         <primitive id="pCylind">
-            <cylinder base="1" top="2" height="1" slices="50" stacks="20" />
+            <cylinder base="2" top="1" height="1" slices="50" stacks="20" />
         </primitive>
         <!--
         <primitive id="pSphere">

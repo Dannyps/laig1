@@ -18,45 +18,28 @@ class MyCylinder extends CGFobject
 	constructor(scene, base, top, height, slices, stacks){
 		super(scene);
 
-		this.base = base;
-		this.top = top;
-		this.height = height;
-		this.slices = slices;
-		this.stacks = stacks;
-
-		this.initBuffers();
+		// initialize the top and bottom covers and the cylinder
+		this.baseCover = new MyCircle(scene, slices);
+		this.topCover = new MyCircle(scene, slices);
+		this.cylinder = new MyCylinderNoCovers(scene, base, top, height, slices, stacks);
 	};
 
-	initBuffers(){
-		this.vertices = [];
-		this.indices = [];
-		this.normals = [];
-		this.texCoords = [];
 
-		const radiusPerStack = (this.top - this.base)/this.stacks; // how much the radius changes from stack to stack
-		const heightPerStack = this.height/this.stacks; // the height of each stack
-		const theta = 2.0*Math.PI/this.slices; // External angle
+	display() {
+		this.scene.pushMatrix();
+			this.cylinder.display();
+		this.scene.popMatrix();
 
-		for(let i = 0; i <= this.slices; i++) {
-			for(let j = 0; j <= this.stacks; j++) {
-				let currRadius = this.base + j*radiusPerStack;
-				this.vertices.push(currRadius*Math.cos(theta*i), currRadius*Math.sin(theta*i), j*heightPerStack);
-				this.normals.push(Math.cos(theta*i),Math.sin(theta*i),0);
-				this.texCoords.push(i*1/this.slices, j*1/this.stacks);
-			}
-		}
+		this.scene.pushMatrix();
+			this.scene.scale(this.cylinder.base, this.cylinder.base, 1);
+			this.scene.rotate(Math.PI, 1, 0, 0);
+			this.baseCover.display();
+		this.scene.popMatrix();
 
-		for (let i = 0; i < this.slices; ++i) {
-			for(let j = 0; j < this.stacks; ++j) {
-				this.indices.push(
-					(i+1)*(this.stacks+1) + j, i*(this.stacks+1) + j+1, i*(this.stacks+1) + j,
-					i*(this.stacks+1) + j+1, (i+1)*(this.stacks+1) + j, (i+1)*(this.stacks+1) + j+1
-				);
-			}
-		}
-
-		this.primitiveType=this.scene.gl.TRIANGLES;
-
-		this.initGLBuffers();
-	};
+		this.scene.pushMatrix();
+			this.scene.scale(this.cylinder.top, this.cylinder.top, 1);
+			this.scene.translate(0, 0, this.cylinder.height);
+			this.topCover.display();
+		this.scene.popMatrix();
+	}
 };
