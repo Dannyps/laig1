@@ -214,7 +214,7 @@ class MySceneGraph {
                 this.onXMLMinorError("tag <components> out of order");
 
             //Parse components block
-            this.parsedComponents = new Components(this);
+            this.parsedComponents = new Components2(this);
             if ((error = this.parsedComponents.parse(nodes[index])) !== null)
                 return error;
 

@@ -1,6 +1,6 @@
 'use strict';
 
-class Components extends GenericParser {
+class Components2 extends GenericParser {
     constructor(sceneGraph) {
         super(sceneGraph);
 
@@ -19,7 +19,7 @@ class Components extends GenericParser {
         });
 
         // ensure at least one light is defined
-        if (this.componentsCollection.size === 0) {
+        if (this.components.size === 0) {
             this.onXMLError('You must set at least one component!');
             return -1;
         }
@@ -46,18 +46,51 @@ class Components extends GenericParser {
         let requiredElements = new Map();
 
         requiredElements.set('transformationref', {
-            hasFallback: true,
-            requiredAttrs: {id: 'ss'},
+            hasFallback: this.FALLBACK_IGN,
+            requiredAttrs: {
+                id: 'ss'
+            },
+            defaultValues: {}
+        });
+
+        requiredElements.set('transformation', {
+            hasFallback: this.FALLBACK_IGN,
+            requiredAttrs: {},
+            defaultValues: {}
+        });
+
+        requiredElements.set('materials', {
+            hasFallback: this.FALLBACK_IGN,
+            requiredAttrs: {},
+            defaultValues: {}
+        });
+
+        requiredElements.set('texture', {
+            hasFallback: this.FALLBACK_IGN,
+            requiredAttrs: {
+                id: 'ss',
+                length_s: "ff",
+                length_t: "ff"
+            },
+            defaultValues: {
+                length_s: 1,
+                length_t: 1
+            }
+        });
+
+        requiredElements.set('children', {
+            hasFallback: this.FALLBACK_IGN,
+            requiredAttrs: {},
             defaultValues: {}
         });
 
 
         let parsedElements = this._parseUniqueChildElements(compEl, requiredElements);
 
-        console.log(parsedElements); debugger;
+        console.log(parsedElements);
+        debugger;
         // push the components
-        this.components.set(attrs.id, {
-        });
+        this.components.set(attrs.id, {});
     }
 
 }
