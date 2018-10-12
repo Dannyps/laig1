@@ -9,10 +9,17 @@ class Primitives extends GenericParser {
             x2: '0', y2: '0.5', z3: '-0.5',
             x3: '0', y3: '0', z3: '0.5'
 		};
+
 		this.cylinder = {
 			base: 1,
 			top: 1,
 			height: 1,
+			slices: 10,
+			stacks: 20
+		}
+
+		this.sphere = {
+			base: 1,
 			slices: 10,
 			stacks: 20
 		}
@@ -95,12 +102,15 @@ class Primitives extends GenericParser {
 			case 'triangle':
 				parsedPrimitive = this._parseTriangle(childNode);
 				break;
-			case 'cylinder':
+				case 'cylinder':
 				parsedPrimitive = this._parseCylinder(childNode);
+				break;
+			case 'sphere':
+				parsedPrimitive = this._parseSphere(childNode);
 				break;
 			default:
 				this.onXMLMinorError("Unknown type of primitive");
-				return null;
+				return -5;
 		}
 
 		// check for errors
@@ -147,5 +157,14 @@ class Primitives extends GenericParser {
 		return this._parseAttributes(cylinderEl, {
 			base: 'ff', top: 'ff', height: 'ff', slices: 'ii', stacks: 'ii'
 		}, this.cylinder); 
+	}
+
+	_parseSphere(sphereEl) {
+		if(sphereEl.tagName != 'sphere')
+			throw 'Unexpected element';
+			
+		return this._parseAttributes(sphereEl, {
+			radius: 'ff', slices: 'ii', stacks: 'ii'
+		}, this.sphere); 
 	}
 }
