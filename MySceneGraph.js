@@ -27,7 +27,7 @@ class MySceneGraph {
 
         this.nodes = [];
 
-        this.idRoot = null;                    // The id of the root element.
+        this.idRoot = null; // The id of the root element.
 
         this.axisCoords = [];
         this.axisCoords['x'] = [1, 0, 0];
@@ -88,7 +88,7 @@ class MySceneGraph {
         var error;
 
         // Processes each node, verifying errors.
-        
+
         // <scene>
         var index;
         if ((index = nodeNames.indexOf("scene")) == -1)
@@ -99,12 +99,12 @@ class MySceneGraph {
 
             //Parse scene block
             let scene = new Scene(this);
-            if((error = scene.parse(nodes[index])) != null)
+            if ((error = scene.parse(nodes[index])) != null)
                 return error;
 
             this.info('Parsed scene');
         }
-        
+
         // <views>
         if ((index = nodeNames.indexOf("views")) == -1)
             return "tag <views> missing";
@@ -113,7 +113,7 @@ class MySceneGraph {
         } else {
             // Parse the views block 
             //if ((error = this.parseViews(nodes[index])) != null)
-                //return error;
+            //return error;
         }
 
         // <ambient>
@@ -125,7 +125,7 @@ class MySceneGraph {
 
             //Parse ambient block
             this.ambient = new Ambient(this);
-            if((error = this.ambient.parse(nodes[index])) != null)
+            if ((error = this.ambient.parse(nodes[index])) != null)
                 return error;
 
 
@@ -146,19 +146,19 @@ class MySceneGraph {
             this.info('Parsed lights');
         }
 
-        // textures
-        if ((index = nodeNames.indexOf("textures")) == -1)
-            return "tag <textures> missing";
-        else {
-            if (index != TEXTURES_INDEX)
-                this.onXMLMinorError("tag <textures> out of order");
+        // // textures
+        // if ((index = nodeNames.indexOf("textures")) == -1)
+        //     return "tag <textures> missing";
+        // else {
+        //     if (index != TEXTURES_INDEX)
+        //         this.onXMLMinorError("tag <textures> out of order");
 
-            //Parse ambient block
-            this.parsedTextures = new Textures(this);
-            this.parsedTextures.parse(nodes[index]);
+        //     //Parse ambient block
+        //     this.parsedTextures = new Textures(this);
+        //     this.parsedTextures.parse(nodes[index]);
 
-            this.info('Parsed textures');
-        }
+        //     this.info('Parsed textures');
+        // }
 
         // material
         if ((index = nodeNames.indexOf("materials")) == -1)
@@ -188,19 +188,37 @@ class MySceneGraph {
             this.info('Parsed transformations');
         }
 
+
         // primitives
-        if ((index = nodeNames.indexOf("primitives")) == -1)
+        if ((index = nodeNames.indexOf("primitives")) == -1) {
             return "tag <primitives> missing";
-        else {
+
+        } else {
+
             if (index != PRIMITIVES_INDEX)
                 this.onXMLMinorError("tag <primitives> out of order");
-
             //Parse primitives block
             this.parsedPrimitives = new Primitives(this);
-            if((error = this.parsedPrimitives.parse(nodes[index])) !== null)
+            if ((error = this.parsedPrimitives.parse(nodes[index])) != null) {
+                return error;
+            }
+            this.info('Parsed primitives');
+        }
+
+        // components
+
+        if ((index = nodeNames.indexOf("components")) == -1)
+            return "tag <components> missing";
+        else {
+            if (index != COMPONENTS_INDEX)
+                this.onXMLMinorError("tag <components> out of order");
+
+            //Parse components block
+            this.parsedComponents = new Components(this);
+            if ((error = this.parsedComponents.parse(nodes[index])) !== null)
                 return error;
 
-            this.info('Parsed primitives');
+            this.info('Parsed components');
         }
     }
 
@@ -208,11 +226,11 @@ class MySceneGraph {
      * Parses the <views> block.
      */
     parseViews(viewsNode) {
-        
+
         let children = viewsNode.children;
 
         // Ensure there's at least one view
-        if(children.length === 0) {
+        if (children.length === 0) {
             this.onXMLError("You must specify at least one view under <views> tag");
             return;
         }
@@ -230,7 +248,7 @@ class MySceneGraph {
                 let bottom = this.reader.getFloat(children[i], 'top', false);
 
                 // check if required attributes are defined
-                if(id === null) return;
+                if (id === null) return;
 
                 this.orthoViews.push({
                     id: id,
@@ -245,7 +263,7 @@ class MySceneGraph {
         }
 
         // check if default perspective is defined
-        if(!this.reader.hasAttribute(viewsNode, 'default')) {
+        if (!this.reader.hasAttribute(viewsNode, 'default')) {
             this.onXMLMinorError("Default view isn't set. Assuming TODO");
         } else {
             this.defaultView = this.reader.getString(viewsNode, 'default', true);
@@ -306,8 +324,7 @@ class MySceneGraph {
             var enableLight = true;
             if (enableIndex == -1) {
                 this.onXMLMinorError("enable value missing for ID = " + lightId + "; assuming 'value = 1'");
-            }
-            else {
+            } else {
                 var aux = this.reader.getFloat(grandChildren[enableIndex], 'value');
                 if (!(aux != null && !isNaN(aux) && (aux == 0 || aux == 1)))
                     this.onXMLMinorError("unable to parse value component of the 'enable light' field for ID = " + lightId + "; assuming 'value = 1'");
@@ -345,8 +362,7 @@ class MySceneGraph {
                     return "unable to parse x-coordinate of the light position for ID = " + lightId;
                 else
                     positionLight.push(w);
-            }
-            else
+            } else
                 return "light position undefined for ID = " + lightId;
 
             // Retrieves the ambient component.
@@ -379,8 +395,7 @@ class MySceneGraph {
                     return "unable to parse A component of the ambient illumination for ID = " + lightId;
                 else
                     ambientIllumination.push(a);
-            }
-            else
+            } else
                 return "ambient component undefined for ID = " + lightId;
 
             // TODO: Retrieve the diffuse component
@@ -468,16 +483,22 @@ class MySceneGraph {
                     break;
                 case 'triangle':
                     let triangle = new MyTriangle(this.scene, {
-                        x:primitive.x1, y:primitive.y1, z:primitive.z1
+                        x: primitive.x1,
+                        y: primitive.y1,
+                        z: primitive.z1
                     }, {
-                        x:primitive.x2, y:primitive.y2, z:primitive.z2
+                        x: primitive.x2,
+                        y: primitive.y2,
+                        z: primitive.z2
                     }, {
-                        x:primitive.x3, y:primitive.y3, z:primitive.z3
+                        x: primitive.x3,
+                        y: primitive.y3,
+                        z: primitive.z3
                     });
 
                     triangle.display();
                     break;
-                
+
                 case 'cylinder':
                     let cylinder = new MyCylinder(this.scene, primitive.base, primitive.top, primitive.height, primitive.slices, primitive.stacks);
                     cylinder.display();

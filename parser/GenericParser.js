@@ -135,7 +135,7 @@ class GenericParser {
     }
 
     /**
-     * Given an element, it fetches required child elements and parses it's attributes.
+     * Given an element, it fetches required child elements and parses its attributes.
      * 
      * For each required element, this method assumes it must be unique.
      * 
@@ -199,10 +199,12 @@ class GenericParser {
      * @param {Boolean} hasFallback If true, it means there's a default/fallback value to be used, thus it's a minor issue (warning). Displays an error otherwise
      */
     _showAttributeNotFound(elementName, attrName, hasFallback) {
-        if(hasFallback) {
+        if(hasFallback==true) {
             // minor issue, it has a fallback value
             this.sceneGraph.onXMLMinorError(`[${this.constructor.name.toUpperCase()}] Attribute '${attrName}' is not set for element <${elementName}>. Using default value`);
-        } else {
+        } else if (hasFallback==ign){
+
+        }else{
             // error
             this.sceneGraph.onXMLError(`[${this.constructor.name.toUpperCase()}] Attribute '${attrName}' is not set for element <${elementName}>. Cannot proceed`);
         }
@@ -212,7 +214,7 @@ class GenericParser {
      * 
      * @param {String} elementName The element's name for which the attribute wasn't found 
      * @param {String} attrName The expected attribute name
-     * @param {Boolean} hasFallback If true, it means there's a default/fallback value to be used, thus it's a minor issue (warning). Displays an error otherwise
+     * @param {Boolean} hasFallback If true, it means there's a default/fallback value to be used, thus it's a minor issue (warning). Displays an error otherwise. 
      */
     _showUnexpectedAttrValue(elementName, attrName, hasFallback) {
         if(hasFallback) {

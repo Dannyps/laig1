@@ -63,7 +63,7 @@ class Lights extends GenericParser {
         }
 
          // ensure there aren't more than 8 lights
-         if (this.omniLights.size + this.spotLights.size < 8) {
+         if (this.omniLights.size + this.spotLights.size > 8) {
             this.onXMLError('There can\'t be more than 8 lights!');
             return -1;
         }
