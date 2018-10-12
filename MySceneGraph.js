@@ -482,6 +482,10 @@ class MySceneGraph {
                     let cylinder = new MyCylinder(this.scene, primitive.base, primitive.top, primitive.height, primitive.slices, primitive.stacks);
                     cylinder.display();
                     break;
+
+                case 'sphere':
+                    let sphere = new MySphere(this.scene, primitive.radius, primitive.slices, primitive.stacks);
+                    sphere.display();
                 default:
                     break;
             }
