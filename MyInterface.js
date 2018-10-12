@@ -48,5 +48,11 @@ class MyInterface extends CGFinterface {
             this.scene.lightValues[id] = omniLight.enabled;
             group.add(this.scene.lightValues, id);
         });
+
+        
+        lights.spotLights.forEach((spotLight, id) => {
+            this.scene.lightValues[id] = spotLight.enabled;
+            group.add(this.scene.lightValues, id);
+        });
     }
 }

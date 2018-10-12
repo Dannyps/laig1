@@ -88,6 +88,22 @@ class XMLscene extends CGFscene {
 
             i++;
         });
+
+        this.graph.parsedLights.spotLights.forEach((sL, id) => {
+            this.lights[i].setPosition(sL.location.x, sL.location.y, sL.location.z, sL.location.w);
+            this.lights[i].setAmbient(sL.ambient.r, sL.ambient.g, sL.ambient.b, sL.ambient.a);
+            this.lights[i].setDiffuse(sL.diffuse.r, sL.diffuse.g, sL.diffuse.b, sL.diffuse.a);
+            this.lights[i].setSpecular(sL.specular.r, sL.specular.g, sL.specular.b, sL.specular.a);
+            this.lights[i].setSpotDirection(sL.target.x, sL.target.y, sL.target.z);
+            this.lights[i].setSpotCutOff(sL.angle);
+            this.lights[i].setSpotExponent(sL.exponent);
+            
+            this.lights[i].setVisible(true);
+
+            if(sL.enabled) this.lights[i].enable(); 
+            else this.lights[i].disable();
+            i++;
+        });
     }
 
 

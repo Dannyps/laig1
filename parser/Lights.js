@@ -12,6 +12,13 @@ class Lights extends GenericParser {
             z: 0,
             w: 1
         };
+
+        this.target = {
+            x: 5,
+            y: 5,
+            z: 5
+        };
+
         this.ambient = {
             r: 0.15,
             g: 0.15,
@@ -52,6 +59,12 @@ class Lights extends GenericParser {
         // ensure at least one light is defined
         if (this.omniLights.size + this.spotLights.size === 0) {
             this.onXMLError('You must set at least one light!');
+            return -1;
+        }
+
+         // ensure there aren't more than 8 lights
+         if (this.omniLights.size + this.spotLights.size < 8) {
+            this.onXMLError('There can\'t be more than 8 lights!');
             return -1;
         }
     }
@@ -189,15 +202,28 @@ class Lights extends GenericParser {
             defaultValues: this.location
         });
 
+        requiredElements.set('target', {
+            hasFallback: true,
+            requiredAttrs: {
+                x: 'ff',
+                y: 'ff',
+                z: 'ff'
+            },
+            defaultValues: this.target
+        });
+
         let parsedElements = this._parseUniqueChildElements(spotEL, requiredElements);
 
         // push the spot data
         this.spotLights.set(attrs.id, {
             enabled: attrs.enabled,
+            exponent: attrs.exponent,
+            angle: attrs.angle,
             ambient: parsedElements.get('ambient'),
             diffuse: parsedElements.get('diffuse'),
             specular: parsedElements.get('specular'),
-            location: parsedElements.get('location')
+            location: parsedElements.get('location'),
+            target: parsedElements.get('target')
         });
     }
 
