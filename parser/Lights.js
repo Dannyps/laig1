@@ -6,7 +6,7 @@ class Lights extends GenericParser{
 
         // set default values
         this.enabled = true;
-        this.location = {x: 0, y:0, z: 0, w: 0};
+        this.location = {x: 0, y:0, z: 0, w: 1};
         this.ambient = {r: 0.5, g: 0.5, b: 0.5, a: 1};
         this.diffuse = {r: 0.3, g: 0.3, b: 0.3, a: 1};
         this.specular = {r: 0.2, g: 0.2, b: 0.2, a: 1};
