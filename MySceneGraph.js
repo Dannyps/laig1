@@ -174,6 +174,20 @@ class MySceneGraph {
             this.info('Parsed materials');
         }
 
+        // transformations
+        if ((index = nodeNames.indexOf("transformations")) == -1)
+            return "tag <transformations> missing";
+        else {
+            if (index != TRANSFORMATIONS_INDEX)
+                this.onXMLMinorError("tag <transformations> out of order");
+
+            //Parse ambient block
+            this.parsedTransformations = new Transformations(this);
+            this.parsedTransformations.parse(nodes[index]);
+
+            this.info('Parsed transformations');
+        }
+
         // primitives
         if ((index = nodeNames.indexOf("primitives")) == -1)
             return "tag <primitives> missing";
