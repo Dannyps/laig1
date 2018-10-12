@@ -18,9 +18,9 @@ class Ambient extends GenericParser {
 
         // default ambient light
         this.ambientLight = {
-            r: 0.5,
-            g: 0.5,
-            b: 0.5,
+            r: 0.2,
+            g: 0.2,
+            b: 0.2,
             a: 1
         };
     }
