@@ -27,16 +27,21 @@ class MyTriangle extends CGFobject
 	initBuffers() 
 	{
 			
+		let v1 = this.vert1;
+		let v2 = this.vert2;
+		let v3 = this.vert3;
+		
 		this.vertices = [
-			this.vert1.x, this.vert1.y, this.vert1.z,
-			this.vert2.x, this.vert2.y, this.vert2.z,
-			this.vert3.x, this.vert3.y, this.vert3.z,
+			v1.x, v1.y, v1.z,
+			v2.x, v2.y, v2.z,
+			v3.x, v3.y, v3.z,
 		];
 
+		let normal = NormalsUtils.calculateSurfaceNormal([v1, v2, v3])
 		this.normals = [
-			0, 0, 1,
-			0, 0, 1,
-			0, 0, 1
+			normal.x, normal.y, normal.z,
+			normal.x, normal.y, normal.z,
+			normal.x, normal.y, normal.z
 		];
 
 		this.indices = [
