@@ -12,7 +12,15 @@ class XMLscene extends CGFscene {
         super();
 
         this.interface = myinterface;
+
         this.lightValues = {};
+
+        /**
+         * Cameras
+         */
+        this.activeCamera; // holds the ID of the active camera
+        this.views = new Map(); // maps the ID to a CFGCamera or CGFCameraOrtho
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15,15,15), vec3.fromValues(0,0,0)); // the LIB requires this...
     }
 
     /**
@@ -23,8 +31,6 @@ class XMLscene extends CGFscene {
         super.init(application);
 
         this.sceneInited = false;
-
-        this.initCameras();
 
         this.enableTextures(true);
 
@@ -40,7 +46,21 @@ class XMLscene extends CGFscene {
      * Initializes the scene cameras.
      */
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        this.graph.views.forEach((view, id) => {
+            if(view.type === 'perspective') {
+                this.views.set(id, new CGFcamera(
+                    view.fieldView, view.near, view.far, 
+                    vec3.fromValues(view.from.x, view.from.y, view.from.z), 
+                    vec3.fromValues(view.to.x, view.to.y, view.to.z))
+                );
+            }
+        });
+
+        // set the default camera
+        this.activeCamera = this.graph.defaultView;
+
+        // loads the camera's ID to the interface
+        this.interface.addViewsGroup();
     }
     /**
      * Initializes the scene lights with the values read from the XML file.
@@ -111,12 +131,11 @@ class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
-        //this.camera.near = this.graph.orthoViews[0].near;
-        //this.camera.far = this.graph.orthoViews[0].near;
-        //this.camera.position = vec4.fromValues(this.graph.orthoViews[0])
-
         // Change reference length according to parsed graph
         this.axis = new CGFaxis(this, this.graph.referenceLength);
+
+        // Init cameras
+        this.initCameras();
 
         // Change ambient and background details according to parsed graph
         let background =  this.graph.ambient.getBackground();

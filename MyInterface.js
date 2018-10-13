@@ -55,4 +55,19 @@ class MyInterface extends CGFinterface {
             group.add(this.scene.lightValues, id);
         });
     }
+
+    addViewsGroup() {
+        let viewsID = [];
+        this.scene.views.forEach((value, id) => {
+            viewsID.push(id);
+        });
+
+        let ctrl = this.gui.add(this.scene, 'activeCamera', viewsID);
+        ctrl.onChange(function(val) {
+            this.scene.camera = this.scene.views.get(val);
+        }.bind(this));
+
+        // force to update view
+        //ctrl.setValue(this.scene.activeCamera);
+    }
 }

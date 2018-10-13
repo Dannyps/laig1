@@ -37,6 +37,12 @@ class MySceneGraph {
         this.axisCoords['y'] = [0, 1, 0];
         this.axisCoords['z'] = [0, 0, 1];
 
+        /**
+         * Cameras information
+         */
+        this.defaultCamera; // the ID from the active camera
+        this.views; // all parsed views
+
         // File reading 
         this.reader = new CGFXMLreader();
 
@@ -93,7 +99,7 @@ class MySceneGraph {
         // Processes each node, verifying errors.
         
         // <scene>
-        var index;
+        let index;
         if ((index = nodeNames.indexOf("scene")) == -1)
             return "tag <scene> missing";
         else {
@@ -110,13 +116,20 @@ class MySceneGraph {
         
         // <views>
         if ((index = nodeNames.indexOf("views")) == -1)
-            return "tag <views> missing";
-        else if (index != VIEWS_INDEX) {
-            this.onXMLMinorError("tag <views> out of order");
-        } else {
-            // Parse the views block 
-            //if ((error = this.parseViews(nodes[index])) != null)
-                //return error;
+            return "tag <scene> missing";
+        else {
+            if (index != VIEWS_INDEX)
+                this.onXMLMinorError("tag <views> out of order");
+
+            //Parse scene block
+            let views = new Views(this);
+            if(views.parse(nodes[index]))
+                return "Failed to parse the <views> tag. ABORT!";
+            else {
+                this.info('Parsed views');
+                this.defaultView = views.getDefaultViewID();
+                this.views = views.getParsedViews();
+            }
         }
 
         // <ambient>
