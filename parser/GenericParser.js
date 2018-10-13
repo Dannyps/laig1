@@ -179,6 +179,36 @@ class GenericParser {
     }
 
     /**
+     * Given an element, it fetches required child elements and parses its attributes.
+     * 
+     * If the element can't be found, it shows an error
+     * @param {Element} parentElement The parent element to be processed
+     * 
+     * @return {Array} An Array whith entries for each required element. Elements that couldn't be found or properly parsed are not available on the Array
+     */
+    _parseChildElements(parentElement) {
+        let parsedElements = new Array();
+
+        console.log(parsedElements, parentElement); debugger;
+        requiredElements.forEach((elementProperties, elementTagName) => {
+            // find the element
+            let elementCollection = parentElement.getElementsByTagName(elementTagName);
+
+            if (elementCollection.length > 1) {
+                this._showElementMultipleDefinitions(parentElement.tagName, elementTagName);
+            } else if (elementCollection.length === 0) {
+                this._showElementNotFound(parentElement.tagName, elementTagName, elementProperties.hasFallback);
+                return; // cannot proceed ? TODO
+            }
+
+            let parsedAttrs = this._parseAttributes(elementCollection[0], elementProperties.requiredAttrs, elementProperties.defaultValues);
+            parsedElements.set(elementTagName, parsedAttrs);
+        });
+
+        return parsedElements;
+    }
+
+    /**
      * Gets the default value for a given attribute.
      * @param {*} attrName 
      * @param {*} defaultValues @see {@link _parseAttributes}
@@ -236,7 +266,6 @@ class GenericParser {
     }
 
     _showElementNotFound(parentElementName, childElementName, hasFallback) {
-        console.log(hasFallback);
         if (hasFallback == this.FALLBACK_IGN) {
         } else if (hasFallback) {
             this.sceneGraph.onXMLMinorError(`[${this.constructor.name.toUpperCase()}] Required element <${childElementName}> couldn't be found under <${parentElementName}>. Using default values`);

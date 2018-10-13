@@ -53,6 +53,22 @@ class Components2 extends GenericParser {
             defaultValues: {}
         });
 
+        requiredElements.set('primitiveref', {
+            hasFallback: this.FALLBACK_IGN,
+            requiredAttrs: {
+                id: 'ss'
+            },
+            defaultValues: {}
+        });
+
+        requiredElements.set('componentref', {
+            hasFallback: this.FALLBACK_IGN,
+            requiredAttrs: {
+                id: 'ss'
+            },
+            defaultValues: {}
+        });
+
         requiredElements.set('transformation', {
             hasFallback: this.FALLBACK_IGN,
             requiredAttrs: {},
@@ -86,6 +102,20 @@ class Components2 extends GenericParser {
 
 
         let parsedElements = this._parseUniqueChildElements(compEl, requiredElements);
+
+        
+        // Reads the names of the nodes to an auxiliary buffer.
+        var nodeNames = [];
+
+        for (var i = 0; i < compEl.children.length; i++) {
+            nodeNames.push(compEl.children[i].nodeName);
+        }
+
+        if (parsedElements.has('transformationref')){
+            // transformationref was found. We needn't look for further transformations.
+        }else{
+            console.log(compEl.children[nodeNames.indexOf("transformation")]);
+        }
 
         console.log(parsedElements);
         debugger;
