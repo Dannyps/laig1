@@ -27,9 +27,12 @@ class MySceneGraph {
 
         this.nodes = [];
 
-        this.idRoot = null;                    // The id of the root element.
-
-        this.axisCoords = [];
+        /**
+         * Scene information
+         */
+        this.idRoot; // the root's id
+        this.referenceLength; // the axis length
+        this.axisCoords = []; // set axis coordinates
         this.axisCoords['x'] = [1, 0, 0];
         this.axisCoords['y'] = [0, 1, 0];
         this.axisCoords['z'] = [0, 0, 1];
@@ -99,10 +102,10 @@ class MySceneGraph {
 
             //Parse scene block
             let scene = new Scene(this);
-            if((error = scene.parse(nodes[index])) != null)
-                return error;
-
-            this.info('Parsed scene');
+            if(scene.parse(nodes[index]))
+                return "Failed to parse the <scene> tag. ABORT!";
+            else
+                this.info('Parsed scene');
         }
         
         // <views>
