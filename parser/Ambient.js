@@ -44,7 +44,7 @@ class Ambient extends GenericParser {
     /**
      * Parses the ambient element from XML
      * @param {Element} ambientNode 
-     * @return {null}
+     * @return {number} Returns 0. This should never fail because there are fallback values
      */
     parse(ambientNode) {
         // specify the required elements and call auxiliary method to parse them
@@ -73,6 +73,6 @@ class Ambient extends GenericParser {
             this.backgroundScene = parsedElements.get('background');
         }
 
-        return null; // the errors are handled with fallback values
+        return 0; // the errors are handled with fallback values
     }
 }
