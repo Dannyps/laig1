@@ -144,12 +144,13 @@ class XMLscene extends CGFscene {
         this.initCameras();
 
         // Change ambient and background details according to parsed graph
-        let background =  this.graph.ambient.getBackground();
+        let background =  this.graph.ambientBackgroundColor;
         this.gl.clearColor(background.r, background.g, background.b, background.a);
 
-        let ambLight = this.graph.ambient.getAmbientLight();
+        let ambLight = this.graph.ambientLight;
         this.setGlobalAmbientLight(ambLight.r, ambLight.g, ambLight.b, ambLight.a);
 
+        // initialize lights
         this.initLights();
 
         // Adds lights group.

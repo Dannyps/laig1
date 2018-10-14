@@ -30,8 +30,11 @@ class MySceneGraph {
         /**
          * Scene information
          */
-        this.idRoot; // the root's id
-        this.referenceLength; // the axis length
+        /** the scene root's node id @type {string} */
+        this.idRoot;
+        /** the axis lenght @type {number} */
+        this.referenceLength;
+
         this.axisCoords = []; // set axis coordinates
         this.axisCoords['x'] = [1, 0, 0];
         this.axisCoords['y'] = [0, 1, 0];
@@ -40,8 +43,23 @@ class MySceneGraph {
         /**
          * Cameras information
          */
-        this.defaultCamera; // the ID from the active camera
-        this.views; // all parsed views
+        /** the default camera ID @type {string} */
+        this.defaultCamera;
+        /** all parsed views @type {{Map.<string, (perspectiveView|orthoView)>}} */
+        this.views;
+
+        /**
+         * Ambient information such ambient light and scene's background color
+         */
+        /** the ambient light for the scene @type {{r: number, g: number, b: number, a: number}} */
+        this.ambientLight;
+        /** the background color for the scene @type {{r: number, g: number, b: number, a: number}} */
+        this.ambientBackgroundColor;
+
+        /**
+         * Lights information
+         */
+
 
         // File reading 
         this.reader = new CGFXMLreader();
@@ -140,12 +158,14 @@ class MySceneGraph {
                 this.onXMLMinorError("tag <ambient> out of order");
 
             //Parse ambient block
-            this.ambient = new Ambient(this);
-            if((error = this.ambient.parse(nodes[index])) != null)
-                return error;
-
-
-            this.info('Parsed ambient');
+            let ambient = new Ambient(this);
+            if((error = ambient.parse(nodes[index])) != null)
+                return "Failed to parse the <ambient> tag. ABORT!";
+            else {
+                this.info('Parsed ambient');
+                this.ambientLight = ambient.getAmbientLight();
+                this.ambientBackgroundColor = ambient.getBackground();
+            }
         }
 
         // lights
