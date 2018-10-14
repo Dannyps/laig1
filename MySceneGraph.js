@@ -66,6 +66,12 @@ class MySceneGraph {
         /** @description all parsed lights @type {{Map.<string, (omniLights|spotLights)>}} */
         this.parsedLights;
 
+        /**
+         * Textures
+         */
+
+        /** @description all parsed textures @type {{Map.<string, string>}} Maps each texture ID to filename */
+        this.textures;
 
         // File reading 
         this.reader = new CGFXMLreader();
@@ -191,18 +197,21 @@ class MySceneGraph {
             }
         }
 
-        // textures
+        // <textures>
         if ((index = nodeNames.indexOf("textures")) == -1)
             return "tag <textures> missing";
         else {
             if (index != TEXTURES_INDEX)
                 this.onXMLMinorError("tag <textures> out of order");
 
-            //Parse ambient block
-            this.parsedTextures = new Textures(this);
-            this.parsedTextures.parse(nodes[index]);
-
-            this.info('Parsed textures');
+            //Parse texture block
+            let textures = new Textures(this);
+            if(textures.parse(nodes[index])) 
+                return "Failed to parse the <textures> tag. ABORT!";
+            else {
+                this.textures = textures.getParsedTextures();
+                this.info('Parsed textures');
+            }
         }
 
         // material
@@ -248,7 +257,7 @@ class MySceneGraph {
             this.info('Parsed primitives');
         }
     }
-    
+
     /*
      * Callback to be executed on any read error, showing an error on the console.
      * @param {string} message

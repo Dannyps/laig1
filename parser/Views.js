@@ -26,7 +26,7 @@
 class Views extends GenericParser {
     /**
      * @constructor
-     * @param {*} sceneGraph 
+     * @param {MySceneGraph} sceneGraph 
      */
     constructor(sceneGraph) {
         super(sceneGraph);
@@ -212,13 +212,13 @@ class Views extends GenericParser {
         requiredElements.set('from', {
             hasFallback: true,
             requiredAttrs: requiredAttrs,
-            defaultValues: {x: defaultPosition.x, y: defaultPosition.y, z: defaultPosition.z}
+            defaultValues: {x: this.defaultPosition.x, y: this.defaultPosition.y, z: this.defaultPosition.z}
         });
 
         requiredElements.set('to', {
             hasFallback: true,
             requiredAttrs: requiredAttrs,
-            defaultValues: {x: defaultTarget.x, y: defaultTarget.y, z: defaultTarget.z}
+            defaultValues: {x: this.defaultTarget.x, y: this.defaultTarget.y, z: this.defaultTarget.z}
         });
 
         // parse <to> and <from> child elements
