@@ -1,10 +1,3 @@
-// set some default values
-const defaultNear = 0.1; // default near clipping plane distance
-const defaultFar = 1000; // default far clipping plane distance
-const defaultFieldView = 0.5; // default field of view for perspective cameras
-const defaultTarget = {x: 0, y:0, z:0}; // default target position
-const defaultPosition = {x:15, y:15, z:15}; // default camera position
-
 /**
  * @typedef perspectiveView
  * @type {object}
@@ -48,6 +41,13 @@ class Views extends GenericParser {
          * A string with the ID of the default view
          */
         this.defaultView;
+
+        // set some default values
+        this.defaultNear = 0.1; // default near clipping plane distance
+        this.defaultFar = 1000; // default far clipping plane distance
+        this.defaultFieldView = 0.5; // default field of view for perspective cameras
+        this.defaultTarget = {x: 0, y:0, z:0}; // default target position
+        this.defaultPosition = {x:15, y:15, z:15}; // default camera position
     }
 
     /**
@@ -114,9 +114,9 @@ class Views extends GenericParser {
             far: 'ff',
             angle: 'ff'
         }, {
-            near: defaultNear,
-            far: defaultFar,
-            angle: defaultFieldView
+            near: this.defaultNear,
+            far:this.defaultFar,
+            angle: this.defaultFieldView
         });
 
         // check if attributes were parsed successfully
@@ -140,8 +140,8 @@ class Views extends GenericParser {
             near: properties.near,
             far: properties.far,
             fieldView: properties.angle,
-            from: childs.get('from') || defaultPosition,
-            to: childs.get('to') || defaultTarget
+            from: childs.get('from') || this.defaultPosition,
+            to: childs.get('to') || this.defaultTarget
         });
 
         return 0;
@@ -161,9 +161,9 @@ class Views extends GenericParser {
             top: 'ff',
             bottom: 'ff'
         }, {
-            near: defaultNear,
-            far: defaultFar,
-            angle: defaultFieldView
+            near: this.defaultNear,
+            far: this.defaultFar,
+            angle: this.defaultFieldView
         });
 
         // check if attributes were parsed successfully
@@ -190,8 +190,8 @@ class Views extends GenericParser {
             right: properties.right,
             top: properties.top,
             bottom: properties.bottom,
-            from: childs.get('from') || defaultPosition,
-            to: childs.get('to') || defaultTarget
+            from: childs.get('from') || this.defaultPosition,
+            to: childs.get('to') || this.defaultTarget
         });
 
         return 0;
