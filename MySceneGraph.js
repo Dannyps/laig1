@@ -73,6 +73,13 @@ class MySceneGraph {
         /** @description all parsed textures @type {{Map.<string, string>}} Maps each texture ID to filename */
         this.textures;
 
+        /**
+         * Transformations
+         */
+
+        /** @description all parsed transformations @type {Map.<string, Array.<parsedRotate | parsedScale | parsedTranslate>>} */
+        this.parsedTransformations;
+
         // File reading 
         this.reader = new CGFXMLreader();
 
@@ -228,18 +235,21 @@ class MySceneGraph {
             this.info('Parsed materials');
         }
 
-        // transformations
+        // <transformations>
         if ((index = nodeNames.indexOf("transformations")) == -1)
             return "tag <transformations> missing";
         else {
             if (index != TRANSFORMATIONS_INDEX)
                 this.onXMLMinorError("tag <transformations> out of order");
 
-            //Parse ambient block
-            this.parsedTransformations = new Transformations(this);
-            this.parsedTransformations.parse(nodes[index]);
-
-            this.info('Parsed transformations');
+            //Parse texture block
+            let transformations = new Transformations(this);
+            if(transformations.parse(nodes[index])) 
+                return "Failed to parse the <transformations> tag. ABORT!";
+            else {
+                this.parsedTransformations = transformations.getParsedTransformations();
+                this.info('Parsed transformations');
+            }
         }
 
         // primitives
