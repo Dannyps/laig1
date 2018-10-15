@@ -57,8 +57,8 @@ class Transformations extends GenericParser {
     parse(transformationsNode) {
         // find all transformation elements and parse them
         let transfsCollection = transformationsNode.getElementsByTagName('transformation');
-        for(let i = 0; i < transfsCollection.length; i++) {
-            if(this._parseTransformations(transfsCollection[i]))
+        for (let i = 0; i < transfsCollection.length; i++) {
+            if (this._parseTransformations(transfsCollection[i]))
                 return -1; // something went wrong
         }
 
@@ -76,23 +76,31 @@ class Transformations extends GenericParser {
      * This function is sensitive to erros, because errors in transformations easily lead to caotic scenes.
      * If attributes are missing or unknown tags are found, the function stops processing and returns -1.
      * @param {Element} tranfsEl An element <transformation> to be processed
-     * @return {number} Returns 0 upon success, or -1 otherwise 
+     * @param {Boolean} needsID If the <transformation> must have an id. Defaults to true.
+     * @return {number} Returns 0 upon success, or -1 otherwise. If needsID is false, will return the transformation.
      */
-    _parseTransformations(tranfsEl) {
+    _parseTransformations(tranfsEl, needsID = true) {
         if (tranfsEl.tagName !== 'transformation') throw 'Unexpected element';
 
-        /**
-         * Parse the ID attribute
-         */
-        let attrs = this._parseAttributes(tranfsEl, {id: 'ss'});
+        let attrs;
 
-        if (attrs === null)
-            return -1; // some error happened, abort
-        
-        // check if id is unique
-        if(this.transformations.has(attrs.id)) {
-            this.onXMLError(`IDs for transformations must be unique! ${attrs.id} already taken`);
-            return -1; // abort
+        if (needsID) {
+            /**
+             * Parse the ID attribute
+             */
+            attrs = this._parseAttributes(tranfsEl, {
+                id: 'ss'
+            });
+
+            if (attrs === null)
+                return -1; // some error happened, abort
+
+            // check if id is unique
+            if (this.transformations.has(attrs.id)) {
+                this.onXMLError(`IDs for transformations must be unique! ${attrs.id} already taken`);
+                return -1; // abort
+            }
+
         }
 
         /**
@@ -102,10 +110,10 @@ class Transformations extends GenericParser {
 
         // iterate over the children elements
         let transfInstructions = tranfsEl.children;
-        for(let i = 0; i < transfInstructions.length; i++) {
+        for (let i = 0; i < transfInstructions.length; i++) {
             let aux;
-            switch(transfInstructions[i].tagName) {
-                case 'translate': 
+            switch (transfInstructions[i].tagName) {
+                case 'translate':
                     aux = this._parseTranslate(transfInstructions[i]);
                     break;
                 case 'rotate':
@@ -120,7 +128,7 @@ class Transformations extends GenericParser {
             }
 
             // failed to parse instruction, abort
-            if(aux === null)
+            if (aux === null)
                 return -1;
             else {
                 aux.type = transfInstructions[i].tagName; // identify the kind of transformation
@@ -129,13 +137,16 @@ class Transformations extends GenericParser {
         }
 
         // check if the transformation has at least one instruction
-        if(instructions.length === 0) {
+        if (instructions.length === 0 && needsID) {
             this.onXMLError(`The transformation with ID: ${attrs.id} has zero instructions`);
             return -1;
         }
 
-        this.transformations.set(attrs.id, instructions);
-        return 0;
+        if (needsID) {
+            this.transformations.set(attrs.id, instructions);
+            return 0;
+        } else
+            return instructions;
     }
 
     /**
@@ -144,9 +155,13 @@ class Transformations extends GenericParser {
      * @return {(null | {x: number, y: number, z: number})}
      */
     _parseTranslate(translateEl) {
-        if(translateEl.tagName !== 'translate') throw "Unexpected element";
+        if (translateEl.tagName !== 'translate') throw "Unexpected element";
 
-        let requiredAttrs = {x: 'ff', y: 'ff', z: 'ff'};
+        let requiredAttrs = {
+            x: 'ff',
+            y: 'ff',
+            z: 'ff'
+        };
         return this._parseAttributes(translateEl, requiredAttrs);
     }
 
@@ -156,9 +171,12 @@ class Transformations extends GenericParser {
      * @return {(null | {axis: string, angle: number})}
      */
     _parseRotate(rotateEl) {
-        if(rotateEl.tagName !== 'rotate') throw "Unexpected element";
+        if (rotateEl.tagName !== 'rotate') throw "Unexpected element";
 
-        let requiredAttrs = {axis: 'cc', angle: 'ff'};
+        let requiredAttrs = {
+            axis: 'cc',
+            angle: 'ff'
+        };
         return this._parseAttributes(rotateEl, requiredAttrs);
     }
 
@@ -168,9 +186,13 @@ class Transformations extends GenericParser {
      * @return {(null | {x: number, y: number, z: number})}
      */
     _parseScale(scaleEl) {
-        if(scaleEl.tagName !== 'scale') throw "Unexpected element";
+        if (scaleEl.tagName !== 'scale') throw "Unexpected element";
 
-        let requiredAttrs = {x: 'ff', y: 'ff', z: 'ff'};
+        let requiredAttrs = {
+            x: 'ff',
+            y: 'ff',
+            z: 'ff'
+        };
         return this._parseAttributes(scaleEl, requiredAttrs);
     }
 

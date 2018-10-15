@@ -18,7 +18,7 @@ class Components2 extends GenericParser {
             this._parseComponents(compEl);
         });
 
-        // ensure at least one light is defined
+        // ensure at least one component is defined
         if (this.components.size === 0) {
             this.onXMLError('You must set at least one component!');
             return -1;
@@ -114,13 +114,13 @@ class Components2 extends GenericParser {
         if (parsedElements.has('transformationref')){
             // transformationref was found. We needn't look for further transformations.
         }else{
-            console.log(compEl.children[nodeNames.indexOf("transformation")]);
+            let transformationsNode = compEl.children[nodeNames.indexOf("transformation")];
+            let transformations = new Transformations(this);
+            parsedElements.set('transformation', transformations._parseTransformations(transformationsNode, false));
+            
         }
-
-        console.log(parsedElements);
-        debugger;
         // push the components
-        this.components.set(attrs.id, {});
+        this.components.set(attrs.id, parsedElements);
     }
 
 }
