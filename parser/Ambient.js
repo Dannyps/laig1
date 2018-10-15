@@ -26,9 +26,25 @@ class Ambient extends GenericParser {
     }
 
     /**
+     * Returns the background color for the scene
+     * @return {{r: number, g: number, b: number, a: number}}
+     */
+    getBackground() {
+        return this.backgroundScene;
+    }
+
+    /**
+     * Returns the ambient light for the scene
+     * @return {{r: number, g: number, b: number, a: number}}
+     */
+    getAmbientLight() {
+        return this.ambientLight;
+    }
+
+    /**
      * Parses the ambient element from XML
      * @param {Element} ambientNode 
-     * @return {null}
+     * @return {number} Returns 0. This should never fail because there are fallback values
      */
     parse(ambientNode) {
         // specify the required elements and call auxiliary method to parse them
@@ -57,22 +73,6 @@ class Ambient extends GenericParser {
             this.backgroundScene = parsedElements.get('background');
         }
 
-        return null; // the errors are handled with fallback values
-    }
-
-    /**
-     * Returns the background color for the scene
-     * @return {Object} {r: NUMBER, g: NUMBER, b: NUMBER, a: NUMBER}
-     */
-    getBackground() {
-        return this.backgroundScene;
-    }
-
-    /**
-     * Returns the ambient light for the scene
-     * @return {Object} {r: NUMBER, g: NUMBER, b: NUMBER, a: NUMBER}
-     */
-    getAmbientLight() {
-        return this.ambientLight;
+        return 0; // the errors are handled with fallback values
     }
 }

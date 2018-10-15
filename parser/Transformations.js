@@ -1,81 +1,177 @@
 'use strict';
 
+/**
+ * @typedef parsedTranslate
+ * @type {object}
+ * @property {string} type - "translate"
+ * @property {number} x 
+ * @property {number} y
+ * @property {number} z
+ */
+
+/**
+ * @typedef parsedScale
+ * @type {object}
+ * @property {string} type - "scale"
+ * @property {number} x 
+ * @property {number} y
+ * @property {number} z
+ */
+
+/**
+ * @typedef parsedRotate
+ * @type {object}
+ * @property {string} type - "rotate"
+ * @property {string} axis - 'x' | 'y' | 'z'
+ * @property {number} angle - The rotation angle in degrees
+ */
+
+
 class Transformations extends GenericParser {
+    /**
+     * Parses transformations
+     * @param {CGFscene} sceneGraph 
+     */
     constructor(sceneGraph) {
         super(sceneGraph);
 
-        // data structure
+        /**
+         * A map containing all parsed transformations, mapping each transformation ID to a collection of trasnformation instructions
+         * @type {Map.<string, Array.<parsedRotate | parsedScale | parsedTranslate>>}
+         */
         this.transformations = new Map();
     }
 
+    /**
+     * @return {Map.<string, Array.<parsedRotate | parsedScale | parsedTranslate>>}
+     */
+    getParsedTransformations() {
+        return this.transformations;
+    }
+
+    /**
+     * Parses all transformations under the <transformations> element.
+     * @param {Element} transformationsNode 
+     * @return {number} Returns 0 upon success, otherwise returns -1. Also see {@link Transformations#_parseTransformations}
+     */
     parse(transformationsNode) {
-        // find all text elements and parse them
+        // find all transformation elements and parse them
         let transfsCollection = transformationsNode.getElementsByTagName('transformation');
-        Array.prototype.forEach.call(transfsCollection, (tranfsEl) => {
-            this._parseTransformations(tranfsEl);
-        });
+        for(let i = 0; i < transfsCollection.length; i++) {
+            if(this._parseTransformations(transfsCollection[i]))
+                return -1; // something went wrong
+        }
 
         // ensure at least one texture is defined
         if (this.transformations.size === 0) {
             this.onXMLError('You must set at least one transformation!');
             return -1;
+        } else {
+            return 0;
         }
     }
 
+    /**
+     * Parses a set of instructions that compose a transformation and adds it {@link Transformations#transformations}
+     * This function is sensitive to erros, because errors in transformations easily lead to caotic scenes.
+     * If attributes are missing or unknown tags are found, the function stops processing and returns -1.
+     * @param {Element} tranfsEl An element <transformation> to be processed
+     * @return {number} Returns 0 upon success, or -1 otherwise 
+     */
     _parseTransformations(tranfsEl) {
         if (tranfsEl.tagName !== 'transformation') throw 'Unexpected element';
 
+        /**
+         * Parse the ID attribute
+         */
+        let attrs = this._parseAttributes(tranfsEl, {id: 'ss'});
 
-        let attrs = this._parseAttributes(tranfsEl, {
-            id: 'ss'
-        });
-
-        if (attrs === null) {
-            // some error happened, skip this text
-            return;
+        if (attrs === null)
+            return -1; // some error happened, abort
+        
+        // check if id is unique
+        if(this.transformations.has(attrs.id)) {
+            this.onXMLError(`IDs for transformations must be unique! ${attrs.id} already taken`);
+            return -1; // abort
         }
 
         /**
-         * Setup the parser for child elements
+         * Parse child elements, representing transformation instructions
          */
-        let requiredElements = new Map();
+        let instructions = []; // array with all transformations
 
-        requiredElements.set('translate', {
-            hasFallback: true,
-            requiredAttrs: {
-                x: 'ff',
-                y: 'ff',
-                z: 'ff'
-            },
-            defaultValues: this.ambient
-        });
+        // iterate over the children elements
+        let transfInstructions = tranfsEl.children;
+        for(let i = 0; i < transfInstructions.length; i++) {
+            let aux;
+            switch(transfInstructions[i].tagName) {
+                case 'translate': 
+                    aux = this._parseTranslate(transfInstructions[i]);
+                    break;
+                case 'rotate':
+                    aux = this._parseRotate(transfInstructions[i]);
+                    break;
+                case 'scale':
+                    aux = this._parseScale(transfInstructions[i]);
+                    break;
+                default:
+                    this.onXMLError(`Unknown element ${transfInstructions[i].tagName}. ABORT!`);
+                    return -1;
+            }
 
-        requiredElements.set('rotate', {
-            hasFallback: true,
-            requiredAttrs: {
-                axis: 'cc',
-                angle: 'ff'
-            },
-            defaultValues: this.diffuse
-        });
-
-        requiredElements.set('scale', {
-            hasFallback: true,
-            requiredAttrs: {
-                x: 'ff',
-                y: 'ff',
-                z: 'ff'
-            },
-            defaultValues: this.specular
-        });
-
-
-        let tr = this._parseUniqueChildElements(tranfsEl, requiredElements);
-        // push the texture data
-        if (this.transformations.get(attrs.id) != undefined) {
-            this.onXMLError("There are two transformations with the same ID! Last will be used.");
+            // failed to parse instruction, abort
+            if(aux === null)
+                return -1;
+            else {
+                aux.type = transfInstructions[i].tagName; // identify the kind of transformation
+                instructions.push(aux);
+            }
         }
-        this.transformations.set(attrs.id, tr);
+
+        // check if the transformation has at least one instruction
+        if(instructions.length === 0) {
+            this.onXMLError(`The transformation with ID: ${attrs.id} has zero instructions`);
+            return -1;
+        }
+
+        this.transformations.set(attrs.id, instructions);
+        return 0;
+    }
+
+    /**
+     * Parses <translate> elements
+     * @param {Element} translateEl 
+     * @return {(null | {x: number, y: number, z: number})}
+     */
+    _parseTranslate(translateEl) {
+        if(translateEl.tagName !== 'translate') throw "Unexpected element";
+
+        let requiredAttrs = {x: 'ff', y: 'ff', z: 'ff'};
+        return this._parseAttributes(translateEl, requiredAttrs);
+    }
+
+    /**
+     * Parses <rotate> elements
+     * @param {Element} rotateEl 
+     * @return {(null | {axis: string, angle: number})}
+     */
+    _parseRotate(rotateEl) {
+        if(rotateEl.tagName !== 'rotate') throw "Unexpected element";
+
+        let requiredAttrs = {axis: 'cc', angle: 'ff'};
+        return this._parseAttributes(rotateEl, requiredAttrs);
+    }
+
+    /**
+     * Parses <scale> elements
+     * @param {Element} scaleEl 
+     * @return {(null | {x: number, y: number, z: number})}
+     */
+    _parseScale(scaleEl) {
+        if(scaleEl.tagName !== 'scale') throw "Unexpected element";
+
+        let requiredAttrs = {x: 'ff', y: 'ff', z: 'ff'};
+        return this._parseAttributes(scaleEl, requiredAttrs);
     }
 
 }

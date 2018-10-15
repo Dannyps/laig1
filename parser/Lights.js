@@ -1,48 +1,64 @@
 'use strict';
 
+/**
+ * @typedef omniLights
+ * @type {Object}
+ * @property {string} type - "omni"
+ * @property {boolean} enabled - if the light starts on/off
+ * @property {{r: number, g: number, b: number, a: number}} ambient - ambient component
+ * @property {{r: number, g: number, b: number, a: number}} diffuse - diffuse component
+ * @property {{r: number, g: number, b: number, a: number}} specular - specular component
+ * @property {{x: number, y: number, z: number, w: number}} location - the light position
+ */
+
+ /**
+  * @typedef spotLights
+  * @type {Object}
+  * @property {string} type - "spot"
+  * @property {boolean} enabled - if the light starts on/off
+  * @property {number} exponent
+  * @property {number} angle
+  * @property {{r: number, g: number, b: number, a: number}} ambient - ambient component
+  * @property {{r: number, g: number, b: number, a: number}} diffuse - diffuse component
+  * @property {{r: number, g: number, b: number, a: number}} specular - specular component
+  * @property {{x: number, y: number, z: number, w: number}} location - the light position
+  * @property {{x: number, y: number, z: number}} target
+  */
+
+
 class Lights extends GenericParser {
+    
+    /**
+     * Parser for light components
+     * @param {*} sceneGraph 
+     */
     constructor(sceneGraph) {
         super(sceneGraph);
 
-        // set default values
-        this.enabled = true;
-        this.location = {
-            x: 0,
-            y: 0,
-            z: 0,
-            w: 1
-        };
+        /** data structure for omni and spot light types @type {Map.<string, (omniLights|spotLights)>} */
+        this.parsedLights = new Map();
 
-        this.target = {
-            x: 5,
-            y: 5,
-            z: 5
-        };
-
-        this.ambient = {
-            r: 0.15,
-            g: 0.15,
-            b: 0.15,
-            a: 1
-        };
-        this.diffuse = {
-            r: 0.3,
-            g: 0.3,
-            b: 0.3,
-            a: 1
-        };
-        this.specular = {
-            r: 0.2,
-            g: 0.2,
-            b: 0.2,
-            a: 1
-        };
-
-        // data structure for omni and spot light types
-        this.omniLights = new Map();
-        this.spotLights = new Map();
+        // default values
+        this.defaultEnabled = true;
+        this.defaultLocation = {x: 0, y: 0, z: 0, w: 1};
+        this.defaultTarget =  {x: 5, y: 5, z: 5};
+        this.defaultAmbient = {r: 0.15, g: 0.15, b: 0.15, a: 1};
+        this.defaultDiffuse = {r: 0.3, g: 0.3, b: 0.3, a: 1};
+        this.defaultSpecular = {r: 0.2, g: 0.2, b: 0.2, a: 1};
     }
 
+    /**
+     * @return {Map.<string, (omniLights|spotLights)>} Returns all valid parsed lights
+     */
+    getParsedLights() {
+        return this.parsedLights;
+    }
+
+    /**
+     * Parses all lights
+     * @param {Element} lightsNode The <lights> element to be parsed
+     * @return {number} Returns 0 upon success, or any other value otherwise
+     */
     parse(lightsNode) {
         // find all omni elements and parse them
         let omniCollection = lightsNode.getElementsByTagName('omni');
@@ -57,34 +73,41 @@ class Lights extends GenericParser {
         });
 
         // ensure at least one light is defined
-        if (this.omniLights.size + this.spotLights.size === 0) {
+        if (this.parsedLights === 0) {
             this.onXMLError('You must set at least one light!');
             return -1;
         }
 
          // ensure there aren't more than 8 lights
-         if (this.omniLights.size + this.spotLights.size > 8) {
+         if (this.parsedLights.size > 8) {
             this.onXMLError('There can\'t be more than 8 lights!');
             return -1;
         }
+
+        return 0;
     }
 
+    /**
+     * Parses <omni> elements and pushes the properties of this light to {@link Lights#parsedLights} map.
+     * If some error happens while parsing attributes/child elements, a message is displayed and the element is skipped
+     * It also ensures that if some previous parsed light has the same ID as this light, it displays a warning and it's skipped
+     * 
+     * @param {Element} omniEl 
+     */
     _parseOmniLights(omniEl) {
         if (omniEl.tagName !== 'omni') throw 'Unexpected element';
 
         /**
          * Parse the attributes for the omni element
          */
-        let attrs = this._parseAttributes(omniEl, {
-            id: 'ss',
-            enabled: 'tt'
-        }, {
-            enabled: true
-        });
+        let attrs = this._parseAttributes(omniEl, {id: 'ss',enabled: 'tt'}, {enabled: this.defaultEnabled});
 
-        if (attrs === null) {
-            // some error happened, skip this omni light
-            return;
+        if (attrs === null)
+            return; // some error happened, skip this omni light
+
+        // ensure ID uniqueness
+        if(this.parsedLights.has(attrs.id)) {
+            this.onXMLMinorError(`A light with id: ${attrs.id} already exists, thus this light will be ignored`);
         }
 
         /**
@@ -101,19 +124,19 @@ class Lights extends GenericParser {
         requiredElements.set('ambient', {
             hasFallback: true,
             requiredAttrs: requiredAttrsLightComp,
-            defaultValues: this.ambient
+            defaultValues: this.defaultAmbient
         });
 
         requiredElements.set('diffuse', {
             hasFallback: true,
             requiredAttrs: requiredAttrsLightComp,
-            defaultValues: this.diffuse
+            defaultValues: this.defaultDiffuse
         });
 
         requiredElements.set('specular', {
             hasFallback: true,
             requiredAttrs: requiredAttrsLightComp,
-            defaultValues: this.specular
+            defaultValues: this.defaultSpecular
         });
 
         requiredElements.set('location', {
@@ -124,14 +147,14 @@ class Lights extends GenericParser {
                 z: 'ff',
                 w: 'ff'
             },
-            defaultValues: this.location
+            defaultValues: this.defaultLocation
         });
-
 
         let parsedElements = this._parseUniqueChildElements(omniEl, requiredElements);
 
         // push the omni data
-        this.omniLights.set(attrs.id, {
+        this.parsedLights.set(attrs.id, {
+            type: 'omni',
             enabled: attrs.enabled,
             ambient: parsedElements.get('ambient'),
             diffuse: parsedElements.get('diffuse'),
@@ -140,6 +163,13 @@ class Lights extends GenericParser {
         });
     }
 
+    /**
+     * Parses <spot> elements and pushes the properties of this light to {@link Lights#parsedLights} map.
+     * If some error happens while parsing attributes/child elements, a message is displayed and the element is skipped
+     * It also ensures that if some previous parsed light has the same ID as this light, it displays a warning and it's skipped
+     * 
+     * @param {Element} omniEl 
+     */
     _parseSpotLights(spotEL) {
         if (spotEL.tagName !== 'spot') throw 'Unexpected element';
 
@@ -152,14 +182,17 @@ class Lights extends GenericParser {
             angle: 'ff',
             exponent: 'ff'
         }, {
-            enabled: true,
+            enabled: this.defaultEnabled,
             angle: 45,
             exponent: 2
         });
 
-        if (attrs === null) {
-            // some error happened, skip this omni light
-            return;
+        if (attrs === null)
+            return; // some error happened, skip this spot light
+
+        // ensure ID uniqueness
+        if(this.parsedLights.has(attrs.id)) {
+            this.onXMLMinorError(`A light with id: ${attrs.id} already exists, thus this light will be ignored`);
         }
 
         /**
@@ -176,19 +209,19 @@ class Lights extends GenericParser {
         requiredElements.set('ambient', {
             hasFallback: true,
             requiredAttrs: requiredAttrsLightComp,
-            defaultValues: this.ambient
+            defaultValues: this.defaultAmbient
         });
 
         requiredElements.set('diffuse', {
             hasFallback: true,
             requiredAttrs: requiredAttrsLightComp,
-            defaultValues: this.diffuse
+            defaultValues: this.defaultDiffuse
         });
 
         requiredElements.set('specular', {
             hasFallback: true,
             requiredAttrs: requiredAttrsLightComp,
-            defaultValues: this.specular
+            defaultValues: this.defaultSpecular
         });
 
         requiredElements.set('location', {
@@ -199,7 +232,7 @@ class Lights extends GenericParser {
                 z: 'ff',
                 w: 'ff'
             },
-            defaultValues: this.location
+            defaultValues: this.defaultLocation
         });
 
         requiredElements.set('target', {
@@ -209,13 +242,14 @@ class Lights extends GenericParser {
                 y: 'ff',
                 z: 'ff'
             },
-            defaultValues: this.target
+            defaultValues: this.defaultTarget
         });
 
         let parsedElements = this._parseUniqueChildElements(spotEL, requiredElements);
 
         // push the spot data
-        this.spotLights.set(attrs.id, {
+        this.parsedLights.set(attrs.id, {
+            type: 'spot',
             enabled: attrs.enabled,
             exponent: attrs.exponent,
             angle: attrs.angle,
