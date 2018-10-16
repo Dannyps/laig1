@@ -1,15 +1,35 @@
 'use strict';
 
-class Materials extends GenericParser{
+class Materials extends GenericParser {
     constructor(sceneGraph) {
         super(sceneGraph);
 
         // set default values
         this.shininess = 10;
-        this.emission = {x: 0, y:0, z: 0, w: 0};
-        this.ambient = {r: 0.2, g: 0.2, b: 0.2, a: 1};
-        this.diffuse = {r: 0.5, g: 0.5, b: 0.5, a: 1};
-        this.specular = {r: 0.5, g: 0.5, b: 0.5, a: 1};
+        this.emission = {
+            x: 0,
+            y: 0,
+            z: 0,
+            w: 0
+        };
+        this.ambient = {
+            r: 0.2,
+            g: 0.2,
+            b: 0.2,
+            a: 1
+        };
+        this.diffuse = {
+            r: 0.5,
+            g: 0.5,
+            b: 0.5,
+            a: 1
+        };
+        this.specular = {
+            r: 0.5,
+            g: 0.5,
+            b: 0.5,
+            a: 1
+        };
 
         this.materials = new Map();
     }
@@ -21,21 +41,26 @@ class Materials extends GenericParser{
         });
 
         // ensure at least one material is defined
-        if(this.materials.size === 0) {
+        if (this.materials.size === 0) {
             this.onXMLError('You must set at least one material!');
             return -1;
         }
     }
 
     _parseMaterial(matEl) {
-        if(matEl.tagName !== 'material') throw 'Unexpected element';
+        if (matEl.tagName !== 'material') throw 'Unexpected element';
 
         /**
          * Parse the attributes for the material element
          */
-        let attrs = this._parseAttributes(matEl, {id: 'ss', shininess: 'ff'}, {shininess: this.shininess});
+        let attrs = this._parseAttributes(matEl, {
+            id: 'ss',
+            shininess: 'ff'
+        }, {
+            shininess: this.shininess
+        });
 
-        if(attrs === null) {
+        if (attrs === null) {
             // some error happened
             return;
         }
@@ -44,8 +69,13 @@ class Materials extends GenericParser{
          * Setup the parser for child elements
          */
         let requiredElements = new Map();
-        let requiredAttrsLightComp = {r: 'ff', g:'ff', b:'ff', a:'ff'};
-        
+        let requiredAttrsLightComp = {
+            r: 'ff',
+            g: 'ff',
+            b: 'ff',
+            a: 'ff'
+        };
+
         requiredElements.set('emission', {
             hasFallback: true,
             requiredAttrs: requiredAttrsLightComp,
@@ -85,6 +115,24 @@ class Materials extends GenericParser{
             specular: parsedElements.get('specular'),
             emission: parsedElements.get('emission')
         });
+    }
+
+
+    parseMaterialRefs(matEl) {
+        if (matEl.tagName !== 'materials') throw 'Unexpected element';
+
+        //        let attrs = this._parseAttributes(matEl, {id: 'ss'}, {});
+
+        let childrn = matEl.children;
+        let mats = [];
+        for (let i = 0; i < childrn.length; i++) {
+            let mat = this._parseAttributes(childrn[i], {
+                id: 'ss'
+            }, {});
+            mats.push(mat);
+        }
+
+        return mats;
     }
 
 }

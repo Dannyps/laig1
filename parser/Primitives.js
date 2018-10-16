@@ -1,31 +1,78 @@
+/**
+ * @typedef parsedRectangle
+ * @type {object}
+ * @property {string} type "rectangle"
+ * @property {number} x1
+ * @property {number} y1
+ * @property {number} x2
+ * @property {number} y2
+ */
+
+/**
+  * @typedef parsedTriangle
+  * @type {object}
+  * @property {string} type "triangle"
+  * @property {number} x1
+  * @property {number} y1
+  * @property {number} z1
+  * @property {number} x2
+  * @property {number} y2
+  * @property {number} z2
+  * @property {number} x3
+  * @property {number} y3
+  * @property {number} z3
+ */
+
+/**
+ * @typedef parsedCylinder
+ * @type {object}
+ * @property {string} type "cylinder"
+ * @property {number} base
+ * @property {number} top
+ * @property {number} height
+ * @property {number} slices
+ * @property {number} stacks
+ */
+
+/**
+ * @typedef parsedSphere
+ * @type {object}
+ * @property {number} radius
+ * @property {number} slices
+ * @property {number} stacks
+ */
+
 class Primitives extends GenericParser {
+	/**
+	 * Responsible to parse primitives
+	 * @param {*} sceneGraph 
+	 */
     constructor(sceneGraph) {
         super(sceneGraph);
 
-        // set some default values
-        this.rectangle = {x1: '1', y1: '1', x2: '1', y2: '1'};
-        this.triangle = {
+        /**
+		 * Default values
+		 */
+        this.defaultRectangle = {x1: '1', y1: '1', x2: '1', y2: '1'};
+        this.defaultTriangle = {
             x1: '0', y1: '-0.5', z1: '-0.5',
             x2: '0', y2: '0.5', z3: '-0.5',
             x3: '0', y3: '0', z3: '0.5'
 		};
-
-		this.cylinder = {
+		this.defaultCylinder = {
 			base: 1,
 			top: 1,
 			height: 1,
 			slices: 10,
 			stacks: 20
 		}
-
-		this.sphere = {
+		this.defaultSphere = {
 			base: 1,
 			slices: 10,
 			stacks: 20
 		}
-		// TODO
 		
-		// the data container for primitives
+		/** @description data container with all primitives @type {Map.<string, (parsedRectangle | parsedTriangle | parsedCylinder | parsedSphere)>} */
 		this.primitives = new Map();
 	}
 	
@@ -33,7 +80,7 @@ class Primitives extends GenericParser {
 	 * Returns all parsed primitives
 	 * Each item in the Map structure, in addition to the expected values, it contais a property 'type' to distinguish the CGFObjects
 	 * 
-	 * @return {Map<String, Object>}
+	 * @return {Map.<string, (parsedRectangle | parsedTriangle | parsedCylinder | parsedSphere)>}
 	 */
 	getPrimitives() {
 		return this.primitives;
@@ -136,7 +183,7 @@ class Primitives extends GenericParser {
 		/**
 		 * Parse attributes
 		 */
-		return this._parseAttributes(rectangleEl, {x1: 'ff', y1: 'ff', x2: 'ff', y2: 'ff'}, this.rectangle);
+		return this._parseAttributes(rectangleEl, {x1: 'ff', y1: 'ff', x2: 'ff', y2: 'ff'}, this.defaultRectangle);
 	}
 	
 	_parseTriangle(triangleEl) {
@@ -147,7 +194,7 @@ class Primitives extends GenericParser {
 			x1: 'ff', y1: 'ff', z1: 'ff',
 			x2: 'ff', y2: 'ff', z2: 'ff',
 			x3: 'ff', y3: 'ff', z3: 'ff',
-		}, this.triangle);
+		}, this.defaultTriangle);
 	}
 
 	_parseCylinder(cylinderEl) {
@@ -156,7 +203,7 @@ class Primitives extends GenericParser {
 			
 		return this._parseAttributes(cylinderEl, {
 			base: 'ff', top: 'ff', height: 'ff', slices: 'ii', stacks: 'ii'
-		}, this.cylinder); 
+		}, this.defaultCylinder); 
 	}
 
 	_parseSphere(sphereEl) {
@@ -165,6 +212,6 @@ class Primitives extends GenericParser {
 			
 		return this._parseAttributes(sphereEl, {
 			radius: 'ff', slices: 'ii', stacks: 'ii'
-		}, this.sphere); 
+		}, this.defaultSphere); 
 	}
 }

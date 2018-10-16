@@ -3,6 +3,7 @@
 class GenericParser {
     constructor(sceneGraph) {
         this.sceneGraph = sceneGraph;
+        this.FALLBACK_IGN = 2;
     }
 
     /**
@@ -37,26 +38,26 @@ class GenericParser {
         let parsedAttrs = {};
 
         let requiredAttrsName = Object.getOwnPropertyNames(requiredAttrs);
-        for(let i = 0; i < requiredAttrsName.length; i++) {
+        for (let i = 0; i < requiredAttrsName.length; i++) {
             let requiredAttrName = requiredAttrsName[i];
             // check if element contains the attribute
-            if(element.hasAttribute(requiredAttrName)) {
+            if (element.hasAttribute(requiredAttrName)) {
                 // attempt to parse the attribute and ensure the value is valid
                 let val = this._parseAttributeVal(
                     element,
-                    requiredAttrName, 
-                    element.getAttribute(requiredAttrName), 
+                    requiredAttrName,
+                    element.getAttribute(requiredAttrName),
                     requiredAttrs[requiredAttrName],
                     defaultValues);
 
-                if(val === null) return null;
+                if (val === null) return null;
                 else parsedAttrs[requiredAttrName] = val;
 
             } else {
                 // attribute not defined
                 // try to get a default as a fallback
                 let val = this._getDefaultValue(requiredAttrName, defaultValues);
-                if(val === null) {
+                if (val === null) {
                     this._showAttributeNotFound(element.tagName, requiredAttrName, false);
                     return null;
                 } else {
@@ -85,43 +86,43 @@ class GenericParser {
         let retVal = null;
 
         /* deal with 'ii' and 'ff' */
-        if(expectedType == 'ff' || expectedType == 'ii' ) {
+        if (expectedType == 'ff' || expectedType == 'ii') {
             // first attempt to convert to JS Number type. If it fails, it becomes NaN
             let num = Number(attrVal);
 
-            if(!Number.isNaN(num)) {
+            if (!Number.isNaN(num)) {
                 // it's a valid number type, but if 'ii' is expected, is it really integer?
-                if(expectedType == 'ii') {
-                    if (Number.isInteger(num)) retVal = num; 
+                if (expectedType == 'ii') {
+                    if (Number.isInteger(num)) retVal = num;
                 } else {
                     retVal = num;
                 }
             }
-        } 
+        }
         /* deal with 'ss' */
         else if (expectedType == 'ss') {
             // TODO: is there anything to check here?
             retVal = attrVal;
-        } 
+        }
         /* deal with 'tt' */
         else if (expectedType == 'tt') {
-            if(attrVal === 'true') retVal = true;
+            if (attrVal === 'true') retVal = true;
             else if (attrVal === 'false') retVal = false;
-        } 
+        }
         /* deal with 'cc' */
         else if (expectedType == 'cc') {
             // cc can be 'x', 'y', or 'z'
-            if(['x', 'y', 'z'].includes(attrVal)) retVal = attrVal;
+            if (['x', 'y', 'z'].includes(attrVal)) retVal = attrVal;
         }
         /* deal with unknown expected type */
         else throw `Unknown expected type for attribute ${attrName}`;
 
         // at this stage, if retVal is null, it means that the attrVal is not of the expected type, thus we attemp to get the default value
-        if(retVal === null) {
+        if (retVal === null) {
             retVal = this._getDefaultValue(attrName, defaultValues);
 
             // if retVal still 'null' then there's no fallback value and the error is displayed
-            if(retVal === null) {
+            if (retVal === null) {
                 this._showUnexpectedAttrValue(element.tagName, attrName, false);
                 return null;
             } else {
@@ -130,13 +131,13 @@ class GenericParser {
                 return retVal;
             }
         }
-        
+
         return retVal;
-        
+
     }
 
     /**
-     * Given an element, it fetches required child elements and parses it's attributes.
+     * Given an element, it fetches required child elements and parses its attributes.
      * 
      * For each required element, this method assumes it must be unique.
      * 
@@ -162,7 +163,37 @@ class GenericParser {
             // find the element
             let elementCollection = parentElement.getElementsByTagName(elementTagName);
 
-            if(elementCollection.length > 1) {
+            if (elementCollection.length > 1) {
+                this._showElementMultipleDefinitions(parentElement.tagName, elementTagName);
+            } else if (elementCollection.length === 0) {
+                this._showElementNotFound(parentElement.tagName, elementTagName, elementProperties.hasFallback);
+                return; // cannot proceed ? TODO
+            }
+
+            let parsedAttrs = this._parseAttributes(elementCollection[0], elementProperties.requiredAttrs, elementProperties.defaultValues);
+            parsedElements.set(elementTagName, parsedAttrs);
+        });
+
+        return parsedElements;
+    }
+
+    /**
+     * Given an element, it fetches required child elements and parses its attributes.
+     * 
+     * If the element can't be found, it shows an error
+     * @param {Element} parentElement The parent element to be processed
+     * 
+     * @return {Array} An Array whith entries for each required element. Elements that couldn't be found or properly parsed are not available on the Array
+     */
+    _parseChildElements(parentElement) {
+        let parsedElements = new Array();
+
+        console.log(parsedElements, parentElement); debugger;
+        requiredElements.forEach((elementProperties, elementTagName) => {
+            // find the element
+            let elementCollection = parentElement.getElementsByTagName(elementTagName);
+
+            if (elementCollection.length > 1) {
                 this._showElementMultipleDefinitions(parentElement.tagName, elementTagName);
             } else if (elementCollection.length === 0) {
                 this._showElementNotFound(parentElement.tagName, elementTagName, elementProperties.hasFallback);
@@ -184,9 +215,9 @@ class GenericParser {
      * @returns {*|null} Returns the default value. If it doesn't exist, return 'null'
      */
     _getDefaultValue(attrName, defaultValues) {
-        if(defaultValues === undefined || defaultValues === null)
+        if (defaultValues === undefined || defaultValues === null)
             return null;
-        else if(defaultValues.hasOwnProperty(attrName)) {
+        else if (defaultValues.hasOwnProperty(attrName)) {
             return defaultValues[attrName];
         } else {
             return null;
@@ -197,10 +228,12 @@ class GenericParser {
      * Used to display formatted messages when an expected attribute is not found
      * @param {String} elementName The element's name for which the attribute wasn't found 
      * @param {String} attrName The expected attribute name
-     * @param {Boolean} hasFallback If true, it means there's a default/fallback value to be used, thus it's a minor issue (warning). Displays an error otherwise
+     * @param {Boolean} hasFallback If true, it means there's a default/fallback value to be used, thus it's a minor issue (warning). Displays an error otherwise. A third value
+     * (this.FALLBACK_IGN) is accepted, and no warning will be shown.
      */
     _showAttributeNotFound(elementName, attrName, hasFallback) {
-        if(hasFallback) {
+        if (hasFallback == this.FALLBACK_IGN) {
+        } else if (hasFallback == true) {
             // minor issue, it has a fallback value
             this.sceneGraph.onXMLMinorError(`[${this.constructor.name.toUpperCase()}] Attribute '${attrName}' is not set for element <${elementName}>. Using default value`);
         } else {
@@ -213,10 +246,12 @@ class GenericParser {
      * 
      * @param {String} elementName The element's name for which the attribute wasn't found 
      * @param {String} attrName The expected attribute name
-     * @param {Boolean} hasFallback If true, it means there's a default/fallback value to be used, thus it's a minor issue (warning). Displays an error otherwise
+     * @param {Boolean} hasFallback If true, it means there's a default/fallback value to be used, thus it's a minor issue (warning). Displays an error otherwise. A third value
+     * (this.FALLBACK_IGN) is accepted, and no warning will be shown.
      */
     _showUnexpectedAttrValue(elementName, attrName, hasFallback) {
-        if(hasFallback) {
+        if (hasFallback == this.FALLBACK_IGN) {
+        } else if (hasFallback) {
             // minor issue, it has a fallback value
             this.sceneGraph.onXMLMinorError(`[${this.constructor.name.toUpperCase()}] Unexpected value type for attribute '${attrName}' in element <${elementName}>. Using default value`);
         } else {
@@ -230,30 +265,31 @@ class GenericParser {
     }
 
     _showElementNotFound(parentElementName, childElementName, hasFallback) {
-        if(hasFallback) {
+        if (hasFallback == this.FALLBACK_IGN) {
+        } else if (hasFallback) {
             this.sceneGraph.onXMLMinorError(`[${this.constructor.name.toUpperCase()}] Required element <${childElementName}> couldn't be found under <${parentElementName}>. Using default values`);
         } else {
             this.sceneGraph.onXMLError(`[${this.constructor.name.toUpperCase()}] Required element <${childElementName}> couldn't be found under <${parentElementName}>`);
         }
     }
 
-    onXMLError(foo){
+    onXMLError(foo) {
         this.sceneGraph.onXMLError(foo);
     }
 
-    onXMLMinorError(foo){
+    onXMLMinorError(foo) {
         this.sceneGraph.onXMLMinorError(foo);
     }
 
-    log(foo){
+    log(foo) {
         this.sceneGraph.log(foo);
     }
 
-    info(foo){
+    info(foo) {
         this.sceneGraph.info(foo);
     }
 
-    debug(foo){
+    debug(foo) {
         this.sceneGraph.debug(foo);
     }
 }

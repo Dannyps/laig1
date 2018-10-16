@@ -13,7 +13,7 @@
 <yas xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="yas.xsd">
     <!-- deve definir-se um objeto para raiz da arvore, assim -->
     <!-- como o comprimento dos tres eixos (cilindros) -->
-    <scene root="cc1" axis_length="5.0" />
+    <scene root="root" axis_length="5.0" />
     <views default="vp1">
         <!-- tem de existir, pelo menos, uma vista de -->
         <!-- entre as seguintes (perspective ou ortho) -->
@@ -105,23 +105,18 @@
         <!-- Deve existir um ou mais blocos "primitive" -->
         <!-- Os identificadores "id" nao podem ser repetidos -->
         
-       <!-- <primitive id="pRect"> -->
-            <!-- apenas pode existir UMA das seguintes tags: -->
-            <!-- rectangle, triangle, cylinder, sphere, torus -->
-            <!-- os parametros devem ser interpretados, genericamente, -->
-            <!-- como em WebGL; o cilindro deve adicionalmente ter tampas -->
-           <!-- <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
-        </primitive >  -->
+       <primitive id="pRect">
+           <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+        </primitive >
         
-        <!--<primitive id="pTriang">
+        <primitive id="pTriang">
             <triangle x1="-0.5" y1="-0.5" z1="-0.5" x2="-0.5" y2="-0.5" z2="0.5" x3="0.5" y3="-0.5" z3="-0.5" />
-        </primitive>-->
-        <!-->
+        </primitive>
+        
         <primitive id="pCylind">
             <cylinder base="2" top="1" height="1" slices="50" stacks="2" />
         </primitive>
-        -->
-        
+                
         <primitive id="pSphere">
             <sphere radius="1" slices="20" stacks="20" />
         </primitive>
@@ -142,7 +137,7 @@
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
-                <primitiveref id="pQuad"/>
+                <primitiveref id="pRect"/>
             </children>
         </component>
 
@@ -156,7 +151,7 @@
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
-                <primitiveref id="pQuad"/>
+                <primitiveref id="pRect"/>
             </children>
         </component>
 
@@ -170,7 +165,7 @@
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
-                <primitiveref id="pQuad"/>
+                <primitiveref id="pRect"/>
             </children>
         </component>
 
@@ -184,7 +179,7 @@
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
-                <primitiveref id="pQuad"/>
+                <primitiveref id="pRect"/>
             </children>
         </component>
 
@@ -198,7 +193,7 @@
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
-                <primitiveref id="pQuad"/>
+                <primitiveref id="pRect"/>
             </children>
         </component>
 
@@ -212,7 +207,7 @@
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
-                <primitiveref id="pQuad"/>
+                <primitiveref id="pRect"/>
             </children>
         </component>
 
@@ -288,59 +283,12 @@
         </component>
 
 
-        <component id="cc1">
-            <!-- Uma "component" e' um objeto composto e pode ser -->
-            <!-- usada em nos intermédios -->
-            <!-- bloco "transformation" e' obrigatorio -->
-            <transformation>
-                <!-- deve conter uma referencia a uma das "transformation" -->
-                <!-- declaradas anteriormente -->
-                
-                
-                <transformationref id="tt1" />
-
-
-                <!-- ou, ALTERNATIVAMENTE, transformacoes explicitas, -->
-                <!-- usando zero ou mais das instrucoes seguintes, sem -->
-                <!-- limite nem ordem -->
-                <!-- ex: bloco transformation pode ficar sem conteudo -->
-                
-                <!--<translate x="ff" y="ff" z="ff" />
-                <rotate axis="cc" angle="ff" />
-                <scale x="ff" y="ff" z="ff" />-->
-            </transformation>
-            <!-- declaracao obrigatoria de pelo menos um material; -->
-            <!-- o material id="inherit", mantem (herda) material do "pai" -->
-            <!-- se varios materiais declarados, o default e' o -->
-            <!-- primeiro material; de cada vez que se pressione a tecla m/M, -->
-            <!-- o material muda para o proximo material da lista; do -->
-            <!-- ultimo material da lista volta ao primeiro -->
-            <materials>
-               
-            </materials>
-            <!-- declaracao obrigatoria de texture -->
-            <!-- id="inherit" mantem (herda) a textura do objecto "pai" -->
-            <!-- id="none" remove a textura recebida do pai -->
-            <!-- a textura declarada sobrepoe a textura recebida do -->
-            <!-- objecto "pai" -->
-            <!-- length_s e length_t sao fatores de escala de textura:-->
-            <!-- Exemplo length_s=3.0: uma ocorrencia da textura, em -->
-            <!-- comprimento, deve cobrir um comprimento igual -->
-            <!-- a 3 unidades; -->
-            <!-- Exemplo length_t=0.4, uma ocorrencia da textura, em -->
-            <!-- largura, deve cobrir uma largura igual a 0.4 unidades. -->
-            <!-- E' permitido que objetos afetados por Transf. Geometr. -->
-            <!-- do tipo escalamento violem esta regra. -->
-            <!-- Nao e' necessario aplicar fatores de escala em -->
-            <!-- quadricas (esfera, cilindro...) -->
+        <component id="root">
+            <transformation></transformation>
+            <materials></materials>
             <texture id="tt1" length_s="1" length_t="1" />
-            <!-- bloco "children" obrigatorio num "component" -->
             <children>
-                <!-- deve existir uma ou mais tags "componentref" e/ou -->
-                <!-- "primitiveref", identificando outros -->
-                <!-- componentes ou primitivas -->
-                <!--<componentref id="cccref1" />-->
-                <primitiveref id="pRect" />
+                <componentref id="semaforo" />
             </children>
         </component>
     </components>
