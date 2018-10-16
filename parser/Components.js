@@ -18,6 +18,8 @@ class Components2 extends GenericParser {
             this._parseComponents(compEl);
         });
 
+        console.log(this.components); debugger;
+
         // ensure at least one component is defined
         if (this.components.size === 0) {
             this.onXMLError('You must set at least one component!');
@@ -117,7 +119,6 @@ class Components2 extends GenericParser {
             let transformationsNode = compEl.children[nodeNames.indexOf("transformation")];
             let transformations = new Transformations(this);
             parsedElements.set('transformation', transformations._parseTransformations(transformationsNode, false));
-            
         }
         // push the components
         this.components.set(attrs.id, parsedElements);

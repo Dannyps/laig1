@@ -271,7 +271,6 @@ class MySceneGraph {
 
         // components
 
-        console.log(nodeNames);
         if ((index = nodeNames.indexOf("components")) == -1)
             return "tag <components> missing";
         else {
