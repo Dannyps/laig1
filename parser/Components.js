@@ -1,6 +1,6 @@
 'use strict';
 
-class Components2 extends GenericParser {
+class ComponentsParser extends GenericParser {
     constructor(sceneGraph) {
         super(sceneGraph);
 

@@ -86,6 +86,11 @@ class MySceneGraph {
         /** @description all parsed primitives @type {Map.<string, (parsedRectangle | parsedTriangle | parsedCylinder | parsedSphere)>} */
         this.parsedPrimitives;
 
+        /**
+         * Components
+         */
+        this.parsedComponents;
+
 
         /**
          * File reading
@@ -281,7 +286,7 @@ class MySceneGraph {
             }
         }
 
-        // components
+        // >components>
         if ((index = nodeNames.indexOf("components")) == -1)
             return "tag <components> missing";
         else {
@@ -289,10 +294,15 @@ class MySceneGraph {
                 this.onXMLMinorError("tag <components> out of order");
 
             //Parse components block
-            let components = new Components2(this);
+            let components = new ComponentsParser(this);
             if (components.parse(nodes[index]))
                 return "Failed to parse the <transformations> tag. ABORT!";
-            this.parsedComponents = components.getParsedComponents();
+            
+            let aux = components.getParsedComponents();
+            this.parsedComponents = new Map();
+            aux.forEach((value, key) => {
+                this.parsedComponents.set(key, new Component(this, this.scene, value.transformation, value.children));
+            });
             console.log(components);
             this.info('Parsed components');
         }
@@ -353,6 +363,6 @@ class MySceneGraph {
     displayScene() {
         // entry point for graph rendering
         //TODO: Render loop starting at root of graph
-
+        this.parsedComponents.get(this.idRoot).display();
     }
 }
