@@ -6,8 +6,6 @@ class GenericParser {
         this.FALLBACK_IGN = 2;
     }
 
-
-
     /**
      * The method to be called in order to parse a main XML element (lights, views, ambient, etc.) 
      * @return {Number} Returns 0 if the element was parsed successfully or any other value upon errors
