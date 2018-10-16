@@ -8,8 +8,12 @@ class Components2 extends GenericParser {
 
 
         // data structure for components
-        this.components = new Map();
-    }
+		this.components = new Map();
+	}
+	
+	getParsedComponents() {
+		return this.components;
+	}
 
     parse(componentsNode) {
         // find all omni elements and parse them
@@ -18,13 +22,14 @@ class Components2 extends GenericParser {
             this._parseComponents(compEl);
         });
 
-        console.log(this.components); debugger;
 
         // ensure at least one component is defined
         if (this.components.size === 0) {
             this.onXMLError('You must set at least one component!');
             return -1;
-        }
+		}
+		
+		return 0;
     }
 
     _parseComponents(compEl) {
@@ -42,86 +47,99 @@ class Components2 extends GenericParser {
             return;
         }
 
-        /**
-         * Setup the parser for child elements
-         */
-        let requiredElements = new Map();
+		/**
+		 * Parse child elements, without forcing any specific order
+		 */
+		let parsedElements = {};
 
-        requiredElements.set('transformationref', {
-            hasFallback: this.FALLBACK_IGN,
-            requiredAttrs: {
-                id: 'ss'
-            },
-            defaultValues: {}
-        });
+		for(let i = 0; i < compEl.children.length; i++) {
+			switch(compEl.children[i].tagName) {
+				case 'transformation':
+					parsedElements.transformation = this._parseTransformation(compEl.children[i]);
+					break;
+				case 'children':
+					parsedElements.children = this._parseChildren(compEl.children[i]);
+					break;
+			}
+		}
 
-        requiredElements.set('primitiveref', {
-            hasFallback: this.FALLBACK_IGN,
-            requiredAttrs: {
-                id: 'ss'
-            },
-            defaultValues: {}
-        });
-
-        requiredElements.set('componentref', {
-            hasFallback: this.FALLBACK_IGN,
-            requiredAttrs: {
-                id: 'ss'
-            },
-            defaultValues: {}
-        });
-
-        requiredElements.set('transformation', {
-            hasFallback: this.FALLBACK_IGN,
-            requiredAttrs: {},
-            defaultValues: {}
-        });
-
-        requiredElements.set('materials', {
-            hasFallback: this.FALLBACK_IGN,
-            requiredAttrs: {},
-            defaultValues: {}
-        });
-
-        requiredElements.set('texture', {
-            hasFallback: this.FALLBACK_IGN,
-            requiredAttrs: {
-                id: 'ss',
-                length_s: "ff",
-                length_t: "ff"
-            },
-            defaultValues: {
-                length_s: 1,
-                length_t: 1
-            }
-        });
-
-        requiredElements.set('children', {
-            hasFallback: this.FALLBACK_IGN,
-            requiredAttrs: {},
-            defaultValues: {}
-        });
-
-
-        let parsedElements = this._parseUniqueChildElements(compEl, requiredElements);
-
-        
-        // Reads the names of the nodes to an auxiliary buffer.
-        var nodeNames = [];
-
-        for (var i = 0; i < compEl.children.length; i++) {
-            nodeNames.push(compEl.children[i].nodeName);
-        }
-
-        if (parsedElements.has('transformationref')){
-            // transformationref was found. We needn't look for further transformations.
-        }else{
-            let transformationsNode = compEl.children[nodeNames.indexOf("transformation")];
-            let transformations = new Transformations(this);
-            parsedElements.set('transformation', transformations._parseTransformations(transformationsNode, false));
-        }
-        // push the components
         this.components.set(attrs.id, parsedElements);
     }
+
+	/**
+	 * 
+	 * @param {*} transformationEl 
+	 */
+    _parseTransformation(transformationEl) {
+		if(transformationEl.tagName != 'transformation') throw "Unexpected element";
+
+		/**
+		 * Try to find a transformationref child element
+		 * It should be an unique child element
+		 * It must have an ID for an already parsed transformation
+		 */
+		let transfRef = transformationEl.getElementsByTagName('transformationref');
+		if(transfRef.length > 0) {
+			// get the id
+			let attrs = this._parseAttributes(transfRef[0], {id: 'ss'});
+			if(attrs === null) {
+				// id is not specified
+				return null;
+			} else if(!this.sceneGraph.parsedTransformations.has(attrs.id)) {
+				// there's no transformation with such id
+				return null;
+			}
+			
+			// final check, if multiple transformationref are defined, use the first one and show a warning
+			if(transfRef.length > 1);
+			
+			return this.sceneGraph.parsedTransformations.get(attrs.id);
+		}
+
+		/**
+		 * No transformationref is declared, thus assume all child elements are transformation instructions
+		 */
+		let transformations = new Transformations(this);
+        return transformations._parseTransformations(transformationEl, false);
+	}
+	
+	/**
+	 * Parses the children tag and returns an array of components IDs and primitives IDs. 
+	 * It doesn't verify that the ID's are correct (the elements exist), but ensures at least one child is defined and the syntax is correct
+	 * @param {Element} childrenEl 
+	 * @returns {({primitivesID: string[], componentsID: string[]}|null)} All successfully parsed children's ID or null upon errors
+	 */
+	_parseChildren(childrenEl) {
+		if(childrenEl.tagName != 'children') throw "Unexpected element";
+
+		let componentRefs = [], primitiveRefs = [];
+
+		Array.prototype.forEach.call(childrenEl.children, (el) => {
+			if(!['componentref', 'primitiveref'].includes(el.tagName)) {
+				this.onXMLMinorError(`Unknown element <${el.tagName}>`);
+				return null; // skip
+			}
+
+			// parse ID attribute
+			let attrs = this._parseAttributes(el, {id: 'ss'});
+
+			if(attrs === null)
+				return null;
+
+			if(el.tagName === 'componentref')
+				componentRefs.push(attrs.id);
+			else
+				primitiveRefs.push(attrs.id);
+		});
+
+		// check if at least one child is defined
+		if((componentRefs.length + primitiveRefs.length) === 0) {
+			this.onXMLError(`The component hasn't any children`);
+			return null;
+		}
+
+		return {componentsID: componentRefs, primitivesID: primitiveRefs};
+	}
+
 
 }

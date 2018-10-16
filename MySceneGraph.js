@@ -80,7 +80,16 @@ class MySceneGraph {
         /** @description all parsed transformations @type {Map.<string, Array.<parsedRotate | parsedScale | parsedTranslate>>} */
         this.parsedTransformations;
 
-        // File reading 
+        /**
+         * Primitives
+         */
+        /** @description all parsed primitives @type {Map.<string, (parsedRectangle | parsedTriangle | parsedCylinder | parsedSphere)>} */
+        this.parsedPrimitives;
+
+
+        /**
+         * File reading
+         */
         this.reader = new CGFXMLreader();
 
         /*
@@ -253,7 +262,7 @@ class MySceneGraph {
         }
 
 
-        // primitives
+        // <primitives>
         if ((index = nodeNames.indexOf("primitives")) == -1) {
             return "tag <primitives> missing";
 
@@ -262,15 +271,17 @@ class MySceneGraph {
             if (index != PRIMITIVES_INDEX)
                 this.onXMLMinorError("tag <primitives> out of order");
             //Parse primitives block
-            this.parsedPrimitives = new Primitives(this);
-            if ((error = this.parsedPrimitives.parse(nodes[index])) != null) {
-                return error;
+            let primitives = new Primitives(this);
+            
+            if (primitives.parse(nodes[index]))
+                return "Failed to parse the <primitives> tag. ABORT!";
+            else {
+                this.parsedPrimitives = primitives.getPrimitives();
+                this.info('Parsed primitives');
             }
-            this.info('Parsed primitives');
         }
 
         // components
-
         if ((index = nodeNames.indexOf("components")) == -1)
             return "tag <components> missing";
         else {
@@ -278,10 +289,11 @@ class MySceneGraph {
                 this.onXMLMinorError("tag <components> out of order");
 
             //Parse components block
-            this.parsedComponents = new Components2(this);
-            if ((error = this.parsedComponents.parse(nodes[index])) !== null)
-                return error;
-
+            let components = new Components2(this);
+            if (components.parse(nodes[index]))
+                return "Failed to parse the <transformations> tag. ABORT!";
+            this.parsedComponents = components.getParsedComponents();
+            console.log(components);
             this.info('Parsed components');
         }
     }
@@ -302,7 +314,6 @@ class MySceneGraph {
     onXMLMinorError(message) {
         console.warn("Warning: " + message);
     }
-
 
     /**
      * Callback to be executed on any message.
@@ -343,42 +354,5 @@ class MySceneGraph {
         // entry point for graph rendering
         //TODO: Render loop starting at root of graph
 
-        // TEST for rendering primitives
-        this.parsedPrimitives.getPrimitives().forEach((primitive, id) => {
-            switch (primitive.type) {
-                case 'rectangle':
-                    let rect = new MyRectangle(this.scene, primitive.x1, primitive.y1, primitive.x2, primitive.y2);
-                    rect.display();
-                    break;
-                case 'triangle':
-                    let triangle = new MyTriangle(this.scene, {
-                        x: primitive.x1,
-                        y: primitive.y1,
-                        z: primitive.z1
-                    }, {
-                        x: primitive.x2,
-                        y: primitive.y2,
-                        z: primitive.z2
-                    }, {
-                        x: primitive.x3,
-                        y: primitive.y3,
-                        z: primitive.z3
-                    });
-
-                    triangle.display();
-                    break;
-
-                case 'cylinder':
-                    let cylinder = new MyCylinder(this.scene, primitive.base, primitive.top, primitive.height, primitive.slices, primitive.stacks);
-                    cylinder.display();
-                    break;
-
-                case 'sphere':
-                    let sphere = new MySphere(this.scene, primitive.radius, primitive.slices, primitive.stacks);
-                    sphere.display();
-                default:
-                    break;
-            }
-        });
     }
 }
