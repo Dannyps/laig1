@@ -10,6 +10,9 @@ class Component {
         this.scene = scene;
         this.transformation = transformation;
         this.children = children;
+
+        // create cgf objects for each direct primitive child
+        this.CGFprimitives = new Map();
     }
 
     /**
@@ -42,7 +45,10 @@ class Component {
         // iterate over the children
         // primitives
         this.children.primitivesID.forEach((primitiveId) => {
-            this._displayPrimitive(this.graph.parsedPrimitives.get(primitiveId));
+            if(!this.CGFprimitives.has(primitiveId))
+                this._initCGFprimitive(primitiveId);
+
+            this.CGFprimitives.get(primitiveId).display();
         });
 
         this.children.componentsID.forEach((componentId) => {
@@ -57,14 +63,15 @@ class Component {
      * It creates the CGFObject for each kind of primitive
      * @param {*} primitive 
      */
-    _displayPrimitive(primitive) {
+    _initCGFprimitive(primitiveId) {
+        let primitive = this.graph.parsedPrimitives.get(primitiveId);
+        let cgfObj;
         switch (primitive.type) {
             case 'rectangle':
-                let rect = new MyRectangle(this.scene, primitive.x1, primitive.y1, primitive.x2, primitive.y2);
-                rect.display();
+                cgfObj= new MyRectangle(this.scene, primitive.x1, primitive.y1, primitive.x2, primitive.y2);
                 break;
             case 'triangle':
-                let triangle = new MyTriangle(this.scene, {
+                cgfObj = new MyTriangle(this.scene, {
                     x: primitive.x1,
                     y: primitive.y1,
                     z: primitive.z1
@@ -78,19 +85,18 @@ class Component {
                     z: primitive.z3
                 });
 
-                triangle.display();
                 break;
 
             case 'cylinder':
-                let cylinder = new MyCylinder(this.scene, primitive.base, primitive.top, primitive.height, primitive.slices, primitive.stacks);
-                cylinder.display();
+                cgfObj = new MyCylinder(this.scene, primitive.base, primitive.top, primitive.height, primitive.slices, primitive.stacks);
                 break;
 
             case 'sphere':
-                let sphere = new MySphere(this.scene, primitive.radius, primitive.slices, primitive.stacks);
-                sphere.display();
+                cgfObj = new MySphere(this.scene, primitive.radius, primitive.slices, primitive.stacks);
             default:
                 break;
         }
+
+        this.CGFprimitives.set(primitiveId, cgfObj);
     }
 }
