@@ -44,6 +44,10 @@ class Component {
             this._displayPrimitive(this.graph.parsedPrimitives.get(primitiveId));
         });
 
+        this.children.componentsID.forEach((componentId) => {
+            this.graph.parsedComponents.get(componentId).display();
+        })
+
         // iterate over the children of this component and call display
         this.scene.popMatrix();
     }

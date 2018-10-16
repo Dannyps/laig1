@@ -105,23 +105,18 @@
         <!-- Deve existir um ou mais blocos "primitive" -->
         <!-- Os identificadores "id" nao podem ser repetidos -->
         
-       <!-- <primitive id="pRect"> -->
-            <!-- apenas pode existir UMA das seguintes tags: -->
-            <!-- rectangle, triangle, cylinder, sphere, torus -->
-            <!-- os parametros devem ser interpretados, genericamente, -->
-            <!-- como em WebGL; o cilindro deve adicionalmente ter tampas -->
-           <!-- <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
-        </primitive >  -->
+       <primitive id="pRect">
+           <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+        </primitive >
         
-        <!--<primitive id="pTriang">
+        <primitive id="pTriang">
             <triangle x1="-0.5" y1="-0.5" z1="-0.5" x2="-0.5" y2="-0.5" z2="0.5" x3="0.5" y3="-0.5" z3="-0.5" />
-        </primitive>-->
-        <!-->
+        </primitive>
+        
         <primitive id="pCylind">
             <cylinder base="2" top="1" height="1" slices="50" stacks="2" />
         </primitive>
-        -->
-        
+                
         <primitive id="pSphere">
             <sphere radius="1" slices="20" stacks="20" />
         </primitive>
@@ -142,7 +137,7 @@
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
-                <primitiveref id="pQuad"/>
+                <primitiveref id="pRect"/>
             </children>
         </component>
 
@@ -156,7 +151,7 @@
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
-                <primitiveref id="pQuad"/>
+                <primitiveref id="pRect"/>
             </children>
         </component>
 
@@ -170,7 +165,7 @@
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
-                <primitiveref id="pQuad"/>
+                <primitiveref id="pRect"/>
             </children>
         </component>
 
@@ -184,7 +179,7 @@
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
-                <primitiveref id="pQuad"/>
+                <primitiveref id="pRect"/>
             </children>
         </component>
 
@@ -198,7 +193,7 @@
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
-                <primitiveref id="pQuad"/>
+                <primitiveref id="pRect"/>
             </children>
         </component>
 
@@ -212,7 +207,7 @@
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
-                <primitiveref id="pQuad"/>
+                <primitiveref id="pRect"/>
             </children>
         </component>
 
