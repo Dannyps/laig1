@@ -41,7 +41,7 @@ class Component {
         // iterate over the children
         // primitives
         this.children.primitivesID.forEach((primitiveId) => {
-            
+            this._displayPrimitive(this.graph.parsedPrimitives.get(primitiveId));
         });
 
         // iterate over the children of this component and call display
