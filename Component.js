@@ -19,7 +19,8 @@ class Component {
         this.scene.pushMatrix();
 
         // apply transformations
-        this.transformation.forEach((transf) => {
+        for(let i = this.transformation.length - 1; i >= 0; i--) {
+            let transf = this.transformation[i];
             switch(transf.type) {
                 case 'translate':
                     this.scene.translate(transf.x, transf.y, transf.z);
@@ -36,7 +37,7 @@ class Component {
                     this.scene.scale(transf.x, transf.y, transf.z);
                     break;
             }
-        });
+        }
 
         // iterate over the children
         // primitives
