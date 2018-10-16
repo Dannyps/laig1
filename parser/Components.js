@@ -113,6 +113,8 @@ class Components2 extends GenericParser {
             nodeNames.push(compEl.children[i].nodeName);
         }
 
+        // transformations 
+
         if (parsedElements.has('transformationref')){
             // transformationref was found. We needn't look for further transformations.
         }else{
@@ -120,6 +122,24 @@ class Components2 extends GenericParser {
             let transformations = new Transformations(this);
             parsedElements.set('transformation', transformations._parseTransformations(transformationsNode, false));
         }
+        // -------------------------------------------
+
+        // materials
+
+        let materialsNode = compEl.children[nodeNames.indexOf("materials")];
+        let materials = new Materials(this);
+        parsedElements.set('materials', materials.parseMaterialRefs(materialsNode));
+        // -------------------------------------------
+
+        // texture
+
+        let texturesNode = compEl.children[nodeNames.indexOf("texture")];
+        let textures = new Textures(this);
+        parsedElements.set('textures', textures.parseTextRef(texturesNode));
+
+        // -------------------------------------------
+
+
         // push the components
         this.components.set(attrs.id, parsedElements);
     }

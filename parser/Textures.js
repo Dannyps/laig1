@@ -55,7 +55,10 @@ class Textures extends GenericParser {
         /**
          * Parse the attributes for the omni element
          */
-        let attrs = this._parseAttributes(textsEl, {id: 'ss', file: 'ss'});
+        let attrs = this._parseAttributes(textsEl, {
+            id: 'ss',
+            file: 'ss'
+        });
 
         if (attrs === null)
             return;
@@ -67,6 +70,14 @@ class Textures extends GenericParser {
         }
 
         this.textures.set(attrs.id, attrs.file);
+    }
+
+    parseTextRef(textEl) {
+        return this._parseAttributes(textEl, {
+            id: 'ss',
+            length_s: 'ff',
+            length_t: 'ff'
+        }, {});
     }
 
 }
