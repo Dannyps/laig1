@@ -1,11 +1,22 @@
 'use strict';
 
+/**
+ * @typedef component
+ * @type {object}
+ * @property {(parsedRotate | parsedScale | parsedTranslate)[]} transformation - Array of transformations. Might be empty if it hasn't own transformations 
+ * @property children:
+ * @property primitivesID: string[];
+ * @property componentsID: string[];
+ * @property materials: any;
+ * @property texture: any;
+ */
 class ComponentsParser extends GenericParser {
+    /**
+     * Parser for <components> tag
+     * @param {*} sceneGraph 
+     */
     constructor(sceneGraph) {
         super(sceneGraph);
-
-        // set default values
-
 
         // data structure for components
         this.components = new Map();
@@ -15,13 +26,17 @@ class ComponentsParser extends GenericParser {
         return this.components;
     }
 
+    /**
+     * Parses all components
+     * @param {Element} componentsNode 
+     * @return {number} Returns -1 if no components are defined, 0 otherwise
+     */
     parse(componentsNode) {
-        // find all omni elements and parse them
+        // find all component elements and parse them
         let componentsCollection = componentsNode.getElementsByTagName('component');
         Array.prototype.forEach.call(componentsCollection, (compEl) => {
             this._parseComponents(compEl);
         });
-
 
         // ensure at least one component is defined
         if (this.components.size === 0) {
@@ -32,20 +47,21 @@ class ComponentsParser extends GenericParser {
         return 0;
     }
 
+    /**
+     * Parses the component and adds it to {@link ComponentsParser#components}
+     * 
+     * @param {*} compEl  
+     */
     _parseComponents(compEl) {
         if (compEl.tagName !== 'component') throw 'Unexpected element';
 
         /**
          * Parse the attributes for the component
          */
-        let attrs = this._parseAttributes(compEl, {
-            id: 'ss',
-        }, {});
+        let attrs = this._parseAttributes(compEl, {id: 'ss',});
 
-        if (attrs === null) {
-            // some error happened, skip this component
-            return;
-        }
+        if (attrs === null)
+            return; // some error happened, skip this component
 
         /**
          * Parse child elements, without forcing any specific order
@@ -73,8 +89,9 @@ class ComponentsParser extends GenericParser {
     }
 
     /**
-     * 
+     * Parses the transformation section of some component, which might be a reference or an inline transformation
      * @param {*} transformationEl 
+     * @return {(null | parsedRotate | parsedScale | parsedTranslate)} Returns null upon errors or the transformation
      */
     _parseTransformation(transformationEl) {
         if (transformationEl.tagName != 'transformation') throw "Unexpected element";
@@ -87,21 +104,19 @@ class ComponentsParser extends GenericParser {
         let transfRef = transformationEl.getElementsByTagName('transformationref');
         if (transfRef.length > 0) {
             // get the id
-            let attrs = this._parseAttributes(transfRef[0], {
-                id: 'ss'
-            });
-            if (attrs === null) {
-                // id is not specified
-                return null;
-            } else if (!this.sceneGraph.parsedTransformations.has(attrs.id)) {
-                // there's no transformation with such id
-                return null;
-            }
+            let attrs = this._parseAttributes(transfRef[0], {id: 'ss'});
+            if (attrs === null)
+                return null; // id is not specified
+            else if (!this.sceneGraph.parsedTransformations.has(attrs.id))
+                return null; // there's no transformation with such id
 
             // final check, if multiple transformationref are defined, use the first one and show a warning
-            if (transfRef.length > 1);
+            if (transfRef.length > 1)
+                this.onXMLMinorError("You can only set a single transformationref. Using the first one!");
 
-            return this.sceneGraph.parsedTransformations.get(attrs.id);
+            let trans = this.sceneGraph.parsedTransformations.get(attrs.id);
+            if(trans === -1) return null; // failed to parse a transformation
+            else return trans;
         }
 
         /**
@@ -110,6 +125,19 @@ class ComponentsParser extends GenericParser {
         let transformations = new Transformations(this);
         return transformations._parseTransformations(transformationEl, false);
     }
+
+    /** */
+    _parseMaterials(materialsNode) {
+        let materials = new Materials(this);
+        return materials.parseMaterialRefs(materialsNode);
+    }
+
+    /** */
+    _parseTexture(textureNode) {
+        let textures = new Textures(this);
+        return textures.parseTextRef(textureNode);
+    }
+
 
     /**
      * Parses the children tag and returns an array of components IDs and primitives IDs. 
@@ -130,9 +158,7 @@ class ComponentsParser extends GenericParser {
             }
 
             // parse ID attribute
-            let attrs = this._parseAttributes(el, {
-                id: 'ss'
-            });
+            let attrs = this._parseAttributes(el, {id: 'ss'});
 
             if (attrs === null)
                 return null;
@@ -154,19 +180,5 @@ class ComponentsParser extends GenericParser {
             primitivesID: primitiveRefs
         };
     }
-
-    /** */
-    _parseMaterials(materialsNode) {
-        let materials = new Materials(this);
-        return materials.parseMaterialRefs(materialsNode);
-    }
-
-
-    /** */
-    _parseTexture(textureNode) {
-        let textures = new Textures(this);
-        return textures.parseTextRef(textureNode);
-    }
-
 
 }
