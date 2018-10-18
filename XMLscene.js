@@ -31,12 +31,6 @@ class XMLscene extends CGFscene {
         /** @description Object to be manipulated by the interface to turn lights on/off  @type {{id: boolean}} */
         this.lightValues = {};
 
-        /**
-         * Default material (white diffuse)
-         */
-        this.defaultMaterial = new CGFappearance(this);
-        this.defaultMaterial.setDiffuse(1, 1, 1, 1);
-
     }
 
     /**
@@ -157,8 +151,6 @@ class XMLscene extends CGFscene {
         if (this.sceneInited) {
             // Draw axis
             this.axis.display();
-
-            this.defaultMaterial.apply();
 
             // turn lights on/off
             let i = 0;

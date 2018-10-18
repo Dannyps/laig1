@@ -5,9 +5,9 @@
  * @type {object}
  * @property {(parsedRotate | parsedScale | parsedTranslate)[]} transformation - Array of transformations. Might be empty if it hasn't own transformations 
  * @property children:
- * @property primitivesID: string[];
- * @property componentsID: string[];
- * @property materials: any;
+ * @property {string[]} primitivesID
+ * @property {string[]} componentsID
+ * @property {string[]} materials
  * @property texture: any;
  */
 class ComponentsParser extends GenericParser {

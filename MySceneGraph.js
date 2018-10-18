@@ -74,6 +74,12 @@ class MySceneGraph {
         this.textures;
 
         /**
+         * Materials
+         */
+        /** @description all parsed materials @type {{Map.<string, CGFappearance}} */
+        this.parsedMaterials = new Map();
+        
+        /**
          * Transformations
          */
 
@@ -235,18 +241,31 @@ class MySceneGraph {
             }
         }
 
-        // material
+        // <materials>
         if ((index = nodeNames.indexOf("materials")) == -1)
             return "tag <materials> missing";
         else {
             if (index != MATERIALS_INDEX)
                 this.onXMLMinorError("tag <materials> out of order");
 
-            //Parse ambient block
-            this.parsedMaterials = new Materials(this);
-            this.parsedMaterials.parse(nodes[index]);
-
-            this.info('Parsed materials');
+            let materials = new Materials(this);
+            if(materials.parse(nodes[index])) {
+                return "Failed to parse the <materials> tag"
+            } else {
+                let parsedMaterials = materials.getParsedMaterials();
+                // create the CGFappearance for each material
+                parsedMaterials.forEach((value, key) => {
+                    let cgfAppearance = new CGFappearance(this.scene);
+                    cgfAppearance.setAmbient(value.ambient.r, value.ambient.g, value.ambient.b, value.ambient.a);
+                    cgfAppearance.setDiffuse(value.diffuse.r, value.diffuse.g, value.diffuse.b, value.diffuse.a);
+                    cgfAppearance.setEmission(value.emission.r, value.emission.g, value.emission.b, value.emission.a);
+                    cgfAppearance.setSpecular(value.specular.r, value.specular.g, value.specular.b, value.specular.a);
+                    cgfAppearance.setShininess(value.shininess);
+                    this.parsedMaterials.set(key, cgfAppearance);
+                });
+                this.info('Parsed materials');
+            }
+            
         }
 
         // <transformations>
@@ -301,7 +320,7 @@ class MySceneGraph {
             let aux = components.getParsedComponents();
             this.parsedComponents = new Map();
             aux.forEach((value, key) => {
-                this.parsedComponents.set(key, new Component(this, this.scene, value.transformation, value.children));
+                this.parsedComponents.set(key, new Component(this, this.scene, value));
             });
             console.log(components);
             this.info('Parsed components');
@@ -361,6 +380,8 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
+        // Apply default material
+        
         // entry point for graph rendering
         //TODO: Render loop starting at root of graph
         this.parsedComponents.get(this.idRoot).display();

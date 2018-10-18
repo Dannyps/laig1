@@ -2,15 +2,14 @@ class Component {
     /**
      * 
      * @param {CGFscene} scene 
-     * @param {Array.<parsedRotate | parsedScale | parsedTranslate>} transformation the array might be empty
-     * @param {{primitivesID: string[], componentsID: string[]}} children
+     * @param {component} properties 
      */
-    constructor(graph, scene, transformation, children) {
+    constructor(graph, scene, properties) {
         this.graph = graph;
         this.scene = scene;
-        this.transformation = transformation;
-        this.children = children;
-
+        this.transformation = properties.transformation; /** @type {Array.<parsedRotate | parsedScale | parsedTranslate>} */
+        this.children = properties.children; /** @type  {{primitivesID: string[], componentsID: string[]}} */
+        this.materials = properties.materials;
         // create cgf objects for each direct primitive child
         this.CGFprimitives = new Map();
     }
@@ -42,6 +41,9 @@ class Component {
             }
         }
 
+        // apply material
+        if(this.materials[0].id !== 'inherit')
+            this.graph.parsedMaterials.get(this.materials[0].id).apply();
         // iterate over the children
         // primitives
         this.children.primitivesID.forEach((primitiveId) => {

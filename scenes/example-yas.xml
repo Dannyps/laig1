@@ -68,6 +68,12 @@
     <materials>
         <!-- Deve existir um ou mais blocos "material" -->
         <!-- Os identificadores "id" nao podem ser repetidos -->
+        <material id="defaultAppearance" shininess="10">
+            <ambient r="0.2" g="0.2" b="0.2" a="1" />
+            <diffuse r="0.2" g="0.2" b="0.2" a="1" />
+            <specular r="0.2" g="0.2" b="0.2" a="1" />
+            <emission r="0.2" g="0.2" b="0.2" a="1" />
+        </material>
         <material id="mm1" shininess = "1">
             <emission r="0" g="0" b="0" a="0" />
             <ambient r="0.2" g="0.2" b="0.2" a="1" />
@@ -283,7 +289,9 @@
 
         <component id="root">
             <transformation></transformation>
-            <materials></materials>
+            <materials>
+                <materialref id="defaultAppearance" />
+            </materials>
             <texture id="tt1" length_s="1" length_t="1" />
             <children>
                 <componentref id="semaforo" />
