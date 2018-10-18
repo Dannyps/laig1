@@ -31,6 +31,9 @@ class XMLscene extends CGFscene {
         /** @description Object to be manipulated by the interface to turn lights on/off  @type {{id: boolean}} */
         this.lightValues = {};
 
+        /** @description Flag to tell wether the materials should change or not in the next scene rendering @type {boolean} */
+        this.updateMaterials;
+
     }
 
     /**
@@ -125,8 +128,18 @@ class XMLscene extends CGFscene {
         // Adds lights group.
         this.interface.addLightsGroup(this.graph.parsedLights);
 
+        // Add support for keys
+        this.interface.initKeys();
+
         this.sceneInited = true;
     }
+
+    checkKeys() {
+        if (this.interface.isKeyPressed("KeyM")) {
+            this.updateMaterials=true;
+        }
+    }
+
 
 
     /**
@@ -169,8 +182,17 @@ class XMLscene extends CGFscene {
                 }
             }
 
+            // check keys
+            this.checkKeys();
+            if(this.updateMaterials) {
+                console.log("Update the materials");
+            }
+
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();
+
+            // set the flag to false
+            this.updateMaterials = false;
         }
         else {
             // Draw axis

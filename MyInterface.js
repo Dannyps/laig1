@@ -26,6 +26,28 @@ class MyInterface extends CGFinterface {
     }
 
     /**
+     * Setup key pressing support
+     */
+    
+    initKeys() {
+        this.scene.gui=this;
+        this.processKeyboard=function(){};
+        this.activeKeys={};
+    }
+    
+    processKeyDown(event) {
+        this.activeKeys[event.code]=true;
+    };
+    
+    processKeyUp(event) {
+        this.activeKeys[event.code]=false;
+    };
+    
+    isKeyPressed(keyCode) {
+        return this.activeKeys[keyCode] || false;
+    }
+
+    /**
      * Adds a folder containing the IDs of the lights passed as parameter.
      * @param {array} lights
      */
