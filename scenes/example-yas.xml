@@ -291,6 +291,9 @@
             <transformation></transformation>
             <materials>
                 <materialref id="defaultAppearance" />
+                <materialref id="greenLight" />
+                <materialref id="yellowLight" />
+                <materialref id="redLight" />
             </materials>
             <texture id="tt1" length_s="1" length_t="1" />
             <children>

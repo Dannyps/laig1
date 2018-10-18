@@ -10,6 +10,7 @@ class Component {
         this.transformation = properties.transformation; /** @type {Array.<parsedRotate | parsedScale | parsedTranslate>} */
         this.children = properties.children; /** @type  {{primitivesID: string[], componentsID: string[]}} */
         this.materials = properties.materials;
+        this.currMaterial = 0; // index for current material
         // create cgf objects for each direct primitive child
         this.CGFprimitives = new Map();
     }
@@ -42,8 +43,12 @@ class Component {
         }
 
         // apply material
-        if(this.materials[0] !== 'inherit')
-            this.graph.parsedMaterials.get(this.materials[0]).apply();
+        // check if M was pressed
+        if(this.scene.updateMaterials)
+            this.currMaterial = (this.currMaterial + 1) % this.materials.length;
+           
+        if(this.materials[this.currMaterial] !== 'inherit')
+            this.graph.parsedMaterials.get(this.materials[this.currMaterial]).apply();
         
         // iterate over the children
         // primitives
