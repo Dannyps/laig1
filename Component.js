@@ -49,12 +49,13 @@ class Component {
         if (this.scene.updateMaterials)
             this.currMaterial = (this.currMaterial + 1) % this.materials.length;
 
-        if (this.materials[this.currMaterial] !== 'inherit') {
+        let currentMaterialId = this.materials[this.currMaterial];
+        if (currentMaterialId !== 'inherit') {
             // apply texture
             if (this.texture.id !== 'inherit') {
-                this.graph.parsedMaterials.get(this.materials[0].id).setTexture(this.graph.parsedTextures.get(this.texture.id));
+                this.graph.parsedMaterials.get(currentMaterialId).setTexture(this.graph.parsedTextures.get(this.texture.id));
             }
-            this.graph.parsedMaterials.get(this.materials[this.currMaterial]).apply();
+            this.graph.parsedMaterials.get(currentMaterialId).apply();
         }
 
 
