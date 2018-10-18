@@ -147,8 +147,8 @@ class Materials extends GenericParser {
     }
 
 	/**
-	 * 
-	 * @param {string[]} matEl 
+	 * Parses the material references inside the components tags
+	 * @param {string[]} matEl An array with all material's ID references
 	 */
     parseMaterialRefs(matEl) {
         if (matEl.tagName !== 'materials') throw 'Unexpected element';
@@ -157,7 +157,7 @@ class Materials extends GenericParser {
         let mats = [];
         for (let i = 0; i < childrn.length; i++) {
             let mat = this._parseAttributes(childrn[i], {id: 'ss'});
-            mats.push(mat);
+            mats.push(mat.id);
         }
 
         return mats;

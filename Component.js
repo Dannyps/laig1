@@ -42,8 +42,9 @@ class Component {
         }
 
         // apply material
-        if(this.materials[0].id !== 'inherit')
-            this.graph.parsedMaterials.get(this.materials[0].id).apply();
+        if(this.materials[0] !== 'inherit')
+            this.graph.parsedMaterials.get(this.materials[0]).apply();
+        
         // iterate over the children
         // primitives
         this.children.primitivesID.forEach((primitiveId) => {
