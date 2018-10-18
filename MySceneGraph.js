@@ -70,8 +70,8 @@ class MySceneGraph {
          * Textures
          */
 
-        /** @description all parsed textures @type {{Map.<string, string>}} Maps each texture ID to filename */
-        this.textures;
+        /** @description all parsed textures @type {{Map.<string, CGFtexture>}} Maps each texture ID to filename */
+        this.parsedTextures = new Map();
 
         /**
          * Materials
@@ -236,7 +236,12 @@ class MySceneGraph {
             if(textures.parse(nodes[index])) 
                 return "Failed to parse the <textures> tag. ABORT!";
             else {
-                this.textures = textures.getParsedTextures();
+                let parsedTextures = textures.getParsedTextures();
+                // create the CFGtexture for each texture
+                parsedTextures.forEach((value, key) => {
+                    let cgfAppearance = new CGFtexture (this.scene, "scenes/images/"+value);
+                    this.parsedTextures.set(key, cgfAppearance);
+                });
                 this.info('Parsed textures');
             }
         }

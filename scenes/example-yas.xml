@@ -62,7 +62,7 @@
     <textures>
         <!-- Deve existir um ou mais blocos "texture" -->
         <!-- Os identificadores "id" nao podem ser repetidos -->
-        <texture id="tt1" file="ss" />
+        <texture id="tt1" file="vidral.jpg" />
         <texture id="tt2" file="sds" />
     </textures>
     <materials>
@@ -279,7 +279,7 @@
             <materials>
                 <materialref id="inherit" />
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="tt1" length_s="1" length_t="1" />
             <children>
                 <componentref id="semBase"/>
                 <componentref id="semPoste"/>

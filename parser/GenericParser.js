@@ -188,7 +188,7 @@ class GenericParser {
     _parseChildElements(parentElement) {
         let parsedElements = new Array();
 
-        console.log(parsedElements, parentElement); debugger;
+        console.log(parsedElements, parentElement);
         requiredElements.forEach((elementProperties, elementTagName) => {
             // find the element
             let elementCollection = parentElement.getElementsByTagName(elementTagName);
