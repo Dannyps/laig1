@@ -63,9 +63,10 @@ class MyInterface extends CGFinterface {
         let ctrl = this.gui.add(this.scene, 'activeCamera', viewsID);
         ctrl.onChange(function(val) {
             this.scene.camera = this.scene.views.get(val);
+            this.setActiveCamera(this.scene.camera);    
         }.bind(this));
 
         // force to update view
-        //ctrl.setValue(this.scene.activeCamera);
+        ctrl.setValue(this.scene.activeCamera);
     }
 }

@@ -70,7 +70,7 @@ class XMLscene extends CGFscene {
                 this.views.set(id, new CGFcameraOrtho(
                     view.left, view.right, view.bottom, view.top, view.near, view.far, 
                     vec3.fromValues(view.from.x, view.from.y, view.from.z), 
-                    vec3.fromValues(view.to.x, view.to.y, view.to.z))
+                    vec3.fromValues(view.to.x, view.to.y, view.to.z), vec3.fromValues(0,1,0))
                 );
             }
         });
