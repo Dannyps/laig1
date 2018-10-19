@@ -134,14 +134,6 @@ class XMLscene extends CGFscene {
         this.sceneInited = true;
     }
 
-    checkKeys() {
-        if (this.interface.isKeyPressed("KeyM")) {
-            this.updateMaterials=true;
-        }
-    }
-
-
-
     /**
      * Displays the scene.
      */
@@ -182,8 +174,6 @@ class XMLscene extends CGFscene {
                 }
             }
 
-            // check keys
-            this.checkKeys();
             if(this.updateMaterials) {
                 console.log("Update the materials");
             }

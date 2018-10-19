@@ -28,23 +28,16 @@ class MyInterface extends CGFinterface {
     /**
      * Setup key pressing support
      */
-    
+
     initKeys() {
         this.scene.gui=this;
-        this.processKeyboard=function(){};
-        this.activeKeys={};
     }
     
-    processKeyDown(event) {
-        this.activeKeys[event.code]=true;
-    };
-    
-    processKeyUp(event) {
-        this.activeKeys[event.code]=false;
-    };
-    
-    isKeyPressed(keyCode) {
-        return this.activeKeys[keyCode] || false;
+    processKeyboard(event) {
+        console.log(event);
+        if(event.key === 'm' || event.key === 'M') {
+            this.scene.updateMaterials = true;
+        }
     }
 
     /**
