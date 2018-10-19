@@ -1,0 +1,590 @@
+
+
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="yas">
+    <xs:annotation>
+      <xs:documentation>Os comentarios devem ter espacos no inicio e no fim, a  separar dos hifens  Nao devem ser usados caracteres especiais (p.ex. acentos)  Todas as tags e atributos sao obrigatorios, exceto onde for  referido o contrario  Na descricao abaixo, os simbolos utilizados tem o seguinte significado:  ii: integer value  ff: float value  ss: string value  cc: character "x" or "y" or "z"  tt: "0" or "1" with Boolean significance</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="scene">
+          <xs:annotation>
+            <xs:documentation>deve definir-se um objeto para raiz da arvore, assim  como o comprimento dos tres eixos (cilindros)</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="root"/>
+                <xs:attribute type="xs:float" name="axis_length"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="views">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="perspective" maxOccurs="unbounded" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>tem de existir, pelo menos, uma vista de  entre as seguintes (perspective ou ortho)</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="from">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="x" use="optional"/>
+                            <xs:attribute type="xs:byte" name="y" use="optional"/>
+                            <xs:attribute type="xs:byte" name="z" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="to">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="x" use="optional"/>
+                            <xs:attribute type="xs:byte" name="y" use="optional"/>
+                            <xs:attribute type="xs:byte" name="z" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="id" use="optional"/>
+                  <xs:attribute type="xs:float" name="near" use="optional"/>
+                  <xs:attribute type="xs:short" name="far" use="optional"/>
+                  <xs:attribute type="xs:float" name="angle" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="ortho">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="from">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="x"/>
+                            <xs:attribute type="xs:byte" name="y"/>
+                            <xs:attribute type="xs:byte" name="z"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="to">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="x"/>
+                            <xs:attribute type="xs:byte" name="y"/>
+                            <xs:attribute type="xs:byte" name="z"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="id"/>
+                  <xs:attribute type="xs:float" name="near"/>
+                  <xs:attribute type="xs:short" name="far"/>
+                  <xs:attribute type="xs:byte" name="left"/>
+                  <xs:attribute type="xs:byte" name="right"/>
+                  <xs:attribute type="xs:byte" name="top"/>
+                  <xs:attribute type="xs:byte" name="bottom"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="default"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ambient">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ambient">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:float" name="r"/>
+                      <xs:attribute type="xs:float" name="g"/>
+                      <xs:attribute type="xs:float" name="b"/>
+                      <xs:attribute type="xs:byte" name="a"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="background">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:float" name="r"/>
+                      <xs:attribute type="xs:byte" name="g"/>
+                      <xs:attribute type="xs:byte" name="b"/>
+                      <xs:attribute type="xs:byte" name="a"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="lights">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="omni">
+                <xs:annotation>
+                  <xs:documentation>Deve existir um ou mais blocos "omni" ou "spot"  Os identificadores "id" nao podem ser repetidos</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="location">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="x"/>
+                            <xs:attribute type="xs:byte" name="y"/>
+                            <xs:attribute type="xs:byte" name="z"/>
+                            <xs:attribute type="xs:byte" name="w"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="ambient">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="r"/>
+                            <xs:attribute type="xs:byte" name="g"/>
+                            <xs:attribute type="xs:byte" name="b"/>
+                            <xs:attribute type="xs:byte" name="a"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="diffuse">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:float" name="r"/>
+                            <xs:attribute type="xs:float" name="g"/>
+                            <xs:attribute type="xs:float" name="b"/>
+                            <xs:attribute type="xs:byte" name="a"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="specular">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:float" name="r"/>
+                            <xs:attribute type="xs:float" name="g"/>
+                            <xs:attribute type="xs:float" name="b"/>
+                            <xs:attribute type="xs:byte" name="a"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="id"/>
+                  <xs:attribute type="xs:string" name="enabled"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="spot">
+                <xs:annotation>
+                  <xs:documentation><![CDATA[<omni id="lo2" enabled="true">
+            <location x="5" y="5" z="5" w="0" />
+            <ambient r="0" g="1" b="0" a="1" />
+            <diffuse r="0" g="0.2" b="0" a="1" />
+            <specular r="0" g="0" b="0" a="1" />
+        </omni>]]></xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="location">
+                      <xs:annotation>
+                        <xs:documentation>atencao, "target" e' diferente de "direction"</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="x"/>
+                            <xs:attribute type="xs:byte" name="y"/>
+                            <xs:attribute type="xs:byte" name="z"/>
+                            <xs:attribute type="xs:byte" name="w"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="target">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="x"/>
+                            <xs:attribute type="xs:byte" name="y"/>
+                            <xs:attribute type="xs:byte" name="z"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="ambient">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="r"/>
+                            <xs:attribute type="xs:byte" name="g"/>
+                            <xs:attribute type="xs:byte" name="b"/>
+                            <xs:attribute type="xs:byte" name="a"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="diffuse">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="r"/>
+                            <xs:attribute type="xs:float" name="g"/>
+                            <xs:attribute type="xs:float" name="b"/>
+                            <xs:attribute type="xs:byte" name="a"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="specular">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="r"/>
+                            <xs:attribute type="xs:byte" name="g"/>
+                            <xs:attribute type="xs:byte" name="b"/>
+                            <xs:attribute type="xs:byte" name="a"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="id"/>
+                  <xs:attribute type="xs:string" name="enabled"/>
+                  <xs:attribute type="xs:float" name="angle"/>
+                  <xs:attribute type="xs:byte" name="exponent"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="textures">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="texture" maxOccurs="unbounded" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Deve existir um ou mais blocos "texture"  Os identificadores "id" nao podem ser repetidos</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:string" name="id" use="optional"/>
+                      <xs:attribute type="xs:string" name="file" use="optional"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="materials">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="material" maxOccurs="unbounded" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Deve existir um ou mais blocos "material"  Os identificadores "id" nao podem ser repetidos  dim grey</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:choice maxOccurs="unbounded" minOccurs="0">
+                    <xs:element name="ambient">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:float" name="r" use="optional"/>
+                            <xs:attribute type="xs:float" name="g" use="optional"/>
+                            <xs:attribute type="xs:float" name="b" use="optional"/>
+                            <xs:attribute type="xs:byte" name="a" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="diffuse">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:float" name="r" use="optional"/>
+                            <xs:attribute type="xs:float" name="g" use="optional"/>
+                            <xs:attribute type="xs:float" name="b" use="optional"/>
+                            <xs:attribute type="xs:byte" name="a" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="specular">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:float" name="r" use="optional"/>
+                            <xs:attribute type="xs:float" name="g" use="optional"/>
+                            <xs:attribute type="xs:float" name="b" use="optional"/>
+                            <xs:attribute type="xs:byte" name="a" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="emission">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:float" name="r" use="optional"/>
+                            <xs:attribute type="xs:float" name="g" use="optional"/>
+                            <xs:attribute type="xs:float" name="b" use="optional"/>
+                            <xs:attribute type="xs:byte" name="a" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:choice>
+                  <xs:attribute type="xs:string" name="id" use="optional"/>
+                  <xs:attribute type="xs:byte" name="shininess" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="transformations">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="transformation">
+                <xs:annotation>
+                  <xs:documentation>Deve existir um ou mais blocos "transformation"  Os identificadores "id" nao podem ser repetidos  Os angulos sao expressos em graus</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="translate">
+                      <xs:annotation>
+                        <xs:documentation>instrucoes a usar sem limite nem ordem  deve existir pelo menos uma transformacao</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="x"/>
+                            <xs:attribute type="xs:byte" name="y"/>
+                            <xs:attribute type="xs:byte" name="z"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="rotate">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="axis"/>
+                            <xs:attribute type="xs:short" name="angle"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="scale">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="x"/>
+                            <xs:attribute type="xs:byte" name="y"/>
+                            <xs:attribute type="xs:byte" name="z"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="id"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="primitives">
+          <xs:annotation>
+            <xs:documentation>>
+        &lt;primitive id="pTorus">
+            &lt;torus inner="ff" outer="ff" slices="ii" loops="ii" />
+        &lt;/primitive></xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="primitive" maxOccurs="unbounded" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Uma "primitive" e' uma primitiva e pode ser usada em nos folha  Deve existir um ou mais blocos "primitive"  Os identificadores "id" nao podem ser repetidos</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="rectangle" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:float" name="x1"/>
+                            <xs:attribute type="xs:float" name="y1"/>
+                            <xs:attribute type="xs:float" name="x2"/>
+                            <xs:attribute type="xs:float" name="y2"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="triangle" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:float" name="x1"/>
+                            <xs:attribute type="xs:float" name="y1"/>
+                            <xs:attribute type="xs:float" name="z1"/>
+                            <xs:attribute type="xs:float" name="x2"/>
+                            <xs:attribute type="xs:float" name="y2"/>
+                            <xs:attribute type="xs:float" name="z2"/>
+                            <xs:attribute type="xs:float" name="x3"/>
+                            <xs:attribute type="xs:float" name="y3"/>
+                            <xs:attribute type="xs:float" name="z3"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="cylinder" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="base" use="optional"/>
+                            <xs:attribute type="xs:byte" name="top" use="optional"/>
+                            <xs:attribute type="xs:byte" name="height" use="optional"/>
+                            <xs:attribute type="xs:byte" name="slices" use="optional"/>
+                            <xs:attribute type="xs:byte" name="stacks" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="sphere" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="radius"/>
+                            <xs:attribute type="xs:byte" name="slices"/>
+                            <xs:attribute type="xs:byte" name="stacks"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="id" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="components">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="component" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="transformation">
+                      <xs:complexType mixed="true">
+                        <xs:choice maxOccurs="unbounded" minOccurs="0">
+                          <xs:element name="rotate">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:string" name="axis" use="optional"/>
+                                  <xs:attribute type="xs:short" name="angle" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="scale">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:float" name="x" use="optional"/>
+                                  <xs:attribute type="xs:float" name="y" use="optional"/>
+                                  <xs:attribute type="xs:float" name="z" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="translate" minOccurs="0">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:float" name="x" use="optional"/>
+                                  <xs:attribute type="xs:float" name="y" use="optional"/>
+                                  <xs:attribute type="xs:float" name="z" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:choice>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="materials">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="materialref" maxOccurs="unbounded" minOccurs="0">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:string" name="id" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="texture">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="id" use="optional"/>
+                            <xs:attribute type="xs:byte" name="length_s" use="optional"/>
+                            <xs:attribute type="xs:float" name="length_t" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="children">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="primitiveref" minOccurs="0">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:string" name="id" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="componentref" maxOccurs="unbounded" minOccurs="0">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:string" name="id" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="id" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+
