@@ -17,8 +17,8 @@
     <views default="vp1">
         <!-- tem de existir, pelo menos, uma vista de -->
         <!-- entre as seguintes (perspective ou ortho) -->
-        <perspective id="vp1" near="0.1" far="500" angle="0.5">
-            <from x="0" y="0" z="5" />
+        <perspective id="vp1" near="0.1" far="500" angle="0.4">
+            <from x="15" y="15" z="15" />
             <to x="0" y="0" z="0" />
         </perspective>
         <perspective id="vp2" near="0.1" far="500" angle="0.1">
@@ -67,6 +67,7 @@
         <!-- Os identificadores "id" nao podem ser repetidos -->
         <texture id="tt1" file="vidral.jpg" />
         <texture id="tt2" file="sds" />
+        <texture id="metal" file="metal.jpg" />
     </textures>
     <materials>
         <!-- Deve existir um ou mais blocos "material" -->
@@ -77,6 +78,13 @@
             <specular r="0.2" g="0.2" b="0.2" a="1" />
             <emission r="0.2" g="0.2" b="0.2" a="1" />
         </material>
+
+        <material id="semaforo" shininess="10">
+            <ambient r="0.2" g="0.2" b="0.2" a="1" />
+            <diffuse r="0.2" g="0.2" b="0.2" a="1" />
+            <specular r="0.4" g="0.4" b="0.4" a="1" />
+            <emission r="0.1" g="0.1" b="0.1" a="1" />
+        </material>
         <material id="mm1" shininess = "1">
             <emission r="0" g="0" b="0" a="0" />
             <ambient r="0.2" g="0.2" b="0.2" a="1" />
@@ -86,16 +94,28 @@
 
         <material id="greenLight">
             <ambient g="1" b="0" a="1" />
-            <diffuse r="0.3" g="0.3" b="0.3" a="1" />
+            <emission r="0" g="0.3" b="0" a="1" />
         </material>
         <material id="yellowLight">
-            <ambient r="1" g="1" b="0" a="1" />
+            <emission r="0.3" g="0.3" b="0" a="1" />
         </material>
         <material id="redLight">
-            <ambient r="1" g="0" b="0" a="1" />
+            <emission r="0.3" g="0" b="0" a="1" />
+        </material>
+
+        <material id="litGreenLight">
+            <ambient g="1" b="0" a="1" />
+            <emission r="0" g="0.5" b="0" a="1" />
+        </material>
+        <material id="litYellowLight">
+            <emission r="0.5" g="0.5" b="0" a="1" />
+        </material>
+        <material id="litRedLight">
+            <emission r="0.5" g="0" b="0" a="1" />
         </material>
         <material id="semaphore">
-            <ambient r="0.4" g="0.4" b="0.4" a="1" /> <!-- dim grey -->
+            <ambient r="0.4" g="0.4" b="0.4" a="1" />
+            <!-- dim grey -->
         </material>
     </materials>
     <transformations>
@@ -114,23 +134,27 @@
         <!-- Uma "primitive" e' uma primitiva e pode ser usada em nos folha -->
         <!-- Deve existir um ou mais blocos "primitive" -->
         <!-- Os identificadores "id" nao podem ser repetidos -->
-        
-       <primitive id="pRect">
-           <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+
+        <primitive id="pRect">
+            <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
         </primitive >
-        
+
         <primitive id="pTriang">
             <triangle x1="-0.5" y1="-0.5" z1="-0.5" x2="-0.5" y2="-0.5" z2="0.5" x3="0.5" y3="-0.5" z3="-0.5" />
         </primitive>
-        
+
         <primitive id="pCylind">
             <cylinder base="2" top="1" height="1" slices="50" stacks="2" />
         </primitive>
-                
+
+        <primitive id="pCylind2">
+            <cylinder base="1" top="1" height="1" slices="50" stacks="2" />
+        </primitive>
+
         <primitive id="pSphere">
             <sphere radius="1" slices="20" stacks="20" />
         </primitive>
-        
+
         <!-->
         <primitive id="pTorus">
             <torus inner="ff" outer="ff" slices="ii" loops="ii" />
@@ -237,9 +261,133 @@
             </children>
         </component>
 
+        <component id="chapeuSemaforo1">
+            <transformation>
+                <translate x="1" y="1" z="0"/>
+                <scale x="0.7" y="0.4" z="0.7" />
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="topChapeuSemaforo"/>
+                <componentref id="leftChapeuSemaforo"/>
+                <componentref id="rightChapeuSemaforo"/>
+                <componentref id="lightSemaforo"/>
+            </children>
+        </component>
+
+        <component id="chapeuSemaforo2">
+            <transformation>
+                <translate x="1" y="0.25" z="0"/>
+                <scale x="0.7" y="0.4" z="0.7" />
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="topChapeuSemaforo"/>
+                <componentref id="leftChapeuSemaforo"/>
+                <componentref id="rightChapeuSemaforo"/>
+                <componentref id="lightSemaforo"/>
+
+            </children>
+        </component>
+
+        <component id="chapeuSemaforo3">
+            <transformation>
+                <translate x="1" y="-0.5" z="0"/>
+                <scale x="0.7" y="0.4" z="0.7" />
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="topChapeuSemaforo"/>
+                <componentref id="leftChapeuSemaforo"/>
+                <componentref id="rightChapeuSemaforo"/>
+                <componentref id="lightSemaforo"/>
+            </children>
+        </component>
+
+        <component id="topChapeuSemaforo">
+            <transformation>
+                <translate x="0" y="0" z="0"/>
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="plane"/>
+            </children>
+        </component>
+
+        <component id="lightSemaforo">
+            <transformation>
+                <rotate axis="y" angle="90"/>
+                <scale x="0.2" y="0.15" z="0.2" />
+                <translate x="0" y="-0.30" z="0"/>
+            </transformation>
+            <materials>
+                <materialref id="redLight" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="pCylind2"/>
+            </children>
+        </component>
+
+        <component id="leftChapeuSemaforo">
+            <transformation>
+                <rotate axis="x" angle="-90" />
+                <translate x="0" y="-0.5" z="0.5"/>
+                <scale x="1" y="0.5" z="1"/>
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="plane"/>
+            </children>
+        </component>
+
+        <component id="rightChapeuSemaforo">
+            <transformation>
+                <rotate axis="x" angle="90" />
+                <translate x="0" y="-0.5" z="-0.5"/>
+                <scale x="1" y="0.5" z="1"/>
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="plane"/>
+            </children>
+        </component>
+
+        <component id="plane">
+            <transformation>
+                <scale x="1" y="0.02" z="1"/>
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
         <component id="semBase">
             <transformation>
                 <translate x="0" y="0.5" z="0"/>
+                <scale x="0.6" y="0.09" z="0.6" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -252,20 +400,22 @@
 
         <component id="semPoste">
             <transformation>
-                <scale x="0.2" y="4" z="0.2" />
-                <translate x="0" y="3" z="0" />
+                <rotate axis="x" angle="-90"/>
+                <scale x="0.15" y="4.5" z="0.15" />
+                <translate x="0" y="0.09" z="0" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
             </materials>
             <texture id="inherit" length_s="10" length_t="0.3" />
             <children>
-                <componentref id="cube"/>
+                <primitiveref id="pCylind2"/>
             </children>
         </component>
-        
+
         <component id="semHead">
             <transformation>
+                <scale x="0.8" y="2" z="0.8" />
                 <translate x="0" y="5" z="0" />
             </transformation>
             <materials>
@@ -274,11 +424,16 @@
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <componentref id="cube"/>
+                <componentref id="chapeuSemaforo1" />
+                <componentref id="chapeuSemaforo2" />
+                <componentref id="chapeuSemaforo3" />
             </children>
-        </component>                
-        
+        </component>
+
         <component id="ground">
             <transformation>
+                <scale x="50" y="50" z="1" />
+                <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -293,9 +448,9 @@
             <transformation>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <materialref id="semaforo" />
             </materials>
-            <texture id="tt1" length_s="1" length_t="1" />
+            <texture id="metal" length_s="1" length_t="1" />
             <children>
                 <componentref id="semBase"/>
                 <componentref id="semPoste"/>
