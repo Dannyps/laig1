@@ -17,6 +17,23 @@ class Component {
         this.CGFprimitives = new Map();
     }
 
+    findCycles(parent) {
+        this.parent = parent;
+        let p = parent;
+        while (p != null) {
+            if (p.name == this.name) {
+                alert("Scenegraph has loops!");
+                console.error("Scene graph has loops!");
+                
+                throw "Loops in graph.";
+            }
+            p = p.parent;
+        }
+        this.children.componentsID.forEach((componentId) => {
+            this.graph.parsedComponents.get(componentId).findCycles(this);
+        })
+    }
+
     pushTexCoords(el) {
 
         this.ols = el.texture.length_s;
@@ -37,12 +54,12 @@ class Component {
         return [el.texture.length_s, el.texture.length_t];
     }
 
-    popTexCoords(el){
+    popTexCoords(el) {
         el.texture.length_s = this.ols;
         el.texture.length_t = this.olt;
     }
 
-    
+
 
     /**
      * 
@@ -84,6 +101,7 @@ class Component {
             // displaying the root node.
             if (currentMaterialId == 'inherit') {
                 console.error("Root node cannot inherit");
+                throw "Root node must not inherit.";
             }
             this.material = this.graph.parsedMaterials.get(currentMaterialId);
         } else {

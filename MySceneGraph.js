@@ -329,6 +329,8 @@ class MySceneGraph {
             });
             console.log(components);
             this.info('Parsed components');
+
+            this.parsedComponents.get(this.idRoot).findCycles(null);
         }
     }
 
