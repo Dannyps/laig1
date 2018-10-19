@@ -30,8 +30,8 @@
             <to x="20" y="20" z="20" />
         </perspective>
         <ortho id="vo1" near="0.1" far="500" left="-5" right="5" top="5" bottom="-5">
-            <from x="0" y="0" z="5" />
-            <to x="0" y="0" z="0" />
+            <from x="5" y="5" z="0" />
+            <to x="0" y="5" z="0" />
         </ortho>
     </views>
     <ambient>
@@ -105,13 +105,13 @@
 
         <material id="litGreenLight">
             <ambient g="1" b="0" a="1" />
-            <emission r="0" g="0.5" b="0" a="1" />
+            <emission r="0" g="0.8" b="0" a="1" />
         </material>
         <material id="litYellowLight">
-            <emission r="0.5" g="0.5" b="0" a="1" />
+            <emission r="0.8" g="0.8" b="0" a="1" />
         </material>
         <material id="litRedLight">
-            <emission r="0.5" g="0" b="0" a="1" />
+            <emission r="0.8" g="0" b="0" a="1" />
         </material>
         <material id="semaphore">
             <ambient r="0.4" g="0.4" b="0.4" a="1" />
@@ -274,7 +274,7 @@
                 <componentref id="topChapeuSemaforo"/>
                 <componentref id="leftChapeuSemaforo"/>
                 <componentref id="rightChapeuSemaforo"/>
-                <componentref id="lightSemaforo"/>
+                <componentref id="redLightSemaforo"/>
             </children>
         </component>
 
@@ -291,7 +291,7 @@
                 <componentref id="topChapeuSemaforo"/>
                 <componentref id="leftChapeuSemaforo"/>
                 <componentref id="rightChapeuSemaforo"/>
-                <componentref id="lightSemaforo"/>
+                <componentref id="yellowLightSemaforo"/>
 
             </children>
         </component>
@@ -309,7 +309,7 @@
                 <componentref id="topChapeuSemaforo"/>
                 <componentref id="leftChapeuSemaforo"/>
                 <componentref id="rightChapeuSemaforo"/>
-                <componentref id="lightSemaforo"/>
+                <componentref id="greenLightSemaforo"/>
             </children>
         </component>
 
@@ -326,14 +326,44 @@
             </children>
         </component>
 
-        <component id="lightSemaforo">
+        <component id="redLightSemaforo">
             <transformation>
                 <rotate axis="y" angle="90"/>
                 <scale x="0.2" y="0.15" z="0.2" />
                 <translate x="0" y="-0.30" z="0"/>
             </transformation>
             <materials>
-                <materialref id="redLight" />
+                <materialref id="litRedLight" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="pCylind2"/>
+            </children>
+        </component>
+
+        <component id="yellowLightSemaforo">
+            <transformation>
+                <rotate axis="y" angle="90"/>
+                <scale x="0.2" y="0.15" z="0.2" />
+                <translate x="0" y="-0.30" z="0"/>
+            </transformation>
+            <materials>
+                <materialref id="yellowLight" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="pCylind2"/>
+            </children>
+        </component>
+
+        <component id="greenLightSemaforo">
+            <transformation>
+                <rotate axis="y" angle="90"/>
+                <scale x="0.2" y="0.15" z="0.2" />
+                <translate x="0" y="-0.30" z="0"/>
+            </transformation>
+            <materials>
+                <materialref id="greenLight" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
