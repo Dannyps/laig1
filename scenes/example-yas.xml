@@ -67,6 +67,7 @@
         <!-- Os identificadores "id" nao podem ser repetidos -->
         <texture id="tt1" file="vidral.jpg" />
         <texture id="tt2" file="sds" />
+        <texture id="ttRoadLane" file="roadTwoLanes.png" />
     </textures>
     <materials>
         <!-- Deve existir um ou mais blocos "material" -->
@@ -303,6 +304,21 @@
             </children>
         </component>
 
+        <!-- ROAD -->
+        <component id="roadLane1">
+            <transformation>
+                <scale x="10" y="90" z="1" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="ttRoadLane" length_s="1" length_t="30" />
+            <children>
+                <primitiveref id="pRect" />
+            </children>
+        </component>
+
         <component id="root">
             <transformation></transformation>
             <materials>
@@ -315,6 +331,7 @@
             <children>
                 <componentref id="semaforo" />
                 <componentref id="ground" />
+                <componentref id="roadLane1" />
             </children>
         </component>
     </components>
