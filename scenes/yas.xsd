@@ -23,7 +23,7 @@
         <xs:element name="views">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="perspective">
+              <xs:element name="perspective" minOccurs="0" maxOccurs="unbounded">
                 <xs:annotation>
                   <xs:documentation>tem de existir, pelo menos, uma vista de  entre as seguintes (perspective ou ortho)</xs:documentation>
                 </xs:annotation>
@@ -58,7 +58,7 @@
                   <xs:attribute type="xs:decimal" name="angle" use="required"/>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="ortho">
+              <xs:element name="ortho" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:simpleContent>
                     <xs:extension base="xs:string">
@@ -279,8 +279,8 @@
                   <xs:documentation>Deve existir um ou mais blocos "material"  Os identificadores "id" nao podem ser repetidos  dim grey</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="emission" minOccurs="0">
+                  <xs:all>
+                    <xs:element name="emission" minOccurs="1" maxOccurs="1">
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
@@ -292,7 +292,7 @@
                         </xs:simpleContent>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="ambient">
+                    <xs:element name="ambient" minOccurs="1" maxOccurs="1">
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
@@ -304,7 +304,7 @@
                         </xs:simpleContent>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="diffuse" minOccurs="0">
+                    <xs:element name="diffuse" minOccurs="1" maxOccurs="1">
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
@@ -316,7 +316,7 @@
                         </xs:simpleContent>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="specular" minOccurs="0">
+                    <xs:element name="specular" minOccurs="1" maxOccurs="1">
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
@@ -328,8 +328,8 @@
                         </xs:simpleContent>
                       </xs:complexType>
                     </xs:element>
-                  </xs:sequence>
-                  <xs:attribute type="xs:string" name="id" use="optional"/>
+                  </xs:all>
+                  <xs:attribute type="xs:string" name="id" use="required"/>
                   <xs:attribute type="xs:decimal" name="shininess" use="optional"/>
                 </xs:complexType>
               </xs:element>
@@ -538,7 +538,7 @@
                       </xs:annotation>
                       <xs:complexType mixed="true">
                         <xs:sequence>
-                          <xs:element name="materialref" minOccurs="0">
+                          <xs:element name="materialref" minOccurs="1" maxOccurs="unbounded">
                             <xs:complexType>
                               <xs:simpleContent>
                                 <xs:extension base="xs:string">

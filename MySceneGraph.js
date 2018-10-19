@@ -325,7 +325,7 @@ class MySceneGraph {
             let aux = components.getParsedComponents();
             this.parsedComponents = new Map();
             aux.forEach((value, key) => {
-                this.parsedComponents.set(key, new Component(this, this.scene, value));
+                this.parsedComponents.set(key, new Component(this, this.scene, value, key));
             });
             console.log(components);
             this.info('Parsed components');
@@ -389,6 +389,6 @@ class MySceneGraph {
         
         // entry point for graph rendering
         //TODO: Render loop starting at root of graph
-        this.parsedComponents.get(this.idRoot).display();
+        this.parsedComponents.get(this.idRoot).display(null);
     }
 }

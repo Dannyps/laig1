@@ -4,22 +4,52 @@ class Component {
      * @param {CGFscene} scene 
      * @param {component} properties 
      */
-    constructor(graph, scene, properties) {
+    constructor(graph, scene, properties, name) {
         this.graph = graph;
         this.scene = scene;
         this.transformation = properties.transformation; /** @type {Array.<parsedRotate | parsedScale | parsedTranslate>} */
         this.children = properties.children; /** @type  {{primitivesID: string[], componentsID: string[]}} */
         this.materials = properties.materials;
         this.texture = properties.texture;
+        this.name = name;
         this.currMaterial = 0; // index for current material
         // create cgf objects for each direct primitive child
         this.CGFprimitives = new Map();
     }
 
+    pushTexCoords(el) {
+
+        this.ols = el.texture.length_s;
+        this.olt = el.texture.length_t;
+
+        let pls, plt; // parent length_s/t
+        if (el.parent == null) {
+            pls = 1;
+            plt = 1;
+        } else {
+            pls = el.parent.texture.length_s;
+            plt = el.parent.texture.length_t;
+
+        }
+        el.texture.length_s *= pls;
+        el.texture.length_t *= plt;
+
+        return [el.texture.length_s, el.texture.length_t];
+    }
+
+    popTexCoords(el){
+        el.texture.length_s = this.ols;
+        el.texture.length_t = this.olt;
+    }
+
+    
+
     /**
      * 
      */
-    display() {
+    display(parent) {
+
+        this.parent = parent;
         this.scene.pushMatrix();
 
         // apply transformations
@@ -50,30 +80,66 @@ class Component {
             this.currMaterial = (this.currMaterial + 1) % this.materials.length;
 
         let currentMaterialId = this.materials[this.currMaterial];
-        if (currentMaterialId !== 'inherit') {
-            // apply texture
-            if (this.texture.id !== 'inherit') {
-                this.graph.parsedMaterials.get(currentMaterialId).setTexture(this.graph.parsedTextures.get(this.texture.id));
+        if (parent == null) {
+            // displaying the root node.
+            if (currentMaterialId == 'inherit') {
+                console.error("Root node cannot inherit");
             }
-            this.graph.parsedMaterials.get(currentMaterialId).apply();
+            this.material = this.graph.parsedMaterials.get(currentMaterialId);
+        } else {
+            // this is a child node
+            if (currentMaterialId === 'inherit') {
+                this.material = parent.material;
+            } else {
+                this.material = this.graph.parsedMaterials.get(currentMaterialId);
+            }
         }
 
+        // apply texture
+        if (this.texture.id !== 'inherit' && this.texture.id != 'none') {
+            this.material.setTexture(this.graph.parsedTextures.get(this.texture.id));
+
+        } else if (this.texture.id == 'none') {
+            this.material.setTexture(null);
+        }
+
+        let tc = this.pushTexCoords(this);
+
+        let ls = tc[0];
+        let lt = tc[1];
+
+        this.material.apply();
 
         // iterate over the children
         // primitives
         this.children.primitivesID.forEach((primitiveId) => {
             if (!this.CGFprimitives.has(primitiveId))
                 this._initCGFprimitive(primitiveId);
+            let myprim = this.CGFprimitives.get(primitiveId);
 
-            this.CGFprimitives.get(primitiveId).display();
+            if (primitiveId == "pRect") {
+                myprim.texCoords = [
+                    0, 0,
+                    0, ls,
+                    lt, 0,
+                    lt, ls
+                ];
+            }
+
+            myprim.updateTexCoordsGLBuffers();
+            myprim.display(this);
+
+
         });
 
         this.children.componentsID.forEach((componentId) => {
-            this.graph.parsedComponents.get(componentId).display();
+            this.graph.parsedComponents.get(componentId).display(this);
         })
 
         // iterate over the children of this component and call display
         this.scene.popMatrix();
+
+        this.popTexCoords(this);
     }
 
     /**
