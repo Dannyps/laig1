@@ -77,7 +77,10 @@ class Textures extends GenericParser {
             id: 'ss',
             length_s: 'ff',
             length_t: 'ff'
-        }, {});
+        }, {
+            length_s: 1,
+            length_t: 1
+        });
     }
 
 }
