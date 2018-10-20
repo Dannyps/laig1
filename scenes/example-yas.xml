@@ -73,6 +73,7 @@
         <texture id="calcada" file="calcada.jpg" />
         <texture id="porta" file="porta.png" />
         <texture id="grass" file="grass.jpg" />
+        <texture id="bricks" file="bricks.png"/>
     </textures>
     <materials>
         <!-- Deve existir um ou mais blocos "material" -->
@@ -796,7 +797,54 @@
 
         <component id="casa1">
             <transformation>
+                <rotate axis="y" angle="-90" />
+                <translate x="10" y="2.5" z="10" />
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="casa" />
+            </children>
+        </component>
 
+
+        <component id="casa2">
+            <transformation>
+                <rotate axis="y" angle="-90" />
+
+                <translate x="10" y="2.5" z="18" />
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="casa" />
+            </children>
+        </component>
+
+        <component id="casa3">
+            <transformation>
+                <rotate axis="y" angle="90" />
+
+                <translate x="-10" y="2.5" z="18" />
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="casa" />
+            </children>
+        </component>
+
+        <component id="casa4">
+            <transformation>
+                <rotate axis="y" angle="90" />
+
+                <translate x="-10" y="2.5" z="10" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -809,9 +857,7 @@
 
         <component id="casa">
             <transformation>
-                <rotate axis="y" angle="-90" />
                 <scale x="5" y="5" z="5"/>
-                <translate x="10" y="2.5" z="10" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -882,7 +928,7 @@
             <materials>
                 <materialref id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="bricks" length_s="2" length_t="1" />
             <children>
                 <primitiveref id="pRect" />
             </children>
@@ -897,7 +943,7 @@
             <materials>
                 <materialref id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="bricks" length_s="2" length_t="1" />
             <children>
                 <primitiveref id="pRect" />
             </children>
@@ -945,6 +991,9 @@
                 <componentref id="passeio7" />
                 <componentref id="passeio8" />
                 <componentref id="casa1" />
+                <componentref id="casa2" />
+                <componentref id="casa3" />
+                <componentref id="casa4" />
 
             </children>
         </component>
