@@ -137,10 +137,11 @@ class Component {
 
             if (primitiveId == "pRect") {
                 myprim.texCoords = [
-                    0, 0,
                     0, ls,
-                    lt, 0,
-                    lt, ls
+                    0, 0,
+                    lt, ls,
+                    lt, 0
+
                 ];
             }
 

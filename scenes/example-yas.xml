@@ -70,6 +70,8 @@
         <texture id="ttRoadLane" file="roadTwoLanes.png" />
         <texture id="ttRoadLaneIntersection" file="roadOneLane.png" />
         <texture id="metal" file="metal.jpg" />
+        <texture id="calcada" file="calcada.jpg" />
+        <texture id="porta" file="porta.png" />
     </textures>
     <materials>
         <!-- Deve existir um ou mais blocos "material" -->
@@ -87,10 +89,24 @@
             <specular r="0.4" g="0.4" b="0.4" a="1" />
             <emission r="0.1" g="0.1" b="0.1" a="1" />
         </material>
+
+        <material id="passeio" shininess="1">
+            <ambient r="0.2" g="0.2" b="0.2" a="1" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1" />
+            <specular r="0" g="0" b="0" a="1" />
+            <emission r="0.1" g="0.1" b="0.1" a="1" />
+        </material>
         <material id="mm1" shininess = "1">
             <emission r="0" g="0" b="0" a="0" />
             <ambient r="0.2" g="0.2" b="0.2" a="1" />
             <diffuse r="0.3" g="0.3" b="0.3" a="1" />
+            <specular r="0" g="0" b="0" a="1" />
+        </material>
+
+        <material id="porta" shininess = "1">
+            <emission r="0" g="0" b="0" a="0" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1" />
             <specular r="0" g="0" b="0" a="1" />
         </material>
 
@@ -464,11 +480,11 @@
 
         <component id="ground">
             <transformation>
-                <scale x="50" y="50" z="1" />
+                <scale x="200" y="200" z="1" />
                 <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <materialref id="greenLight" />
             </materials>
             <texture id="grass" length_s="1" length_t="1" />
             <children>
@@ -479,6 +495,7 @@
         <component id="semaforo">
             <transformation>
                 <scale x="0.5" y="0.8" z="0.7"/>
+                <translate x="0" y="0.35" z="0" />
             </transformation>
             <materials>
                 <materialref id="semaforo" />
@@ -651,6 +668,257 @@
             </children>
         </component>
 
+        <component id="passeio">
+            <transformation>
+                <scale x="20" y="0.35" z="2"/>
+                <translate x="15" y="0.2" z="6"/>
+            </transformation>
+            <materials>
+                <materialref id="passeio" />
+            </materials>
+            <texture id="calcada" length_s="0.2" length_t="2" />
+            <children>
+                <componentref id="cube" />
+            </children>
+        </component>
+
+        <component id="passeio1">
+            <transformation>
+
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="passeio" />
+            </children>
+        </component>
+
+        <component id="passeio2">
+            <transformation>
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="passeio" />
+            </children>
+        </component>
+
+        <component id="passeio3">
+            <transformation>
+                <rotate axis="y" angle="180" />
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="passeio" />
+            </children>
+        </component>
+
+        <component id="passeio4">
+            <transformation>
+                <rotate axis="y" angle="270" />
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="passeio" />
+            </children>
+        </component>
+
+        <component id="passeio5">
+            <transformation>
+                <rotate axis="y" angle="270" />
+                <translate x="12" y="0" z="2.75" />
+                <scale x="1" y="1" z="0.9" />
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="passeio" />
+            </children>
+        </component>
+
+        <component id="passeio6">
+            <transformation>
+                <rotate axis="y" angle="180" />
+                <translate x="0" y="0" z="12" />
+                <scale x="1" y="1" z="0.9" />
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="passeio" />
+            </children>
+        </component>
+
+        <component id="passeio7">
+            <transformation>
+                <rotate axis="y" angle="90" />
+                <translate x="-12" y="0" z="-2.75" />
+                <scale x="1" y="1" z="0.9" />
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="passeio" />
+            </children>
+        </component>
+
+        <component id="passeio8">
+            <transformation>
+                <translate x="0" y="0" z="-12" />
+                <scale x="1" y="1" z="0.9" />
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="passeio" />
+            </children>
+        </component>
+
+        <component id="casa1">
+            <transformation>
+
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="casa" />
+            </children>
+        </component>
+
+        <component id="casa">
+            <transformation>
+                <rotate axis="y" angle="-90" />
+                <scale x="5" y="5" z="5"/>
+                <translate x="10" y="2.5" z="10" />
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="cube" />
+                <componentref id="telhado" />
+                <componentref id="porta" />
+                <!--<componentref id="janela1" />
+                <componentref id="janela2" />-->
+            </children>
+        </component>
+
+        <component id="porta">
+            <transformation>
+                <scale x="0.3" y="0.5" z="0.005"/>
+                <translate x="0" y="-0.25" z="0.5" />
+
+
+            </transformation>
+            <materials>
+                <materialref id="porta" />
+            </materials>
+            <texture id="porta" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube" />
+            </children>
+        </component>
+
+        <component id="telhado1">
+            <transformation>
+                <rotate axis="x" angle="0" />
+                <rotate axis="x" angle="-90" />
+                <rotate axis="z" angle="-135" />
+                <translate x="0" y="0" z="-1" />
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="pTriang" />
+            </children>
+        </component>
+
+        <component id="telhado2">
+            <transformation>
+                <rotate axis="x" angle="90" />
+                <rotate axis="z" angle="-45" />
+                <translate x="0" y="0" z="1" />
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="pTriang" />
+            </children>
+        </component>
+
+        <component id="telhado3">
+            <transformation>
+                <rotate axis="y" angle="90" />
+                <rotate axis="z" angle="45" />
+                <translate x="0.35" y="0.35" z="0" />
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="pRect" />
+            </children>
+        </component>
+
+        <component id="telhado4">
+            <transformation>
+                <rotate axis="y" angle="90" />
+                <rotate axis="z" angle="135" />
+                <translate x="-0.35" y="0.35" z="0" />
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="pRect" />
+            </children>
+        </component>
+
+        <component id="telhado">
+            <transformation>
+                <translate x="0" y="0.5" z="0" />
+                <scale x="0.7" y="1" z="1" />
+            </transformation>
+            <materials>
+                <materialref id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="telhado1" />
+                <componentref id="telhado2" />
+                <componentref id="telhado3" />
+                <componentref id="telhado4" />
+            </children>
+        </component>
+
         <component id="root">
             <transformation></transformation>
             <materials>
@@ -667,6 +935,16 @@
                 <componentref id="semaforo4" />
                 <componentref id="ground" />
                 <componentref id="road" />
+                <componentref id="passeio1" />
+                <componentref id="passeio2" />
+                <componentref id="passeio3" />
+                <componentref id="passeio4" />
+                <componentref id="passeio5" />
+                <componentref id="passeio6" />
+                <componentref id="passeio7" />
+                <componentref id="passeio8" />
+                <componentref id="casa1" />
+
             </children>
         </component>
     </components>
