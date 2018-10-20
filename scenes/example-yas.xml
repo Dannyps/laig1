@@ -17,8 +17,8 @@
     <views default="vp1">
         <!-- tem de existir, pelo menos, uma vista de -->
         <!-- entre as seguintes (perspective ou ortho) -->
-        <perspective id="vp1" near="0.1" far="500" angle="0.4">
-            <from x="15" y="15" z="15" />
+        <perspective id="vp1" near="0.1" far="500" angle="0.7">
+            <from x="25" y="25" z="25" />
             <to x="0" y="0" z="0" />
         </perspective>
         <perspective id="vp2" near="0.1" far="500" angle="0.1">
@@ -478,6 +478,7 @@
 
         <component id="semaforo">
             <transformation>
+                <scale x="0.5" y="0.8" z="0.7"/>
             </transformation>
             <materials>
                 <materialref id="semaforo" />
@@ -487,6 +488,61 @@
                 <componentref id="semBase"/>
                 <componentref id="semPoste"/>
                 <componentref id="semHead"/>
+            </children>
+        </component>
+
+        <component id="semaforo1">
+            <transformation>
+                <rotate axis="y" angle="-90" />
+                <translate x="5.8" y="0" z="5.8" />
+            </transformation>
+            <materials>
+                <materialref id="semaforo" />
+            </materials>
+            <texture id="metal" length_s="1" length_t="1" />
+            <children>
+                <componentref id="semaforo"/>
+            </children>
+        </component>
+
+        <component id="semaforo2">
+            <transformation>
+                <translate x="5.8" y="0" z="-5.8" />
+            </transformation>
+            <materials>
+                <materialref id="semaforo" />
+            </materials>
+            <texture id="metal" length_s="1" length_t="1" />
+            <children>
+                <componentref id="semaforo"/>
+            </children>
+        </component>
+
+        <component id="semaforo3">
+            <transformation>
+                <rotate axis="y" angle="180" />
+                <translate x="-5.8" y="0" z="5.8" />
+            </transformation>
+            <materials>
+                <materialref id="semaforo" />
+            </materials>
+            <texture id="metal" length_s="1" length_t="1" />
+            <children>
+                <componentref id="semaforo"/>
+            </children>
+        </component>
+
+        <component id="semaforo4">
+            <transformation>
+                <rotate axis="y" angle="90" />
+                <translate x="-5.8" y="0" z="-5.8" />
+            </transformation>
+            <materials>
+                <materialref id="semaforo" />
+            </materials>
+            <texture id="metal" length_s="1" length_t="1" />
+            <children>
+                <componentref id="semaforo"/>
             </children>
         </component>
 
@@ -605,7 +661,10 @@
             </materials>
             <texture id="tt1" length_s="1" length_t="1" />
             <children>
-                <componentref id="semaforo" />
+                <componentref id="semaforo1" />
+                <componentref id="semaforo2" />
+                <componentref id="semaforo3" />
+                <componentref id="semaforo4" />
                 <componentref id="ground" />
                 <componentref id="road" />
             </children>
