@@ -33,9 +33,9 @@
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:byte" name="x" use="optional"/>
-                            <xs:attribute type="xs:byte" name="y" use="optional"/>
-                            <xs:attribute type="xs:byte" name="z" use="optional"/>
+                            <xs:attribute type="xs:float" name="x" use="optional"/>
+                            <xs:attribute type="xs:float" name="y" use="optional"/>
+                            <xs:attribute type="xs:float" name="z" use="optional"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -44,9 +44,9 @@
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:byte" name="x" use="optional"/>
-                            <xs:attribute type="xs:byte" name="y" use="optional"/>
-                            <xs:attribute type="xs:byte" name="z" use="optional"/>
+                            <xs:attribute type="xs:float" name="x" use="optional"/>
+                            <xs:attribute type="xs:float" name="y" use="optional"/>
+                            <xs:attribute type="xs:float" name="z" use="optional"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -65,9 +65,9 @@
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:byte" name="x"/>
-                            <xs:attribute type="xs:byte" name="y"/>
-                            <xs:attribute type="xs:byte" name="z"/>
+                            <xs:attribute type="xs:float" name="x"/>
+                            <xs:attribute type="xs:float" name="y"/>
+                            <xs:attribute type="xs:float" name="z"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -76,9 +76,9 @@
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:byte" name="x"/>
-                            <xs:attribute type="xs:byte" name="y"/>
-                            <xs:attribute type="xs:byte" name="z"/>
+                            <xs:attribute type="xs:float" name="x"/>
+                            <xs:attribute type="xs:float" name="y"/>
+                            <xs:attribute type="xs:float" name="z"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -87,10 +87,10 @@
                   <xs:attribute type="xs:string" name="id"/>
                   <xs:attribute type="xs:float" name="near"/>
                   <xs:attribute type="xs:short" name="far"/>
-                  <xs:attribute type="xs:byte" name="left"/>
-                  <xs:attribute type="xs:byte" name="right"/>
-                  <xs:attribute type="xs:byte" name="top"/>
-                  <xs:attribute type="xs:byte" name="bottom"/>
+                  <xs:attribute type="xs:float" name="left"/>
+                  <xs:attribute type="xs:float" name="right"/>
+                  <xs:attribute type="xs:float" name="top"/>
+                  <xs:attribute type="xs:float" name="bottom"/>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
@@ -107,7 +107,7 @@
                       <xs:attribute type="xs:float" name="r"/>
                       <xs:attribute type="xs:float" name="g"/>
                       <xs:attribute type="xs:float" name="b"/>
-                      <xs:attribute type="xs:byte" name="a"/>
+                      <xs:attribute type="xs:float" name="a"/>
                     </xs:extension>
                   </xs:simpleContent>
                 </xs:complexType>
@@ -117,9 +117,9 @@
                   <xs:simpleContent>
                     <xs:extension base="xs:string">
                       <xs:attribute type="xs:float" name="r"/>
-                      <xs:attribute type="xs:byte" name="g"/>
-                      <xs:attribute type="xs:byte" name="b"/>
-                      <xs:attribute type="xs:byte" name="a"/>
+                      <xs:attribute type="xs:float" name="g"/>
+                      <xs:attribute type="xs:float" name="b"/>
+                      <xs:attribute type="xs:float" name="a"/>
                     </xs:extension>
                   </xs:simpleContent>
                 </xs:complexType>
@@ -129,7 +129,7 @@
         </xs:element>
         <xs:element name="lights">
           <xs:complexType>
-            <xs:sequence>
+            <xs:any>
               <xs:element name="omni">
                 <xs:annotation>
                   <xs:documentation>Deve existir um ou mais blocos "omni" ou "spot"  Os identificadores "id" nao podem ser repetidos</xs:documentation>
@@ -140,10 +140,10 @@
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:byte" name="x"/>
-                            <xs:attribute type="xs:byte" name="y"/>
-                            <xs:attribute type="xs:byte" name="z"/>
-                            <xs:attribute type="xs:byte" name="w"/>
+                            <xs:attribute type="xs:float" name="x"/>
+                            <xs:attribute type="xs:float" name="y"/>
+                            <xs:attribute type="xs:float" name="z"/>
+                            <xs:attribute type="xs:float" name="w"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -152,10 +152,10 @@
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:byte" name="r"/>
-                            <xs:attribute type="xs:byte" name="g"/>
-                            <xs:attribute type="xs:byte" name="b"/>
-                            <xs:attribute type="xs:byte" name="a"/>
+                            <xs:attribute type="xs:float" name="r"/>
+                            <xs:attribute type="xs:float" name="g"/>
+                            <xs:attribute type="xs:float" name="b"/>
+                            <xs:attribute type="xs:float" name="a"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -167,7 +167,7 @@
                             <xs:attribute type="xs:float" name="r"/>
                             <xs:attribute type="xs:float" name="g"/>
                             <xs:attribute type="xs:float" name="b"/>
-                            <xs:attribute type="xs:byte" name="a"/>
+                            <xs:attribute type="xs:float" name="a"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -179,7 +179,7 @@
                             <xs:attribute type="xs:float" name="r"/>
                             <xs:attribute type="xs:float" name="g"/>
                             <xs:attribute type="xs:float" name="b"/>
-                            <xs:attribute type="xs:byte" name="a"/>
+                            <xs:attribute type="xs:float" name="a"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -207,10 +207,10 @@
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:byte" name="x"/>
-                            <xs:attribute type="xs:byte" name="y"/>
-                            <xs:attribute type="xs:byte" name="z"/>
-                            <xs:attribute type="xs:byte" name="w"/>
+                            <xs:attribute type="xs:float" name="x"/>
+                            <xs:attribute type="xs:float" name="y"/>
+                            <xs:attribute type="xs:float" name="z"/>
+                            <xs:attribute type="xs:float" name="w"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -219,9 +219,9 @@
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:byte" name="x"/>
-                            <xs:attribute type="xs:byte" name="y"/>
-                            <xs:attribute type="xs:byte" name="z"/>
+                            <xs:attribute type="xs:float" name="x"/>
+                            <xs:attribute type="xs:float" name="y"/>
+                            <xs:attribute type="xs:float" name="z"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -230,10 +230,10 @@
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:byte" name="r"/>
-                            <xs:attribute type="xs:byte" name="g"/>
-                            <xs:attribute type="xs:byte" name="b"/>
-                            <xs:attribute type="xs:byte" name="a"/>
+                            <xs:attribute type="xs:float" name="r"/>
+                            <xs:attribute type="xs:float" name="g"/>
+                            <xs:attribute type="xs:float" name="b"/>
+                            <xs:attribute type="xs:float" name="a"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -242,10 +242,10 @@
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:byte" name="r"/>
+                            <xs:attribute type="xs:float" name="r"/>
                             <xs:attribute type="xs:float" name="g"/>
                             <xs:attribute type="xs:float" name="b"/>
-                            <xs:attribute type="xs:byte" name="a"/>
+                            <xs:attribute type="xs:float" name="a"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -254,10 +254,10 @@
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:byte" name="r"/>
-                            <xs:attribute type="xs:byte" name="g"/>
-                            <xs:attribute type="xs:byte" name="b"/>
-                            <xs:attribute type="xs:byte" name="a"/>
+                            <xs:attribute type="xs:float" name="r"/>
+                            <xs:attribute type="xs:float" name="g"/>
+                            <xs:attribute type="xs:float" name="b"/>
+                            <xs:attribute type="xs:float" name="a"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -266,10 +266,10 @@
                   <xs:attribute type="xs:string" name="id"/>
                   <xs:attribute type="xs:string" name="enabled"/>
                   <xs:attribute type="xs:float" name="angle"/>
-                  <xs:attribute type="xs:byte" name="exponent"/>
+                  <xs:attribute type="xs:float" name="exponent"/>
                 </xs:complexType>
               </xs:element>
-            </xs:sequence>
+            </xs:any>
           </xs:complexType>
         </xs:element>
         <xs:element name="textures">
@@ -307,7 +307,7 @@
                             <xs:attribute type="xs:float" name="r" use="optional"/>
                             <xs:attribute type="xs:float" name="g" use="optional"/>
                             <xs:attribute type="xs:float" name="b" use="optional"/>
-                            <xs:attribute type="xs:byte" name="a" use="optional"/>
+                            <xs:attribute type="xs:float" name="a" use="optional"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -319,7 +319,7 @@
                             <xs:attribute type="xs:float" name="r" use="optional"/>
                             <xs:attribute type="xs:float" name="g" use="optional"/>
                             <xs:attribute type="xs:float" name="b" use="optional"/>
-                            <xs:attribute type="xs:byte" name="a" use="optional"/>
+                            <xs:attribute type="xs:float" name="a" use="optional"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -331,7 +331,7 @@
                             <xs:attribute type="xs:float" name="r" use="optional"/>
                             <xs:attribute type="xs:float" name="g" use="optional"/>
                             <xs:attribute type="xs:float" name="b" use="optional"/>
-                            <xs:attribute type="xs:byte" name="a" use="optional"/>
+                            <xs:attribute type="xs:float" name="a" use="optional"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -343,14 +343,14 @@
                             <xs:attribute type="xs:float" name="r" use="optional"/>
                             <xs:attribute type="xs:float" name="g" use="optional"/>
                             <xs:attribute type="xs:float" name="b" use="optional"/>
-                            <xs:attribute type="xs:byte" name="a" use="optional"/>
+                            <xs:attribute type="xs:float" name="a" use="optional"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
                     </xs:element>
                   </xs:choice>
                   <xs:attribute type="xs:string" name="id" use="optional"/>
-                  <xs:attribute type="xs:byte" name="shininess" use="optional"/>
+                  <xs:attribute type="xs:float" name="shininess" use="optional"/>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
@@ -372,9 +372,9 @@
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:byte" name="x"/>
-                            <xs:attribute type="xs:byte" name="y"/>
-                            <xs:attribute type="xs:byte" name="z"/>
+                            <xs:attribute type="xs:float" name="x"/>
+                            <xs:attribute type="xs:float" name="y"/>
+                            <xs:attribute type="xs:float" name="z"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -393,9 +393,9 @@
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:byte" name="x"/>
-                            <xs:attribute type="xs:byte" name="y"/>
-                            <xs:attribute type="xs:byte" name="z"/>
+                            <xs:attribute type="xs:float" name="x"/>
+                            <xs:attribute type="xs:float" name="y"/>
+                            <xs:attribute type="xs:float" name="z"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -455,11 +455,11 @@
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:byte" name="base" use="optional"/>
-                            <xs:attribute type="xs:byte" name="top" use="optional"/>
-                            <xs:attribute type="xs:byte" name="height" use="optional"/>
-                            <xs:attribute type="xs:byte" name="slices" use="optional"/>
-                            <xs:attribute type="xs:byte" name="stacks" use="optional"/>
+                            <xs:attribute type="xs:float" name="base" use="optional"/>
+                            <xs:attribute type="xs:float" name="top" use="optional"/>
+                            <xs:attribute type="xs:float" name="height" use="optional"/>
+                            <xs:attribute type="xs:float" name="slices" use="optional"/>
+                            <xs:attribute type="xs:float" name="stacks" use="optional"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
@@ -468,9 +468,9 @@
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:byte" name="radius"/>
-                            <xs:attribute type="xs:byte" name="slices"/>
-                            <xs:attribute type="xs:byte" name="stacks"/>
+                            <xs:attribute type="xs:float" name="radius"/>
+                            <xs:attribute type="xs:float" name="slices"/>
+                            <xs:attribute type="xs:float" name="stacks"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
