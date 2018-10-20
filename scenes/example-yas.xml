@@ -72,6 +72,7 @@
         <texture id="metal" file="metal.jpg" />
         <texture id="calcada" file="calcada.jpg" />
         <texture id="porta" file="porta.png" />
+        <texture id="grass" file="grass.jpg" />
     </textures>
     <materials>
         <!-- Deve existir um ou mais blocos "material" -->
@@ -486,7 +487,7 @@
             <materials>
                 <materialref id="greenLight" />
             </materials>
-            <texture id="grass" length_s="1" length_t="1" />
+            <texture id="grass" length_s="200" length_t="200" />
             <children>
                 <primitiveref id="pRect" />
             </children>
