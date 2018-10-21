@@ -86,7 +86,6 @@
         <!-- Deve existir um ou mais blocos "texture" -->
         <!-- Os identificadores "id" nao podem ser repetidos -->
         <texture id="tt1" file="vidral.jpg" />
-        <texture id="tt2" file="sds" />
         <texture id="ttRoadLane" file="roadTwoLanes.png" />
         <texture id="ttRoadLaneIntersection" file="roadOneLane.png" />
         <texture id="metal" file="metal.jpg" />
@@ -94,6 +93,7 @@
         <texture id="porta" file="porta.png" />
         <texture id="grass" file="grass.jpg" />
         <texture id="bricks" file="bricks.png"/>
+        <texture id="roof" file="roof.jpg"/>
     </textures>
     <materials>
         <!-- Deve existir um ou mais blocos "material" -->
@@ -136,7 +136,7 @@
         </material>
 
         <material id="greenLight">
-            <ambient g="1" b="0" a="1" />
+            <ambient r="0" g="1" b="0" a="1" />
             <emission r="0" g="0.3" b="0" a="1" />
         </material>
         <material id="yellowLight">
@@ -150,7 +150,7 @@
             <ambient g="1" b="0" a="1" />
             <emission r="0" g="0.8" b="0" a="1" />
         </material>
-        <material id="litYellowLight">
+        <material id="litYellowLight" shininess="1">
             <emission r="0.8" g="0.8" b="0" a="1" />
         </material>
         <material id="litRedLight">
@@ -198,7 +198,7 @@
         </primitive>
 
         <primitive id="pTorus">
-            <torus inner="1" outer="2" slices="10" loops="10" />
+            <torus inner="0.1" outer="1" slices="20" loops="20" />
         </primitive>
     </primitives >
     <components>
@@ -764,7 +764,7 @@
             <materials>
                 <materialref id="light" />
             </materials>
-            <texture id="vidral" length_s="0.2" length_t="2" />
+            <texture id="tt1" length_s="0.2" length_t="2" />
             <children>
                 <primitiveref id="pSphere" />
             </children>
@@ -966,8 +966,8 @@
                 <componentref id="cube" />
                 <componentref id="telhado" />
                 <componentref id="porta" />
-                <!--<componentref id="janela1" />
-                <componentref id="janela2" />-->
+                <componentref id="janela1" />
+                <!--<componentref id="janela2" />-->
             </children>
         </component>
 
@@ -984,6 +984,20 @@
             <texture id="porta" length_s="1" length_t="1" />
             <children>
                 <componentref id="cube" />
+            </children>
+        </component>
+
+        <component id="janela1">
+            <transformation>
+                <scale x="0.07" y="0.07" z="0.02"/>
+                <translate x="0" y=".5" z="0.5" />
+            </transformation>
+            <materials>
+                <materialref id="porta" />
+            </materials>
+            <texture id="porta" length_s="1" length_t="1" />
+            <children>
+                <componentref id="torus" />
             </children>
         </component>
 
@@ -1027,7 +1041,7 @@
             <materials>
                 <materialref id="inherit" />
             </materials>
-            <texture id="bricks" length_s="2" length_t="1" />
+            <texture id="roof" length_s="3" length_t="2" />
             <children>
                 <primitiveref id="pRect" />
             </children>
@@ -1042,7 +1056,7 @@
             <materials>
                 <materialref id="inherit" />
             </materials>
-            <texture id="bricks" length_s="2" length_t="1" />
+            <texture id="roof" length_s="3" length_t="2" />
             <children>
                 <primitiveref id="pRect" />
             </children>
@@ -1109,7 +1123,6 @@
                 <componentref id="streetLamp2" />
                 <componentref id="streetLamp3" />
                 <componentref id="streetLamp4" />
-                <componentref id="torus" />
             </children>
         </component>
     </components>

@@ -110,12 +110,21 @@ class Component {
                 this.material = parent.material;
             } else {
                 this.material = this.graph.parsedMaterials.get(currentMaterialId);
+                if(this.material == undefined){
+                    console.error("Broken material ref: "+currentMaterialId);
+                    throw "Broken material ref: "+currentMaterialId;
+                }
             }
         }
 
         // apply texture
         if (this.texture.id !== 'inherit' && this.texture.id != 'none') {
-            this.material.setTexture(this.graph.parsedTextures.get(this.texture.id));
+            let tex = this.graph.parsedTextures.get(this.texture.id);
+            if(tex == undefined){
+                console.error("Broken texture ref: "+this.texture.id);
+                throw "Broken texture ref: "+this.texture.id;
+            }
+            this.material.setTexture(tex);
 
         } else if (this.texture.id == 'none') {
             this.material.setTexture(null);

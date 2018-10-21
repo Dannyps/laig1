@@ -300,57 +300,57 @@
                 </xs:annotation>
                 <xs:complexType>
                   <xs:choice maxOccurs="unbounded" minOccurs="0">
-                    <xs:element name="ambient">
+                    <xs:element name="ambient" minOccurs="1" maxOccurs="1">
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:float" name="r" use="optional"/>
-                            <xs:attribute type="xs:float" name="g" use="optional"/>
-                            <xs:attribute type="xs:float" name="b" use="optional"/>
-                            <xs:attribute type="xs:float" name="a" use="optional"/>
+                            <xs:attribute type="xs:float" name="r" use="required"/>
+                            <xs:attribute type="xs:float" name="g" use="required"/>
+                            <xs:attribute type="xs:float" name="b" use="required"/>
+                            <xs:attribute type="xs:float" name="a" use="required"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="diffuse">
+                    <xs:element name="diffuse" minOccurs="1" maxOccurs="1">
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:float" name="r" use="optional"/>
-                            <xs:attribute type="xs:float" name="g" use="optional"/>
-                            <xs:attribute type="xs:float" name="b" use="optional"/>
-                            <xs:attribute type="xs:float" name="a" use="optional"/>
+                            <xs:attribute type="xs:float" name="r" use="required"/>
+                            <xs:attribute type="xs:float" name="g" use="required"/>
+                            <xs:attribute type="xs:float" name="b" use="required"/>
+                            <xs:attribute type="xs:float" name="a" use="required"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="specular">
+                    <xs:element name="specular" minOccurs="1" maxOccurs="1">
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:float" name="r" use="optional"/>
-                            <xs:attribute type="xs:float" name="g" use="optional"/>
-                            <xs:attribute type="xs:float" name="b" use="optional"/>
-                            <xs:attribute type="xs:float" name="a" use="optional"/>
+                            <xs:attribute type="xs:float" name="r" use="required"/>
+                            <xs:attribute type="xs:float" name="g" use="required"/>
+                            <xs:attribute type="xs:float" name="b" use="required"/>
+                            <xs:attribute type="xs:float" name="a" use="required"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="emission">
+                    <xs:element name="emission" minOccurs="1" maxOccurs="1">
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
-                            <xs:attribute type="xs:float" name="r" use="optional"/>
-                            <xs:attribute type="xs:float" name="g" use="optional"/>
-                            <xs:attribute type="xs:float" name="b" use="optional"/>
-                            <xs:attribute type="xs:float" name="a" use="optional"/>
+                            <xs:attribute type="xs:float" name="r" use="required"/>
+                            <xs:attribute type="xs:float" name="g" use="required"/>
+                            <xs:attribute type="xs:float" name="b" use="required"/>
+                            <xs:attribute type="xs:float" name="a" use="required"/>
                           </xs:extension>
                         </xs:simpleContent>
                       </xs:complexType>
                     </xs:element>
                   </xs:choice>
-                  <xs:attribute type="xs:string" name="id" use="optional"/>
-                  <xs:attribute type="xs:float" name="shininess" use="optional"/>
+                  <xs:attribute type="xs:string" name="id" use="required"/>
+                  <xs:attribute type="xs:float" name="shininess" use="required"/>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
