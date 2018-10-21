@@ -58,8 +58,6 @@ class MyTriangle extends CGFobject {
 			0, 0,
 			a, 0
 		];
-
-		console.log(this.texCoords); debugger;
 	}
 
 	initBuffers() {
