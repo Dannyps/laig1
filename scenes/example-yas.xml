@@ -19,15 +19,15 @@
     <!-- VIEWS -->
     <!--       -->
     <views default="vp1">
-        <perspective id="vp1" near="0.1" far="500" angle="0.7">
+        <perspective id="vp1" near="0.1" far="500" angle="45">
             <from x="25" y="25" z="25" />
             <to x="0" y="0" z="0" />
         </perspective>
-        <perspective id="vp2" near="0.1" far="500" angle="0.1">
+        <perspective id="vp2" near="0.1" far="500" angle="45">
             <from x="15" y="15" z="15" />
             <to x="0" y="0" z="0" />
         </perspective>
-        <perspective id="vp3" near="0.1" far="500" angle="1">
+        <perspective id="vp3" near="0.1" far="500" angle="45">
             <from x="0" y="0" z="0" />
             <to x="20" y="20" z="20" />
         </perspective>
