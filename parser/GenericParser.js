@@ -1,4 +1,20 @@
 'use strict';
+/** 
+ * @typedef requiredAttrs
+ * @type {object}
+ * @property {string} any - Each property is a pair (atribute name, value type). The possible value types are 'ff' || 'ii' || 'ss' || 'cc' || 'tt'
+ */
+
+ /** 
+ * @typedef defaultValues
+ * @type {object}
+ * @property {string} any - Each property is a pair (atribute name, value). Value is a fallback to be used when it's not possible to parse the said attribute name
+ */
+
+ /**
+  * Example of requiredAttrs: {r: 'ff', g: 'ff', b: 'ff'}
+  * Example of defaultValues: {r: 0.5, g: 0.5, b: 1}
+  */
 
 class GenericParser {
     constructor(sceneGraph) {
@@ -15,24 +31,13 @@ class GenericParser {
     }
 
     /**
-     * Generic method that parses the attributes of an element. It only processes the element itself, not any child elements
+     * Generic method that parses the attributes of an element. It only processes the element itself, doesn0t iterate over child elements
      * 
      * @param {Element} element The element to be parsed
-     * @param {Object} requiredAttrs An object specifying the required attributes for the element and the expected value type
-     * 
-     * Each property key/name matches the attribute name
-     * 
-     * Each property value specifies the expected value type. It must be one of the following: 'ff' || 'ii' || 'ss' || 'cc' || 'tt'
-     * 
-     * @param {Object} defaultValues An object with default values, if any, for the attributes. If some attribute is missing, or doesn't have a valid value, but there's a default/fallback value, then the default is used and a minor error is generated. Otherwise, it generates an error and returns.
-     * 
-     * Example:
-     * 
-     * requiredAttrs = {r: 'ff', g: 'ff', b: 'ff'}
-     * 
-     * defaultValues = {r: 0.5, g: 0.5, b: 1}
-     * 
-     * @returns {(null|Object)} null If some error ocurred, or an object where each property is a pair (attributeName, Value), similar to defaultValues
+     * @param {requiredAttrs} requiredAttrs The expected attributes and their value type
+     * @param {defaultValues} [defaultValues] Specifies the default values to be used when some attribute can't be parsed 
+     *  
+     * @returns {(null|Object)} null If some error ocurred, or an object where each property is a pair (attributeName, Value), similar to defaultValues. {@link defaultValues}
      */
     _parseAttributes(element, requiredAttrs, defaultValues) {
         let parsedAttrs = {};
@@ -58,10 +63,10 @@ class GenericParser {
                 // try to get a default as a fallback
                 let val = this._getDefaultValue(requiredAttrName, defaultValues);
                 if (val === null) {
-                    this._showAttributeNotFound(element.tagName, requiredAttrName, false);
+                    this._showAttributeNotFound(element, requiredAttrName, false);
                     return null;
                 } else {
-                    this._showAttributeNotFound(element.tagName, requiredAttrName, true);
+                    this._showAttributeNotFound(element, requiredAttrName, true);
                     parsedAttrs[requiredAttrName] = val;
                 }
             }
@@ -164,9 +169,9 @@ class GenericParser {
             let elementCollection = parentElement.getElementsByTagName(elementTagName);
 
             if (elementCollection.length > 1) {
-                this._showElementMultipleDefinitions(parentElement.tagName, elementTagName);
+                this._showElementMultipleDefinitions(parentElement, elementTagName);
             } else if (elementCollection.length === 0) {
-                this._showElementNotFound(parentElement.tagName, elementTagName, elementProperties.hasFallback);
+                this._showElementNotFound(parentElement, elementTagName, elementProperties.hasFallback);
                 return; // cannot proceed ? TODO
             }
 
@@ -188,13 +193,12 @@ class GenericParser {
     _parseChildElements(parentElement) {
         let parsedElements = new Array();
 
-        console.log(parsedElements, parentElement);
         requiredElements.forEach((elementProperties, elementTagName) => {
             // find the element
             let elementCollection = parentElement.getElementsByTagName(elementTagName);
 
             if (elementCollection.length > 1) {
-                this._showElementMultipleDefinitions(parentElement.tagName, elementTagName);
+                this._showElementMultipleDefinitions(parentElement, elementTagName);
             } else if (elementCollection.length === 0) {
                 this._showElementNotFound(parentElement.tagName, elementTagName, elementProperties.hasFallback);
                 return; // cannot proceed ? TODO
@@ -226,70 +230,83 @@ class GenericParser {
 
     /**
      * Used to display formatted messages when an expected attribute is not found
-     * @param {String} elementName The element's name for which the attribute wasn't found 
+     * @param {String} element The element's name for which the attribute wasn't found 
      * @param {String} attrName The expected attribute name
      * @param {Boolean} hasFallback If true, it means there's a default/fallback value to be used, thus it's a minor issue (warning). Displays an error otherwise. A third value
      * (this.FALLBACK_IGN) is accepted, and no warning will be shown.
      */
-    _showAttributeNotFound(elementName, attrName, hasFallback) {
-        if (hasFallback == this.FALLBACK_IGN) {
-        } else if (hasFallback == true) {
+    _showAttributeNotFound(element, attrName, hasFallback) {
+        if (hasFallback == this.FALLBACK_IGN)
+            return;
+
+        if (hasFallback == true) {
             // minor issue, it has a fallback value
-            this.sceneGraph.onXMLMinorError(`[${this.constructor.name.toUpperCase()}] Attribute '${attrName}' is not set for element <${elementName}>. Using default value`);
+            this.sceneGraph.onXMLMinorError(`[${this.constructor.name.toUpperCase()}] Attribute '${attrName}' is not set for element <${element.tagName}>. Using default value. Affected element shown below:`);
         } else {
             // error
-            this.sceneGraph.onXMLError(`[${this.constructor.name.toUpperCase()}] Attribute '${attrName}' is not set for element <${elementName}>. Cannot proceed`);
+            this.sceneGraph.onXMLError(`[${this.constructor.name.toUpperCase()}] Attribute '${attrName}' is not set for element <${element.tagName}>. Cannot proceed. Affected element shown below:`);
         }
+
+        console.log(element);
     }
 
     /**
      * 
-     * @param {String} elementName The element's name for which the attribute wasn't found 
+     * @param {String} element The element for which the attribute wasn't found 
      * @param {String} attrName The expected attribute name
      * @param {Boolean} hasFallback If true, it means there's a default/fallback value to be used, thus it's a minor issue (warning). Displays an error otherwise. A third value
      * (this.FALLBACK_IGN) is accepted, and no warning will be shown.
      */
-    _showUnexpectedAttrValue(elementName, attrName, hasFallback) {
-        if (hasFallback == this.FALLBACK_IGN) {
-        } else if (hasFallback) {
+    _showUnexpectedAttrValue(element, attrName, hasFallback) {
+        if (hasFallback == this.FALLBACK_IGN)
+            return;
+        
+        if (hasFallback) {
             // minor issue, it has a fallback value
-            this.sceneGraph.onXMLMinorError(`[${this.constructor.name.toUpperCase()}] Unexpected value type for attribute '${attrName}' in element <${elementName}>. Using default value`);
+            this.sceneGraph.onXMLMinorError(`[${this.constructor.name.toUpperCase()}] Unexpected value type for attribute '${attrName}' in element <${element.tagName}>. Using default value. Affected element shown below:`);
         } else {
             // error
-            this.sceneGraph.onXMLError(`[${this.constructor.name.toUpperCase()}] Unexpected value type for attribute '${attrName}' in element <${elementName}>. Cannot proceed`);
+            this.sceneGraph.onXMLError(`[${this.constructor.name.toUpperCase()}] Unexpected value type for attribute '${attrName}' in element <${element.tagName}>. Cannot proceed. Affected element shown below:`);
         }
+
+        console.log(element);
     }
 
-    _showElementMultipleDefinitions(parentElementName, childElementName) {
-        this.sceneGraph.onXMLMinorError(`[${this.constructor.name.toUpperCase()}] Multiple element definitions for <${childElementName}> were found under <${parentElementName}>, while only one is expected. Using first element on the tree`);
+    _showElementMultipleDefinitions(parentElement, childElementName) {
+        this.sceneGraph.onXMLMinorError(`[${this.constructor.name.toUpperCase()}] Multiple element definitions for <${childElementName}> were found under <${parentElement.tagName}>, while only one is expected. Using first element on the tree. Affected element shown below:`);
+        console.log(parentElement);
     }
 
-    _showElementNotFound(parentElementName, childElementName, hasFallback) {
-        if (hasFallback == this.FALLBACK_IGN) {
-        } else if (hasFallback) {
-            this.sceneGraph.onXMLMinorError(`[${this.constructor.name.toUpperCase()}] Required element <${childElementName}> couldn't be found under <${parentElementName}>. Using default values`);
+    _showElementNotFound(parentElement, childElementName, hasFallback) {
+        if (hasFallback == this.FALLBACK_IGN)
+            return;
+        
+        if (hasFallback) {
+            this.sceneGraph.onXMLMinorError(`[${this.constructor.name.toUpperCase()}] Required element <${childElementName}> couldn't be found under <${parentElement.tagName}>. Using default values. Affected element shown below:`);
         } else {
-            this.sceneGraph.onXMLError(`[${this.constructor.name.toUpperCase()}] Required element <${childElementName}> couldn't be found under <${parentElementName}>`);
+            this.sceneGraph.onXMLError(`[${this.constructor.name.toUpperCase()}] Required element <${childElementName}> couldn't be found under <${parentElement.tagName}>. Affected element shown below:`);
         }
+
+        console.log(parentElement);
     }
 
     onXMLError(foo) {
-        this.sceneGraph.onXMLError(foo);
+        this.sceneGraph.onXMLError(`[${this.constructor.name.toUpperCase()}]: ${foo}`);
     }
 
     onXMLMinorError(foo) {
-        this.sceneGraph.onXMLMinorError(foo);
+        this.sceneGraph.onXMLMinorError(`[${this.constructor.name.toUpperCase()}]: ${foo}`);
     }
 
     log(foo) {
-        this.sceneGraph.log(foo);
+        this.sceneGraph.log(`[${this.constructor.name.toUpperCase()}]: ${foo}`);
     }
 
     info(foo) {
-        this.sceneGraph.info(foo);
+        this.sceneGraph.info(`[${this.constructor.name.toUpperCase()}]: ${foo}`);
     }
 
     debug(foo) {
-        this.sceneGraph.debug(foo);
+        this.sceneGraph.debug(`[${this.constructor.name.toUpperCase()}]: ${foo}`);
     }
 }
