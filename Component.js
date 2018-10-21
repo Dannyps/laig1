@@ -195,6 +195,10 @@ class Component {
 
             case 'sphere':
                 cgfObj = new MySphere(this.scene, primitive.radius, primitive.slices, primitive.stacks);
+                break;
+            case 'torus':
+                cgfObj = new MyTorus(this.scene, primitive.inner, primitive.outer, primitive.slices, primitive.loops);
+                break;
             default:
                 break;
         }

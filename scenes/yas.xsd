@@ -475,6 +475,18 @@
                         </xs:simpleContent>
                       </xs:complexType>
                     </xs:element>
+                    <xs:element name="torus" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:float" name="inner"/>
+                            <xs:attribute type="xs:float" name="outer"/>
+                            <xs:attribute type="xs:integer" name="slices"/>
+                            <xs:attribute type="xs:integer" name="loops"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
                   </xs:sequence>
                   <xs:attribute type="xs:string" name="id" use="optional"/>
                 </xs:complexType>

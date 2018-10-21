@@ -155,6 +155,9 @@ class Primitives extends GenericParser {
 			case 'sphere':
 				parsedPrimitive = this._parseSphere(childNode);
 				break;
+			case 'torus':
+				parsedPrimitive = this._parseTorus(childNode);
+				break;
 			default:
 				this.onXMLMinorError("Unknown type of primitive");
 				return -5;
@@ -212,6 +215,15 @@ class Primitives extends GenericParser {
 			
 		return this._parseAttributes(sphereEl, {
 			radius: 'ff', slices: 'ii', stacks: 'ii'
+		}, this.defaultSphere); 
+	}
+
+	_parseTorus(torusEl) {
+		if(torusEl.tagName != 'torus')
+			throw 'Unexpected element';
+			
+		return this._parseAttributes(torusEl, {
+			inner: 'ff', outer: 'ff', slices: 'ii', loops: 'ii'
 		}, this.defaultSphere); 
 	}
 }
