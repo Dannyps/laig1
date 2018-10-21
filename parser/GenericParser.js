@@ -111,8 +111,8 @@ class GenericParser {
         }
         /* deal with 'tt' */
         else if (expectedType == 'tt') {
-            if (attrVal === 'true') retVal = true;
-            else if (attrVal === 'false') retVal = false;
+            if (attrVal === '1') retVal = true;
+            else if (attrVal === '0') retVal = false;
         }
         /* deal with 'cc' */
         else if (expectedType == 'cc') {
@@ -128,11 +128,11 @@ class GenericParser {
 
             // if retVal still 'null' then there's no fallback value and the error is displayed
             if (retVal === null) {
-                this._showUnexpectedAttrValue(element.tagName, attrName, false);
+                this._showUnexpectedAttrValue(element, attrName, false);
                 return null;
             } else {
                 // a default value was found, just display a warning
-                this._showUnexpectedAttrValue(element.tagName, attrName, true);
+                this._showUnexpectedAttrValue(element, attrName, true);
                 return retVal;
             }
         }

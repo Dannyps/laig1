@@ -47,26 +47,26 @@
     <!-- LIGHTS -->
     <!--        -->
     <lights>
-        <omni id="streetlamp1" enabled="true">
+        <omni id="streetlamp1" enabled="1">
             <location x="6" y="5.5" z="14" w="1" />
             <ambient r="0" g="0" b="0" a="1" />
             <diffuse r="0.5" g="0.5" b="0.5" a="1" />
             <specular r="0.2" g="0.2" b="0.2" a="1" />
         </omni>
-        <omni id="streetlamp2" enabled="true">
+        <omni id="streetlamp2" enabled="1">
             <location x="-6" y="5.5" z="14" w="1" />
             <ambient r="0" g="0" b="0" a="1" />
             <diffuse r="0.5" g="0.5" b="0.5" a="1" />
             <specular r="0.2" g="0.2" b="0.2" a="1" />
         </omni>
 
-        <omni id="streetlamp3" enabled="true">
+        <omni id="streetlamp3" enabled="1">
             <location x="6" y="5.5" z="-14" w="1" />
             <ambient r="0" g="0" b="0" a="1" />
             <diffuse r="0.5" g="0.5" b="0.5" a="1" />
             <specular r="0.2" g="0.2" b="0.2" a="1" />
         </omni>
-        <omni id="streetlamp4" enabled="true">
+        <omni id="streetlamp4" enabled="1">
             <location x="-6" y="5.5" z="-14" w="1" />
             <ambient r="0" g="0" b="0" a="1" />
             <diffuse r="0.5" g="0.5" b="0.5" a="1" />
