@@ -91,9 +91,21 @@ class Views extends GenericParser {
             }
         });
 
-        // check if default camera ID exists and add this value to the scene graph
-        this.defaultView = attrs.default;
-        // TODO
+    
+        // check if at least one view is defined
+        if(this.parsedViews.size === 0) {
+            this.onXMLError("You must scecify at least one view");
+            return -1;
+        }
+
+        // check if default camera exists and assign a fallback if needed
+        if(!this.parsedViews.has(attrs.default)) {
+            let firstParsedView = this.parsedViews.entries().next().value; /** @type {[key, value]} */
+            this.onXMLMinorError(`The specified default camera '${attrs.default}' doesn't exist! Using the first parsed view ${firstParsedView[0]}`);
+            this.defaultView = firstParsedView[0];
+        } else {
+            this.defaultView = attrs.default;
+        }
 
         return 0;
     }
