@@ -86,16 +86,16 @@
     <!-- TEXTURES -->
     <!--          -->
     <textures>
-        <texture id="tt1" file="vidral.jpg" />
-        <texture id="ttRoadLane" file="roadTwoLanes.png" />
-        <texture id="ttRoadLaneIntersection" file="roadOneLane.png" />
-        <texture id="metal" file="metal.jpg" />
-        <texture id="calcada" file="calcada.jpg" />
-        <texture id="porta" file="porta.png" />
-        <texture id="grass" file="grass.jpg" />
-        <texture id="bricks" file="bricks.png"/>
-        <texture id="roof" file="roof.jpg"/>
-        <texture id="cement" file="cement.jpg"/>
+        <texture id="tt1" file="scenes/images/vidral.jpg" />
+        <texture id="ttRoadLane" file="scenes/images/roadTwoLanes.png" />
+        <texture id="ttRoadLaneIntersection" file="scenes/images/roadOneLane.png" />
+        <texture id="metal" file="scenes/images/metal.jpg" />
+        <texture id="calcada" file="scenes/images/calcada.jpg" />
+        <texture id="porta" file="scenes/images/porta.png" />
+        <texture id="grass" file="scenes/images/grass.jpg" />
+        <texture id="bricks" file="scenes/images/bricks.png"/>
+        <texture id="roof" file="scenes/images/roof.jpg"/>
+        <texture id="cement" file="scenes/images/cement.jpg"/>
     </textures>
     <!--           -->
     <!-- MATERIALS -->
@@ -223,8 +223,8 @@
 
         <component id="cubeBackFace">
             <transformation>
-                <rotate axis="y" angle="180"/>
                 <translate x="0" y="0" z="-0.5"/>
+                <rotate axis="y" angle="180"/>
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -237,8 +237,8 @@
 
         <component id="cubeRightFace">
             <transformation>
-                <rotate axis="y" angle="90"/>
                 <translate x="0.5" y="0" z="0"/>
+                <rotate axis="y" angle="90"/>
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -251,8 +251,8 @@
 
         <component id="cubeLeftFace">
             <transformation>
-                <rotate axis="y" angle="-90"/>
                 <translate x="-0.5" y="0" z="0"/>
+                <rotate axis="y" angle="-90"/>
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -265,8 +265,8 @@
 
         <component id="cubeTopFace">
             <transformation>
-                <rotate axis="x" angle="-90"/>
                 <translate x="0" y="0.5" z="0"/>
+                <rotate axis="x" angle="-90"/>
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -279,8 +279,8 @@
 
         <component id="cubeBottomFace">
             <transformation>
-                <rotate axis="x" angle="90"/>
                 <translate x="0" y="-0.5" z="0"/>
+                <rotate axis="x" angle="90"/>
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -309,8 +309,8 @@
 
         <component id="chapeuSemaforo1">
             <transformation>
-                <translate x="1" y="1" z="0"/>
                 <scale x="0.7" y="0.4" z="0.7" />
+                <translate x="1" y="1" z="0"/>
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -326,8 +326,8 @@
 
         <component id="chapeuSemaforo2">
             <transformation>
-                <translate x="1" y="0.25" z="0"/>
                 <scale x="0.7" y="0.4" z="0.7" />
+                <translate x="1" y="0.25" z="0"/>
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -344,8 +344,8 @@
 
         <component id="chapeuSemaforo3">
             <transformation>
-                <translate x="1" y="-0.5" z="0"/>
                 <scale x="0.7" y="0.4" z="0.7" />
+                <translate x="1" y="-0.5" z="0"/>
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -374,9 +374,9 @@
 
         <component id="redLightSemaforo">
             <transformation>
-                <rotate axis="y" angle="90"/>
-                <scale x="0.2" y="0.15" z="0.2" />
                 <translate x="0" y="-0.30" z="0"/>
+                <scale x="0.2" y="0.15" z="0.2" />
+                <rotate axis="y" angle="90"/>
             </transformation>
             <materials>
                 <materialref id="redLight" />
@@ -389,9 +389,9 @@
 
         <component id="yellowLightSemaforo">
             <transformation>
-                <rotate axis="y" angle="90"/>
-                <scale x="0.2" y="0.15" z="0.2" />
                 <translate x="0" y="-0.30" z="0"/>
+                <scale x="0.2" y="0.15" z="0.2" />
+                <rotate axis="y" angle="90"/>
             </transformation>
             <materials>
                 <materialref id="yellowLight" />
@@ -404,9 +404,9 @@
 
         <component id="greenLightSemaforo">
             <transformation>
-                <rotate axis="y" angle="90"/>
-                <scale x="0.2" y="0.15" z="0.2" />
                 <translate x="0" y="-0.30" z="0"/>
+                <scale x="0.2" y="0.15" z="0.2" />
+                <rotate axis="y" angle="90"/>
             </transformation>
             <materials>
                 <materialref id="greenLight" />
@@ -419,9 +419,9 @@
 
         <component id="leftChapeuSemaforo">
             <transformation>
-                <rotate axis="x" angle="-90" />
-                <translate x="0" y="-0.5" z="0.5"/>
                 <scale x="1" y="0.5" z="1"/>
+                <translate x="0" y="-0.5" z="0.5"/>
+                <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -434,9 +434,9 @@
 
         <component id="rightChapeuSemaforo">
             <transformation>
-                <rotate axis="x" angle="90" />
-                <translate x="0" y="-0.5" z="-0.5"/>
                 <scale x="1" y="0.5" z="1"/>
+                <translate x="0" y="-0.5" z="-0.5"/>
+                <rotate axis="x" angle="90" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -462,8 +462,8 @@
 
         <component id="semBase">
             <transformation>
-                <translate x="0" y="0.5" z="0"/>
                 <scale x="0.6" y="0.09" z="0.6" />
+                <translate x="0" y="0.5" z="0"/>
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -476,9 +476,9 @@
 
         <component id="semPoste">
             <transformation>
-                <rotate axis="x" angle="-90"/>
-                <scale x="0.15" y="4.5" z="0.15" />
                 <translate x="0" y="0.09" z="0" />
+                <scale x="0.15" y="4.5" z="0.15" />
+                <rotate axis="x" angle="-90"/>
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -491,8 +491,8 @@
 
         <component id="semHead">
             <transformation>
-                <scale x="0.8" y="2" z="0.8" />
                 <translate x="0" y="5" z="0" />
+                <scale x="0.8" y="2" z="0.8" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -508,8 +508,8 @@
 
         <component id="ground">
             <transformation>
-                <scale x="100" y="100" z="1" />
                 <rotate axis="x" angle="-90" />
+                <scale x="100" y="100" z="1" />
             </transformation>
             <materials>
                 <materialref id="greenLight" />
@@ -522,8 +522,8 @@
 
         <component id="semaforo">
             <transformation>
-                <scale x="0.5" y="0.8" z="0.7"/>
                 <translate x="0" y="0.35" z="0" />
+                <scale x="0.5" y="0.8" z="0.7"/>
             </transformation>
             <materials>
                 <materialref id="semaforo" />
@@ -538,8 +538,8 @@
 
         <component id="semaforo1">
             <transformation>
-                <rotate axis="y" angle="-90" />
                 <translate x="5.8" y="0" z="5.8" />
+                <rotate axis="y" angle="-90" />
             </transformation>
             <materials>
                 <materialref id="semaforo" />
@@ -565,8 +565,8 @@
 
         <component id="semaforo3">
             <transformation>
-                <rotate axis="y" angle="180" />
                 <translate x="-5.8" y="0" z="5.8" />
+                <rotate axis="y" angle="180" />
             </transformation>
             <materials>
                 <materialref id="semaforo" />
@@ -579,8 +579,8 @@
 
         <component id="semaforo4">
             <transformation>
-                <rotate axis="y" angle="90" />
                 <translate x="-5.8" y="0" z="-5.8" />
+                <rotate axis="y" angle="90" />
             </transformation>
             <materials>
                 <materialref id="semaforo" />
@@ -607,8 +607,8 @@
 
         <component id="roadLane1p1">
             <transformation>
-                <rotate axis="x" angle="-90" />
                 <translate x="0" y="0" z="-15"/>
+                <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -621,8 +621,8 @@
 
         <component id="roadLane1p2">
             <transformation>
-                <rotate axis="x" angle="-90" />
                 <translate x="0" y="0" z="15"/>
+                <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -635,9 +635,9 @@
 
         <component id="roadLane2p1">
             <transformation>
-                <rotate axis="y" angle="90" />
-                <rotate axis="z" angle="90" />
                 <translate x="15" y="0" z="0"/>
+                <rotate axis="z" angle="90" />
+                <rotate axis="y" angle="90" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -650,9 +650,9 @@
 
         <component id="roadLane2p2">
             <transformation>
-                <rotate axis="y" angle="90" />
-                <rotate axis="z" angle="90" />
                 <translate x="-15" y="0" z="0"/>
+                <rotate axis="z" angle="90" />
+                <rotate axis="y" angle="90" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -665,10 +665,10 @@
 
         <component id="roadIntersectionLane">
             <transformation>
-                <scale x="10" y="10" z="1" />
-                <rotate axis="y" angle="90" />
-                <rotate axis="z" angle="90" />
                 <translate x="0" y="0" z="0"/>
+                <rotate axis="z" angle="90" />
+                <rotate axis="y" angle="90" />
+                <scale x="10" y="10" z="1" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -764,8 +764,8 @@
 
         <component id="lampHead">
             <transformation>
-                <scale x="0.5" y="0.5" z="0.5" />
                 <translate x="0" y="5" z="0"/>
+                <scale x="0.5" y="0.5" z="0.5" />
             </transformation>
             <materials>
                 <materialref id="light" />
@@ -778,8 +778,8 @@
 
         <component id="passeio">
             <transformation>
-                <scale x="20" y="0.35" z="2"/>
                 <translate x="15" y="0.2" z="6"/>
+                <scale x="20" y="0.35" z="2"/>
             </transformation>
             <materials>
                 <materialref id="passeio" />
@@ -844,9 +844,9 @@
 
         <component id="passeio5">
             <transformation>
-                <rotate axis="y" angle="270" />
-                <translate x="12" y="0" z="2.75" />
                 <scale x="1" y="1" z="0.9" />
+                <translate x="12" y="0" z="2.75" />
+                <rotate axis="y" angle="270" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -859,9 +859,9 @@
 
         <component id="passeio6">
             <transformation>
-                <rotate axis="y" angle="180" />
-                <translate x="0" y="0" z="12" />
                 <scale x="1" y="1" z="0.9" />
+                <translate x="0" y="0" z="12" />
+                <rotate axis="y" angle="180" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -874,9 +874,9 @@
 
         <component id="passeio7">
             <transformation>
-                <rotate axis="y" angle="90" />
-                <translate x="-12" y="0" z="-2.75" />
                 <scale x="1" y="1" z="0.9" />
+                <translate x="-12" y="0" z="-2.75" />
+                <rotate axis="y" angle="90" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -889,8 +889,8 @@
 
         <component id="passeio8">
             <transformation>
-                <translate x="0" y="0" z="-12" />
                 <scale x="1" y="1" z="0.9" />
+                <translate x="0" y="0" z="-12" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -903,8 +903,8 @@
 
         <component id="casa1">
             <transformation>
-                <rotate axis="y" angle="-90" />
                 <translate x="10" y="2.5" z="10" />
+                <rotate axis="y" angle="-90" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -918,9 +918,8 @@
 
         <component id="casa2">
             <transformation>
-                <rotate axis="y" angle="-90" />
-
                 <translate x="10" y="2.5" z="18" />
+                <rotate axis="y" angle="-90" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -933,9 +932,8 @@
 
         <component id="casa3">
             <transformation>
-                <rotate axis="y" angle="90" />
-
                 <translate x="-10" y="2.5" z="18" />
+                <rotate axis="y" angle="90" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -948,8 +946,8 @@
 
         <component id="casa4">
             <transformation>
-                <rotate axis="y" angle="90" />
                 <translate x="-10" y="2.5" z="10" />
+                <rotate axis="y" angle="90" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -979,10 +977,8 @@
 
         <component id="porta">
             <transformation>
-                <scale x="0.3" y="0.5" z="0.005"/>
                 <translate x="0" y="-0.25" z="0.5" />
-
-
+                <scale x="0.3" y="0.5" z="0.005"/>
             </transformation>
             <materials>
                 <materialref id="porta" />
@@ -995,8 +991,8 @@
 
         <component id="janela1">
             <transformation>
-                <scale x="0.07" y="0.07" z="0.02"/>
                 <translate x="0" y=".8" z="0.5" />
+                <scale x="0.07" y="0.07" z="0.02"/>
             </transformation>
             <materials>
                 <materialref id="yellowLight" />
@@ -1009,10 +1005,9 @@
 
         <component id="telhado1">
             <transformation>
-                <rotate axis="x" angle="0" />
-                <rotate axis="x" angle="-90" />
-                <rotate axis="z" angle="-135" />
                 <translate x="0" y="0" z="-1" />
+                <rotate axis="z" angle="-135" />
+                <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -1025,9 +1020,9 @@
 
         <component id="telhado2">
             <transformation>
-                <rotate axis="x" angle="90" />
-                <rotate axis="z" angle="-45" />
                 <translate x="0" y="0" z="1" />
+                <rotate axis="z" angle="-45" />
+                <rotate axis="x" angle="90" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -1040,9 +1035,9 @@
 
         <component id="telhado3">
             <transformation>
-                <rotate axis="y" angle="90" />
-                <rotate axis="z" angle="45" />
                 <translate x="0.35" y="0.35" z="0" />
+                <rotate axis="z" angle="45" />
+                <rotate axis="y" angle="90" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -1055,9 +1050,9 @@
 
         <component id="telhado4">
             <transformation>
-                <rotate axis="y" angle="90" />
-                <rotate axis="z" angle="135" />
                 <translate x="-0.35" y="0.35" z="0" />
+                <rotate axis="z" angle="135" />
+                <rotate axis="y" angle="90" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
@@ -1070,8 +1065,8 @@
 
         <component id="telhado">
             <transformation>
-                <translate x="0" y="0.5" z="0" />
                 <scale x="0.7" y="1" z="1" />
+                <translate x="0" y="0.5" z="0" />
             </transformation>
             <materials>
                 <materialref id="inherit" />
