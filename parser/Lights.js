@@ -73,13 +73,13 @@ class Lights extends GenericParser {
         });
 
         // ensure at least one light is defined
-        if (this.parsedLights === 0) {
+        if (this.parsedLights.size === 0) {
             this.onXMLError('You must set at least one light!');
             return -1;
         }
 
-         // ensure there aren't more than 8 lights
-         if (this.parsedLights.size > 8) {
+        // ensure there aren't more than 8 lights
+        if (this.parsedLights.size > 8) {
             this.onXMLError('There can\'t be more than 8 lights!');
             return -1;
         }

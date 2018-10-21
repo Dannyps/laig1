@@ -11,12 +11,14 @@
 <!-- cc: character "x" or "y" or "z" -->
 <!-- tt: "0" or "1" with Boolean significance -->
 <yas xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="yas.xsd">
-    <!-- deve definir-se um objeto para raiz da arvore, assim -->
-    <!-- como o comprimento dos tres eixos (cilindros) -->
+    <!--       -->
+    <!-- SCENE -->
+    <!--       -->
     <scene root="root" axis_length="5.0" />
+    <!--       -->
+    <!-- VIEWS -->
+    <!--       -->
     <views default="vp1">
-        <!-- tem de existir, pelo menos, uma vista de -->
-        <!-- entre as seguintes (perspective ou ortho) -->
         <perspective id="vp1" near="0.1" far="500" angle="0.7">
             <from x="25" y="25" z="25" />
             <to x="0" y="0" z="0" />
@@ -34,13 +36,17 @@
             <to x="0" y="5" z="0" />
         </ortho>
     </views>
+    <!--         -->
+    <!-- AMBIENT -->
+    <!--         -->
     <ambient>
         <ambient r="0.2" g="0.2" b="0.2" a="1" /> 
         <background r="0.0" g="0.2" b="0.3" a="1" />
     </ambient>
+    <!--        -->
+    <!-- LIGHTS -->
+    <!--        -->
     <lights>
-        <!-- Deve existir um ou mais blocos "omni" ou "spot" -->
-        <!-- Os identificadores "id" nao podem ser repetidos -->
         <omni id="streetlamp1" enabled="true">
             <location x="6" y="5.5" z="14" w="1" />
             <ambient r="0" g="0" b="0" a="1" />
