@@ -509,12 +509,12 @@
         <component id="ground">
             <transformation>
                 <rotate axis="x" angle="-90" />
-                <scale x="100" y="100" z="1" />
+                <scale x="50" y="50" z="1" />
             </transformation>
             <materials>
                 <materialref id="greenLight" />
             </materials>
-            <texture id="grass" length_s="100" length_t="100" />
+            <texture id="grass" length_s="25" length_t="25" />
             <children>
                 <primitiveref id="pRect" />
             </children>
