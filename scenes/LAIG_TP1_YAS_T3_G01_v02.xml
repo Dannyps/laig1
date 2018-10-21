@@ -14,7 +14,7 @@
     <!--       -->
     <!-- SCENE -->
     <!--       -->
-    <scene root="root" axis_length="5.0" />
+    <scene root="root" axis_length="0" />
     <!--       -->
     <!-- VIEWS -->
     <!--       -->
@@ -24,15 +24,15 @@
             <to x="0" y="0" z="0" />
         </perspective>
         <perspective id="vp2" near="0.1" far="500" angle="45">
-            <from x="15" y="15" z="15" />
-            <to x="0" y="0" z="0" />
+            <from x="0" y="2" z="-10" />
+            <to x="0" y="2" z="20" />
         </perspective>
         <perspective id="vp3" near="0.1" far="500" angle="45">
-            <from x="0" y="0" z="0" />
-            <to x="20" y="20" z="20" />
+            <from x="-5" y="4" z="-20" />
+            <to x="0" y="2" z="10" />
         </perspective>
-        <ortho id="vo1" near="0.1" far="500" left="-5" right="5" top="5" bottom="-5">
-            <from x="5" y="5" z="0" />
+        <ortho id="vo1" near="0.1" far="500" left="-25" right="25" top="15" bottom="-15">
+            <from x="1" y="30" z="0" />
             <to x="0" y="5" z="0" />
         </ortho>
     </views>
@@ -101,8 +101,6 @@
     <!-- MATERIALS -->
     <!--           -->
     <materials>
-        <!-- Deve existir um ou mais blocos "material" -->
-        <!-- Os identificadores "id" nao podem ser repetidos -->
         <material id="defaultAppearance" shininess="10">
             <ambient r="0.2" g="0.2" b="0.2" a="1" />
             <diffuse r="0.5" g="0.5" b="0.5" a="1" />
