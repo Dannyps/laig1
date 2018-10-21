@@ -30,7 +30,12 @@ class Component {
             p = p.parent;
         }
         this.children.componentsID.forEach((componentId) => {
-            this.graph.parsedComponents.get(componentId).findCycles(this);
+            let c = this.graph.parsedComponents.get(componentId);
+            
+            if(c==undefined){
+                throw "A declared component was not found! ("+componentId+")";
+            } else 
+            c.findCycles(this);
         })
     }
 
