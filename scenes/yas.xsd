@@ -541,7 +541,7 @@
                     <xs:element name="materials">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="materialref" maxOccurs="unbounded" minOccurs="0">
+                          <xs:element name="material" maxOccurs="unbounded" minOccurs="0">
                             <xs:complexType>
                               <xs:simpleContent>
                                 <xs:extension base="xs:string">

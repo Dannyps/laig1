@@ -211,7 +211,7 @@
                 <translate x="0" y="0" z="0.5"/>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -225,7 +225,7 @@
                 <rotate axis="y" angle="180"/>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -239,7 +239,7 @@
                 <rotate axis="y" angle="90"/>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -253,7 +253,7 @@
                 <rotate axis="y" angle="-90"/>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -267,7 +267,7 @@
                 <rotate axis="x" angle="-90"/>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -281,7 +281,7 @@
                 <rotate axis="x" angle="90"/>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -292,7 +292,7 @@
         <component id="cube">
             <transformation></transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -311,7 +311,7 @@
                 <translate x="1" y="1" z="0"/>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -328,7 +328,7 @@
                 <translate x="1" y="0.25" z="0"/>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -346,7 +346,7 @@
                 <translate x="1" y="-0.5" z="0"/>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -362,7 +362,7 @@
                 <translate x="0" y="0" z="0"/>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -377,7 +377,7 @@
                 <rotate axis="y" angle="90"/>
             </transformation>
             <materials>
-                <materialref id="redLight" />
+                <material id="redLight" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -392,7 +392,7 @@
                 <rotate axis="y" angle="90"/>
             </transformation>
             <materials>
-                <materialref id="yellowLight" />
+                <material id="yellowLight" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -407,7 +407,7 @@
                 <rotate axis="y" angle="90"/>
             </transformation>
             <materials>
-                <materialref id="greenLight" />
+                <material id="greenLight" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -422,7 +422,7 @@
                 <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -437,7 +437,7 @@
                 <rotate axis="x" angle="90" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -450,7 +450,7 @@
                 <scale x="1" y="0.02" z="1"/>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -464,7 +464,7 @@
                 <translate x="0" y="0.5" z="0"/>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -479,7 +479,7 @@
                 <rotate axis="x" angle="-90"/>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="10" length_t="0.3" />
             <children>
@@ -493,7 +493,7 @@
                 <scale x="0.8" y="2" z="0.8" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -510,7 +510,7 @@
                 <scale x="50" y="50" z="1" />
             </transformation>
             <materials>
-                <materialref id="greenLight" />
+                <material id="greenLight" />
             </materials>
             <texture id="grass" length_s="25" length_t="25" />
             <children>
@@ -524,7 +524,7 @@
                 <scale x="0.5" y="0.8" z="0.7"/>
             </transformation>
             <materials>
-                <materialref id="semaforo" />
+                <material id="semaforo" />
             </materials>
             <texture id="metal" length_s="1" length_t="1" />
             <children>
@@ -540,7 +540,7 @@
                 <rotate axis="y" angle="-90" />
             </transformation>
             <materials>
-                <materialref id="semaforo" />
+                <material id="semaforo" />
             </materials>
             <texture id="metal" length_s="1" length_t="1" />
             <children>
@@ -553,7 +553,7 @@
                 <translate x="5.8" y="0" z="-5.8" />
             </transformation>
             <materials>
-                <materialref id="semaforo" />
+                <material id="semaforo" />
             </materials>
             <texture id="metal" length_s="1" length_t="1" />
             <children>
@@ -567,7 +567,7 @@
                 <rotate axis="y" angle="180" />
             </transformation>
             <materials>
-                <materialref id="semaforo" />
+                <material id="semaforo" />
             </materials>
             <texture id="metal" length_s="1" length_t="1" />
             <children>
@@ -581,7 +581,7 @@
                 <rotate axis="y" angle="90" />
             </transformation>
             <materials>
-                <materialref id="semaforo" />
+                <material id="semaforo" />
             </materials>
             <texture id="metal" length_s="1" length_t="1" />
             <children>
@@ -595,7 +595,7 @@
                 <scale x="10" y="20" z="1" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="ttRoadLane" length_s="5" length_t="1" />
             <children>
@@ -609,7 +609,7 @@
                 <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="none" length_s="1" length_t="1" />
             <children>
@@ -623,7 +623,7 @@
                 <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="none" length_s="1" length_t="1" />
             <children>
@@ -638,7 +638,7 @@
                 <rotate axis="y" angle="90" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="none" length_s="1" length_t="1" />
             <children>
@@ -653,7 +653,7 @@
                 <rotate axis="y" angle="90" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="none" length_s="1" length_t="1" />
             <children>
@@ -669,7 +669,7 @@
                 <scale x="10" y="10" z="1" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="ttRoadLaneIntersection" length_s="1" length_t="1" />
             <children>
@@ -682,7 +682,7 @@
                 <translate x="0" y="0.01" z="0"/>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="none" length_s="1" length_t="1" />
             <children>
@@ -699,7 +699,7 @@
                 <translate x="0" y="0.01" z="0"/>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="none" length_s="1" length_t="1" />
             <children>
@@ -714,7 +714,7 @@
                 <translate x="6" y=".35" z="14"/>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="none" length_s="1" length_t="1" />
             <children>
@@ -727,7 +727,7 @@
                 <translate x="6" y=".35" z="-14"/>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="none" length_s="1" length_t="1" />
             <children>
@@ -739,7 +739,7 @@
                 <translate x="-6" y=".35" z="-14"/>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="none" length_s="1" length_t="1" />
             <children>
@@ -751,7 +751,7 @@
                 <translate x="-6" y=".35" z="14"/>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="none" length_s="1" length_t="1" />
             <children>
@@ -766,7 +766,7 @@
                 <scale x="0.5" y="0.5" z="0.5" />
             </transformation>
             <materials>
-                <materialref id="light" />
+                <material id="light" />
             </materials>
             <texture id="tt1" length_s="0.2" length_t="2" />
             <children>
@@ -780,7 +780,7 @@
                 <scale x="20" y="0.35" z="2"/>
             </transformation>
             <materials>
-                <materialref id="passeio" />
+                <material id="passeio" />
             </materials>
             <texture id="calcada" length_s="0.2" length_t="2" />
             <children>
@@ -793,7 +793,7 @@
 
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -806,7 +806,7 @@
                 <rotate axis="y" angle="90" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -819,7 +819,7 @@
                 <rotate axis="y" angle="180" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -832,7 +832,7 @@
                 <rotate axis="y" angle="270" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -847,7 +847,7 @@
                 <rotate axis="y" angle="270" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -862,7 +862,7 @@
                 <rotate axis="y" angle="180" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -877,7 +877,7 @@
                 <rotate axis="y" angle="90" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -891,7 +891,7 @@
                 <translate x="0" y="0" z="-12" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -905,7 +905,7 @@
                 <rotate axis="y" angle="-90" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -920,7 +920,7 @@
                 <rotate axis="y" angle="-90" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -934,7 +934,7 @@
                 <rotate axis="y" angle="90" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -948,7 +948,7 @@
                 <rotate axis="y" angle="90" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -961,7 +961,7 @@
                 <scale x="5" y="5" z="5"/>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="bricks" length_t="5" length_s="4" />
             <children>
@@ -979,7 +979,7 @@
                 <scale x="0.3" y="0.5" z="0.005"/>
             </transformation>
             <materials>
-                <materialref id="porta" />
+                <material id="porta" />
             </materials>
             <texture id="porta" length_s="0.25" length_t="0.2" />
             <children>
@@ -993,7 +993,7 @@
                 <scale x="0.07" y="0.07" z="0.02"/>
             </transformation>
             <materials>
-                <materialref id="yellowLight" />
+                <material id="yellowLight" />
             </materials>
             <texture id="porta" length_s="1" length_t="1" />
             <children>
@@ -1008,7 +1008,7 @@
                 <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="cement" />
             <children>
@@ -1023,7 +1023,7 @@
                 <rotate axis="x" angle="90" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="cement" />
             <children>
@@ -1038,7 +1038,7 @@
                 <rotate axis="y" angle="90" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="roof" length_s="1" length_t="1" />
             <children>
@@ -1053,7 +1053,7 @@
                 <rotate axis="y" angle="90" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="roof" length_s="1" length_t="1" />
             <children>
@@ -1067,7 +1067,7 @@
                 <translate x="0" y="0.5" z="0" />
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -1082,7 +1082,7 @@
             <transformation>
             </transformation>
             <materials>
-                <materialref id="inherit" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -1093,10 +1093,10 @@
         <component id="root">
             <transformation></transformation>
             <materials>
-                <materialref id="defaultAppearance" />
-                <materialref id="greenLight" />
-                <materialref id="yellowLight" />
-                <materialref id="redLight" />
+                <material id="defaultAppearance" />
+                <material id="greenLight" />
+                <material id="yellowLight" />
+                <material id="redLight" />
             </materials>
             <texture id="tt1" length_s="1" length_t="1" />
             <children>
