@@ -168,23 +168,20 @@
             <emission r="0" g="0" b="0" a="1" />
         </material>
     </materials>
+    <!--                 -->
+    <!-- TRANSFORMATIONS -->
+    <!--                 -->
     <transformations>
-        <!-- Deve existir um ou mais blocos "transformation" -->
-        <!-- Os identificadores "id" nao podem ser repetidos -->
-        <!-- Os angulos sao expressos em graus -->
         <transformation id="tt1">
-            <!-- instrucoes a usar sem limite nem ordem -->
-            <!-- deve existir pelo menos uma transformacao -->
             <translate x="2" y="0" z="0" />
             <rotate axis="z" angle="180" />
             <scale x="1" y="2" z="1" />
         </transformation>
     </transformations>
+    <!--            -->
+    <!-- PRIMITIVES -->
+    <!--            -->
     <primitives>
-        <!-- Uma "primitive" e' uma primitiva e pode ser usada em nos folha -->
-        <!-- Deve existir um ou mais blocos "primitive" -->
-        <!-- Os identificadores "id" nao podem ser repetidos -->
-
         <primitive id="pRect">
             <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
         </primitive >
