@@ -239,7 +239,7 @@ class MySceneGraph {
                 let parsedTextures = textures.getParsedTextures();
                 // create the CFGtexture for each texture
                 parsedTextures.forEach((value, key) => {
-                    let cgfAppearance = new CGFtexture (this.scene, "scenes/images/"+value);
+                    let cgfAppearance = new CGFtexture (this.scene, ""+value);
                     this.parsedTextures.set(key, cgfAppearance);
                 });
                 this.info('Parsed textures');
