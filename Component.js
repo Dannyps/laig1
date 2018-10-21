@@ -70,7 +70,7 @@ class Component {
         this.scene.pushMatrix();
 
         // apply transformations
-        for (let i = this.transformation.length - 1; i >= 0; i--) {
+        for (let i = 0; i < this.transformation.length; i++) {
             let transf = this.transformation[i];
             switch (transf.type) {
                 case 'translate':
