@@ -24,18 +24,18 @@ class Component {
             if (p.name == this.name) {
                 alert("Scenegraph has loops!");
                 console.error("Scene graph has loops!");
-                
+
                 throw "Loops in graph.";
             }
             p = p.parent;
         }
         this.children.componentsID.forEach((componentId) => {
             let c = this.graph.parsedComponents.get(componentId);
-            
-            if(c==undefined){
-                throw "A declared component was not found! ("+componentId+")";
-            } else 
-            c.findCycles(this);
+
+            if (c == undefined) {
+                throw "A declared component was not found! (" + componentId + ")";
+            } else
+                c.findCycles(this);
         })
     }
 
@@ -115,9 +115,9 @@ class Component {
                 this.material = parent.material;
             } else {
                 this.material = this.graph.parsedMaterials.get(currentMaterialId);
-                if(this.material == undefined){
-                    console.error("Broken material ref: "+currentMaterialId);
-                    throw "Broken material ref: "+currentMaterialId;
+                if (this.material == undefined) {
+                    console.error("Broken material ref: " + currentMaterialId);
+                    throw "Broken material ref: " + currentMaterialId;
                 }
             }
         }
@@ -125,9 +125,9 @@ class Component {
         // apply texture
         if (this.texture.id !== 'inherit' && this.texture.id != 'none') {
             let tex = this.graph.parsedTextures.get(this.texture.id);
-            if(tex == undefined){
-                console.error("Broken texture ref: "+this.texture.id);
-                throw "Broken texture ref: "+this.texture.id;
+            if (tex == undefined) {
+                console.error("Broken texture ref: " + this.texture.id);
+                throw "Broken texture ref: " + this.texture.id;
             }
             this.material.setTexture(tex);
 
@@ -181,6 +181,10 @@ class Component {
      */
     _initCGFprimitive(primitiveId) {
         let primitive = this.graph.parsedPrimitives.get(primitiveId);
+        if (primitive == undefined) {
+            console.error("Broken primitive ref: " + primitiveId);
+            throw "Broken primitive ref: " + primitiveId;
+        }
         let cgfObj;
         switch (primitive.type) {
             case 'rectangle':
