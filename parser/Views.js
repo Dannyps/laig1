@@ -4,7 +4,7 @@
  * @property {string} type - "perspective"
  * @property {number} near
  * @property {number} fear
- * @property {number} fielView
+ * @property {number} fielView - radians
  * @property {{x: number, y: number, z: number}} from
   * @property {{x: number, y: number, z: number}} to
  */
@@ -45,7 +45,7 @@ class Views extends GenericParser {
         // set some default values
         this.defaultNear = 0.1; // default near clipping plane distance
         this.defaultFar = 1000; // default far clipping plane distance
-        this.defaultFieldView = 0.5; // default field of view for perspective cameras
+        this.defaultPerspectiveAngle = Math.PI/2; // default field of view for perspective cameras
         this.defaultTarget = {x: 0, y:0, z:0}; // default target position
         this.defaultPosition = {x:15, y:15, z:15}; // default camera position
     }
@@ -128,7 +128,7 @@ class Views extends GenericParser {
         }, {
             near: this.defaultNear,
             far:this.defaultFar,
-            angle: this.defaultFieldView
+            angle: this.defaultPerspectiveAngle
         });
 
         // check if attributes were parsed successfully
@@ -151,7 +151,7 @@ class Views extends GenericParser {
             type: 'perspective',
             near: properties.near,
             far: properties.far,
-            fieldView: properties.angle,
+            fieldView: properties.angle * Math.PI/180, // converting to degrees
             from: childs.get('from') || this.defaultPosition,
             to: childs.get('to') || this.defaultTarget
         });
