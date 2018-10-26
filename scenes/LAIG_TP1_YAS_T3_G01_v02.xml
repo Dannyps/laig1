@@ -1,4 +1,3 @@
-<!DOCTYPE yas SYSTEM "yas.dtd">
 <!-- Os comentarios devem ter espacos no inicio e no fim, a -->
 <!-- separar dos hifens -->
 <!-- Nao devem ser usados caracteres especiais (p.ex. acentos) -->
@@ -74,7 +73,7 @@
         </omni>
 
 
-        <spot id="ls1" enabled="true" angle="10" exponent="10">
+        <spot id="ls1" enabled="1" angle="10" exponent="10">
             <location x="-7.2" y="3" z="10.2" w="1" />
             <target x="-7.3" y="2" z="10.2" />
             <ambient r="0" g="0" b="0" a="0" />
@@ -231,7 +230,9 @@
         </primitive>
 
         <!-- Nova primitiva: plano, gerado por NURBS -->
-        <plane id="ss" npartsU="ii" npartsV="ii" />
+        <primitive id="pPlane">
+            <plane id="ss" npartsU="ii" npartsV="ii" />
+        </primitive>
         <!-- ex: <plane npartsU="5" npartsU="8" /> um plano de dimensões -->
         <!-- 1 x 1 unidades assente em XZ, centrado na origem -->
         <!-- e com a face visivel apontando para +Y -->
@@ -245,19 +246,23 @@
         <!-- - o numero de pontos de controlo dentro da -->
         <!-- primitiva patch € npointsU * npointsV -->
 
-        <patch id="ss" npointsU="ii" npointsV="ii" npartsU="ii" npartsV="ii">
-            <controlpoint xx="ff" yy="ff" zz="ff" />
-        </patch>
-
+        <primitive id="pPatch">
+            <patch id="ss" npointsU="ii" npointsV="ii" npartsU="ii" npartsV="ii">
+                <controlpoint xx="ff" yy="ff" zz="ff" />
+            </patch>
+        </primitive>
         <!-- Nova primitiva vehicle: corresponde a um veiculo voador. Inclui
         pelo menos uma superficie não plana gerada utilizando NURBS e
         em codigo javascript -->
-        <vehicle id="ss" />
+        <primitive id="pVehicle">
+            <vehicle id="ss" />
+        </primitive>
 
         <!-- — Nova primitiva: cilindro baseado em NURBS -->
         <!-- paradmetros iguais ao cilindro original -->
-        <cylinder2 base="ff" top="ff" height="ff" slices="ii" stacks="ii" />
-
+        <primitive id="pCylinder2">
+            <cylinder2 base="ff" top="ff" height="ff" slices="ii" stacks="ii" />
+        </primitive>
         <!-- Nova primitiva: terreno baseado em shaders -->
         <!-- parametros: -->
         <!-- id da textura que deve ser visualizada sobre o terreno
@@ -267,8 +272,9 @@
         <!-- numero de divisoes em s e t (parts="5" => plano com 5x5
         divisoes -->
         <!-- fator de escala das alturas -->
-        <terrain id="ss" idtexture="ss" idheightmap="ss" parts="i1i" heightscale="ff"/>
-
+        <primitive id="pTerrain">
+            <terrain id="ss" idtexture="ss" idheightmap="ss" parts="i1i" heightscale="ff"/>
+        </primitive>
         <!-- Nova primitiva: plano de agua baseado em shaders -->
         <!-- parametros: -->
         <!-- id da textura que deve ser visualizada sobre o terreno
@@ -279,9 +285,11 @@
         divisoes -->
         <!-- fator de escala das alturas -->
         <!-- fator de escala das coordenadas de textura (para o numero derepeticoes no plano) -->
-        <water id="ss" idtexture="ss" idwavemap="ss" parts="ii" heightscale="ff" texscale="ff" />
+        <primitive id="pWater">
+            <water id="ss" idtexture="ss" idwavemap="ss" parts="ii" heightscale="ff" texscale="ff" />
+        </primitive>
+    </primitives>
 
-    </primitives >
     <components>
         <component id="cubeFrontFace">
             <transformation>
