@@ -40,7 +40,7 @@
     <!-- AMBIENT -->
     <!--         -->
     <ambient>
-        <ambient r="0.2" g="0.2" b="0.2" a="1" /> 
+        <ambient r="0.2" g="0.2" b="0.2" a="1" />
         <background r="0.0" g="0.2" b="0.3" a="1" />
     </ambient>
     <!--        -->
@@ -167,6 +167,7 @@
             <emission r="0" g="0" b="0" a="1" />
         </material>
     </materials>
+
     <!--                 -->
     <!-- TRANSFORMATIONS -->
     <!--                 -->
@@ -177,6 +178,30 @@
             <scale x="1" y="2" z="1" />
         </transformation>
     </transformations>
+
+    <!--                 -->
+    <!--   ANIMATIONS    -->
+    <!--                 -->
+    <animations>
+        <!-- © bloco animations pode ser vazio, isto 6, pode -->
+        <!-- nado ser declarada qualquer animacdo, linear ou circular -->
+        <!-- Span € o tempo, em segundos, que a animacdo deve demorar -->
+        <linear id="ss" span="ff">
+            <!-- devem existir pelo menos dois pontos de controlo -->
+            <controlpoint xx="ff" yy="ff" zz="ff" />
+        </linear>
+        <!-- center corresponde ao ponto que serve -->
+        <!-- de centro da animacdo circular -->
+        <!-- radius corresponde ao raio da rotacao -->
+        <!-- para a animacdo circular -->
+        <!-- startang e rotang correspondem, nomeadamente, -->
+        <!-- ao angulo inicial (em graus) e -->
+        <!-- total de rota¢gcdo (em graus) -->
+
+        <circular id="ss" span="ff" center="ff ff ff" radius="ff" startang="ff" rotang="ff" />
+    </animations>
+
+
     <!--            -->
     <!-- PRIMITIVES -->
     <!--            -->
@@ -204,6 +229,58 @@
         <primitive id="pTorus">
             <torus inner="0.1" outer="1" slices="20" loops="20" />
         </primitive>
+
+        <!-- Nova primitiva: plano, gerado por NURBS -->
+        <plane id="ss" npartsU="ii" npartsV="ii" />
+        <!-- ex: <plane npartsU="5" npartsU="8" /> um plano de dimensões -->
+        <!-- 1 x 1 unidades assente em XZ, centrado na origem -->
+        <!-- e com a face visivel apontando para +Y -->
+        <!-- com divisdo em cinco partes por oito partes -->
+        <!-- Nova primitiva: patch, gerada por NURBS -->
+        <!-- — parametros: -->
+        <!-- — npartsU: divisdo em partes no dominio U a -->
+        <!-- ser usada para o calculo da superficie -->
+        <!-- — npartsV: divisdo em partes no dominio V -->
+        <!-- a ser usada para o calculo da superficie -->
+        <!-- - o numero de pontos de controlo dentro da -->
+        <!-- primitiva patch € npointsU * npointsV -->
+
+        <patch id="ss" npointsU="ii" npointsV="ii" npartsU="ii" npartsV="ii">
+            <controlpoint xx="ff" yy="ff" zz="ff" />
+        </patch>
+
+        <!-- Nova primitiva vehicle: corresponde a um veiculo voador. Inclui
+        pelo menos uma superficie não plana gerada utilizando NURBS e
+        em codigo javascript -->
+        <vehicle id="ss" />
+
+        <!-- — Nova primitiva: cilindro baseado em NURBS -->
+        <!-- paradmetros iguais ao cilindro original -->
+        <cylinder2 base="ff" top="ff" height="ff" slices="ii" stacks="ii" />
+
+        <!-- Nova primitiva: terreno baseado em shaders -->
+        <!-- parametros: -->
+        <!-- id da textura que deve ser visualizada sobre o terreno
+        (dimensoes devem ser poténcias de 2) -->
+        <!-- id da textura que deve ser usada como mapa de alturas para
+        formar o terreno (dimensdes devem ser potencias de 2) -->
+        <!-- numero de divisoes em s e t (parts="5" => plano com 5x5
+        divisoes -->
+        <!-- fator de escala das alturas -->
+        <terrain id="ss" idtexture="ss" idheightmap="ss" parts="i1i" heightscale="ff"/>
+
+        <!-- Nova primitiva: plano de agua baseado em shaders -->
+        <!-- parametros: -->
+        <!-- id da textura que deve ser visualizada sobre o terreno
+        (dimensédes devem ser poténcias de 2) -->
+        <!-- id da textura que deve ser usada como mapa de ondulac¢cdo para
+        formar o terreno (dimensdes devem ser potencias de 2) -->
+        <!-- numero de divisoes em s e t (parts="5" => plano com 5x5
+        divisoes -->
+        <!-- fator de escala das alturas -->
+        <!-- fator de escala das coordenadas de textura (para o numero derepeticoes no plano) -->
+        <water id="ss" idtexture="ss" idwavemap="ss" parts="ii" heightscale="ff" texscale="ff" />
+
     </primitives >
     <components>
         <component id="cubeFrontFace">
@@ -1123,6 +1200,18 @@
                 <componentref id="streetLamp3" />
                 <componentref id="streetLamp4" />
             </children>
+
+            <!-- bloco "animations" e' opcional -->
+            <!-- as transformacoes resultantes da animacao devem -->
+            <!-- declarar-se imediatamente apdos as transformacoes -->
+            <!-- do componente -->
+            <animations>
+                <!-- pode conter uma referencia a uma das "animations" -->
+                <!-- declaradas anteriormente. Este elemento é€ opcional -->
+
+                <animationref id="ss" />
+
+            </animations>
         </component>
     </components>
 </yas>
