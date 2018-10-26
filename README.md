@@ -1,5 +1,3 @@
-LAIG
+# LAIG
 
-Daniel Silva
-
-Fábio Gaspar
+Evaluation scene for TP1
