@@ -231,7 +231,7 @@
 
         <!-- Nova primitiva: plano, gerado por NURBS -->
         <primitive id="pPlane">
-            <plane id="ss" npartsU="ii" npartsV="ii" />
+            <plane npartsU="ii" npartsV="ii" />
         </primitive>
         <!-- ex: <plane npartsU="5" npartsU="8" /> um plano de dimensões -->
         <!-- 1 x 1 unidades assente em XZ, centrado na origem -->
@@ -247,7 +247,7 @@
         <!-- primitiva patch € npointsU * npointsV -->
 
         <primitive id="pPatch">
-            <patch id="ss" npointsU="ii" npointsV="ii" npartsU="ii" npartsV="ii">
+            <patch npointsU="ii" npointsV="ii" npartsU="ii" npartsV="ii">
                 <controlpoint xx="ff" yy="ff" zz="ff" />
             </patch>
         </primitive>
@@ -255,8 +255,8 @@
         pelo menos uma superficie não plana gerada utilizando NURBS e
         em codigo javascript -->
         <primitive id="pVehicle">
-            <vehicle id="ss" />
-        </primitive>
+            <vehicle/>
+        </primitive> 
 
         <!-- — Nova primitiva: cilindro baseado em NURBS -->
         <!-- paradmetros iguais ao cilindro original -->
@@ -273,7 +273,7 @@
         divisoes -->
         <!-- fator de escala das alturas -->
         <primitive id="pTerrain">
-            <terrain id="ss" idtexture="ss" idheightmap="ss" parts="i1i" heightscale="ff"/>
+            <terrain idtexture="ss" idheightmap="ss" parts="i1i" heightscale="ff"/>
         </primitive>
         <!-- Nova primitiva: plano de agua baseado em shaders -->
         <!-- parametros: -->
@@ -286,7 +286,7 @@
         <!-- fator de escala das alturas -->
         <!-- fator de escala das coordenadas de textura (para o numero derepeticoes no plano) -->
         <primitive id="pWater">
-            <water id="ss" idtexture="ss" idwavemap="ss" parts="ii" heightscale="ff" texscale="ff" />
+            <water idtexture="ss" idwavemap="ss" parts="ii" heightscale="ff" texscale="ff" />
         </primitive>
     </primitives>
 
