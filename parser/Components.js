@@ -3,12 +3,13 @@
 /**
  * @typedef component
  * @type {object}
- * @property {(parsedRotate | parsedScale | parsedTranslate)[]} transformation - Array of transformations. Might be empty if it hasn't own transformations 
+ * @property {Array.<parsedRotate|parsedScale|parsedTranslate>} transformation - Array of transformations. Might be empty if it hasn't own transformations 
  * @property children:
  * @property {string[]} primitivesID
  * @property {string[]} componentsID
  * @property {string[]} materials
  * @property texture: any;
+ * @property {string[]} animations - Array of animations IDs
  */
 class ComponentsParser extends GenericParser {
     /**
@@ -22,6 +23,10 @@ class ComponentsParser extends GenericParser {
         this.components = new Map();
     }
 
+    /**
+     * Returns all parsed components
+     * @return {Map<string, component>} A map of components IDs to component properties
+     */
     getParsedComponents() {
         return this.components;
     }
@@ -50,7 +55,7 @@ class ComponentsParser extends GenericParser {
     /**
      * Parses the component and adds it to {@link ComponentsParser#components}
      * 
-     * @param {*} compEl  
+     * @param {Element} compEl The <component> element to be parsed  
      */
     _parseComponents(compEl) {
         if (compEl.tagName !== 'component') throw 'Unexpected element';
@@ -81,6 +86,9 @@ class ComponentsParser extends GenericParser {
                     break;
                 case 'texture':
                     parsedElements.texture = this._parseTexture(compEl.children[i]);
+                    break;
+                case 'animations':
+                    parsedElements.animations = this._parseAnimations(compEl.children[i]);
                     break;
             }
         }
@@ -179,6 +187,33 @@ class ComponentsParser extends GenericParser {
             componentsID: componentRefs,
             primitivesID: primitiveRefs
         };
+    }
+
+    /**
+     * Parses the <animations> tag and returns an array of string IDs for animations to be applied in this component
+     * @param {Element} animationsEl The <animations> tag
+     * @return {string[]} Array with animations ID (sorted in the same way as in YAS file)
+     */
+    _parseAnimations(animationsEl) {
+        if (animationsEl.tagName != 'animations') throw "Unexpected element";
+        
+        let animationsID = []; // array to collect the animations IDs
+        
+        Array.prototype.forEach.call(animationsEl.children, (el) => {
+            if(el.tagName != 'animationref') {
+                this.onXMLMinorError(`Unexpected element ${el} under <animations>`);
+                return null; // skip the element
+            }
+            
+            let attrs;
+            if((attrs = this._parseAttributes(el, {id: 'ss'})) === null){
+                return null;
+            }
+
+            animationsID.push(attrs.id);
+        });
+
+        return animationsID;
     }
 
 }
