@@ -8,6 +8,7 @@ var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
 var MATERIALS_INDEX = 5;
 var TRANSFORMATIONS_INDEX = 6;
+var ANIMATIONS_INDEX = 7;
 var PRIMITIVES_INDEX = 8;
 var COMPONENTS_INDEX = 9;
 
@@ -85,6 +86,11 @@ class MySceneGraph {
 
         /** @description all parsed transformations @type {Map.<string, Array.<parsedRotate | parsedScale | parsedTranslate>>} */
         this.parsedTransformations;
+
+        /**
+         * Animations
+         */
+        this.parsedAnimations;
 
         /**
          * Primitives
@@ -290,6 +296,22 @@ class MySceneGraph {
             }
         }
 
+        // <animations>
+        if ((index = nodeNames.indexOf("animations")) == -1)
+            return "tag <animations> missing";
+        else {
+            if (index != ANIMATIONS_INDEX)
+                this.onXMLMinorError("tag <animations> out of order");
+
+            //Parse texture block
+            let animations = new AnimationsParser(this);
+            if(animations.parse(nodes[index])) 
+                return "Failed to parse the <animations> tag. ABORT!";
+            else {
+                this.parsedAnimations = animations.getParsedAnimations();
+                this.info('Parsed animations');
+            }
+        }
 
         // <primitives>
         if ((index = nodeNames.indexOf("primitives")) == -1) {
