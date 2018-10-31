@@ -185,9 +185,11 @@
         <!-- © bloco animations pode ser vazio, isto 6, pode -->
         <!-- nado ser declarada qualquer animacdo, linear ou circular -->
         <!-- Span € o tempo, em segundos, que a animacdo deve demorar -->
-        <linear id="ss" span="ff">
+        <linear id="TESTE" span="5">
             <!-- devem existir pelo menos dois pontos de controlo -->
-            <controlpoint xx="ff" yy="ff" zz="ff" />
+            <controlpoint xx="0" yy="0" zz="0" />
+            <controlpoint xx="-1.5" yy="0" zz="0" />
+            <controlpoint xx="-1.5" yy="0" zz="5" />
         </linear>
         <!-- center corresponde ao ponto que serve -->
         <!-- de centro da animacdo circular -->
@@ -672,6 +674,10 @@
             <children>
                 <componentref id="semaforo"/>
             </children>
+            <animations>
+                <animationref id="TESTE" />
+                <animationref id="TESTE1" />
+            </animations>
         </component>
 
         <!-- ROAD -->
