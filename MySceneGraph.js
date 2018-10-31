@@ -349,7 +349,6 @@ class MySceneGraph {
             aux.forEach((value, key) => {
                 this.parsedComponents.set(key, new Component(this, this.scene, value, key));
             });
-            console.log(components);
             this.info('Parsed components');
 
             this.parsedComponents.get(this.idRoot).findCycles(null);
