@@ -34,6 +34,8 @@ class XMLscene extends CGFscene {
         /** @description Flag to tell wether the materials should change or not in the next scene rendering @type {boolean} */
         this.updateMaterials;
 
+        /** @description Holds the current system time and it's updated aproximatelly every ~100ms in update() callback */
+        this.currSysTime;
     }
 
     /**
@@ -53,6 +55,8 @@ class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.axis = new CGFaxis(this);
+
+        this.setUpdatePeriod(100); // every ~100 ms call updateTime callback
     }
 
     /**
@@ -132,6 +136,18 @@ class XMLscene extends CGFscene {
         this.interface.initKeys();
 
         this.sceneInited = true;
+    }
+
+    /**
+     * Callback invoked with some frequency specified with this.setUpdatePeriod()
+     * @param {*} currTime 
+     */
+    update(currTime) {
+        this.currSysTime = currTime;  // current system time in miliseconds
+
+        this.graph.parsedAnimations.forEach((anim) => {
+            anim.update(this.currSysTime);
+        });
     }
 
     /**
