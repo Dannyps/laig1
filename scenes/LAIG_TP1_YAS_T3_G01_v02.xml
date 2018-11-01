@@ -1214,18 +1214,6 @@
                 <componentref id="streetLamp3" />
                 <componentref id="streetLamp4" />
             </children>
-
-            <!-- bloco "animations" e' opcional -->
-            <!-- as transformacoes resultantes da animacao devem -->
-            <!-- declarar-se imediatamente apdos as transformacoes -->
-            <!-- do componente -->
-            <animations>
-                <!-- pode conter uma referencia a uma das "animations" -->
-                <!-- declaradas anteriormente. Este elemento é€ opcional -->
-
-                <animationref id="ss" />
-
-            </animations>
         </component>
     </components>
 </yas>

@@ -8,6 +8,7 @@ class Component {
         this.graph = graph;
         this.scene = scene;
         this.transformation = properties.transformation; /** @type {Array.<parsedRotate | parsedScale | parsedTranslate>} */
+        this.animations = properties.animations;
         this.children = properties.children; /** @type  {{primitivesID: string[], componentsID: string[]}} */
         this.materials = properties.materials;
         this.texture = properties.texture;
@@ -94,6 +95,10 @@ class Component {
                     break;
             }
         }
+
+        // apply animation
+        if(this.animations)
+            this.graph.parsedAnimations.get(this.animations[0]).apply(this.scene);
 
         // apply material
 
