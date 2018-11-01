@@ -88,9 +88,9 @@ class MySceneGraph {
         this.parsedTransformations;
 
         /**
-         * Animations
+         * @description all instances of animations @type {Map.<string, LinearAnimation>}
          */
-        this.parsedAnimations;
+        this.parsedAnimations = new Map();
 
         /**
          * Primitives
@@ -308,10 +308,18 @@ class MySceneGraph {
             if(animations.parse(nodes[index])) 
                 return "Failed to parse the <animations> tag. ABORT!";
             else {
-                this.parsedAnimations = animations.getParsedAnimations();
+                animations.getParsedAnimations().forEach((anim, id) => {
+                    let animation;
+                    if(anim.type === 'linear')
+                        animation = new LinearAnimation(anim);
+                    // TODO
+                    this.parsedAnimations.set(id, animation);
+                });
                 this.info('Parsed animations');
             }
         }
+
+        console.log(this.parsedAnimations);
 
         // <primitives>
         if ((index = nodeNames.indexOf("primitives")) == -1) {
@@ -332,7 +340,7 @@ class MySceneGraph {
             }
         }
 
-        // >components>
+        // <components>
         if ((index = nodeNames.indexOf("components")) == -1)
             return "tag <components> missing";
         else {

@@ -4,7 +4,7 @@
  /**
   * @typedef linearAnimation
   * @type {object}
-  * @property {string} type - "Linear"
+  * @property {string} type - "linear"
   * @property {number} dadas - 
   * @property {Array.<{xx:number, yy:number, zz:number}} ctrlPoints 
   */
@@ -92,6 +92,7 @@ class AnimationsParser extends GenericParser {
 
         // store the animatin
         this.animations.set(parsedAttrs.id, {
+            span: parsedAttrs.span,
             type: linearEl.tagName,
             ctrlPoints: ctrlPoints,
         });
