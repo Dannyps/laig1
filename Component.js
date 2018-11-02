@@ -8,7 +8,7 @@ class Component {
         this.graph = graph;
         this.scene = scene;
         this.transformation = properties.transformation; /** @type {Array.<parsedRotate | parsedScale | parsedTranslate>} */
-        this.animations = properties.animations;
+        this.animations = _initOwnAnimations(graph, properties.animations);
         this.children = properties.children; /** @type  {{primitivesID: string[], componentsID: string[]}} */
         this.materials = properties.materials;
         this.texture = properties.texture;
@@ -97,9 +97,11 @@ class Component {
         }
 
         // apply animation
-        if(this.animations)
-            this.graph.parsedAnimations.get(this.animations[0]).apply(this.scene);
-
+        this.animations.forEach(anim => {
+            anim.update(this.scene.currSysTime);
+            anim.apply(this.scene);
+        });
+        
         // apply material
 
         // check if M was pressed
@@ -228,4 +230,26 @@ class Component {
 
         this.CGFprimitives.set(primitiveId, cgfObj);
     }
+}
+
+/**
+ * Returns an array of animations
+ * @param {MySceneGraph} sceneGraph 
+ * @param {string[]} animationIDs 
+ * 
+ * @return {Animation[]}
+ */
+function _initOwnAnimations(sceneGraph, animationIDs) {
+    if(!animationIDs) return [];
+
+    let animations = [];
+
+    animationIDs.forEach(animationID => {
+        let animProperties = sceneGraph.parsedAnimations.get(animationID);
+        if(animProperties.type === 'linear')
+            animations.push(new LinearAnimation(animProperties));
+        //TODO
+    });
+
+    return animations;
 }

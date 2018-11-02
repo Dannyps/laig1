@@ -676,7 +676,6 @@
             </children>
             <animations>
                 <animationref id="TESTE" />
-                <animationref id="TESTE1" />
             </animations>
         </component>
 

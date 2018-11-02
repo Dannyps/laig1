@@ -308,13 +308,7 @@ class MySceneGraph {
             if(animations.parse(nodes[index])) 
                 return "Failed to parse the <animations> tag. ABORT!";
             else {
-                animations.getParsedAnimations().forEach((anim, id) => {
-                    let animation;
-                    if(anim.type === 'linear')
-                        animation = new LinearAnimation(anim);
-                    // TODO
-                    this.parsedAnimations.set(id, animation);
-                });
+                this.parsedAnimations = animations.getParsedAnimations();
                 this.info('Parsed animations');
             }
         }

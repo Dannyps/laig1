@@ -144,10 +144,6 @@ class XMLscene extends CGFscene {
      */
     update(currTime) {
         this.currSysTime = currTime;  // current system time in miliseconds
-
-        this.graph.parsedAnimations.forEach((anim) => {
-            anim.update(this.currSysTime);
-        });
     }
 
     /**
