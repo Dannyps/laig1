@@ -75,6 +75,12 @@ class Component {
         this.parent = parent;
         this.scene.pushMatrix();
 
+        // apply animation
+        this.animations.forEach(anim => {
+            anim.update(this.scene.currSysTime);
+            anim.apply(this.scene);
+        });
+
         // apply transformations
         for (let i = 0; i < this.transformation.length; i++) {
             let transf = this.transformation[i];
@@ -96,14 +102,7 @@ class Component {
             }
         }
 
-        // apply animation
-        this.animations.forEach(anim => {
-            anim.update(this.scene.currSysTime);
-            anim.apply(this.scene);
-        });
-        
         // apply material
-
         // check if M was pressed
         if (this.scene.updateMaterials)
             this.currMaterial = (this.currMaterial + 1) % this.materials.length;
