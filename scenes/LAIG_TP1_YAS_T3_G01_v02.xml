@@ -199,7 +199,7 @@
         <!-- ao angulo inicial (em graus) e -->
         <!-- total de rota¢gcdo (em graus) -->
 
-        <circular id="ss" span="ff" center="ff ff ff" radius="ff" startang="ff" rotang="ff" />
+        <circular id="TESTE2" span="10" center="5 0 0" radius="5" startang="0" rotang="180" />
     </animations>
 
 

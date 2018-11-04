@@ -8,6 +8,18 @@
   * @property {number} dadas - 
   * @property {Array.<{xx:number, yy:number, zz:number}} ctrlPoints 
   */
+
+/**
+  * @typedef circularAnimation
+  * @type {object}
+  * @property {string} type - "circular"
+  * @property {string} id - 
+  * @property {number} span - The animation duration
+  * @property {{x: number, y: number, z: number}} center - The center of the animation
+  * @property {number} radius - The radius of the circular animation
+  * @property {number} startang - The initial angle (degrees)
+  * @property {number} rotang - The total amount of rotation (degrees)
+  */
 class AnimationsParser extends GenericParser {
     /**
      * Parser for <animations> tag
@@ -40,6 +52,7 @@ class AnimationsParser extends GenericParser {
                     this._parseLinearAnimation(animation);
                     break;
                 case 'circular':
+                    this._parseCircularAnimation(animation);
                     break;
                 default:
                     this.onXMLMinorError(`Unknown ${animation.tagName} under <animations> tag`);
@@ -96,5 +109,61 @@ class AnimationsParser extends GenericParser {
             type: linearEl.tagName,
             ctrlPoints: ctrlPoints,
         });
+    }
+
+    /**
+     * 
+     * @param {Element} circEl 
+     * @return {(null|undefined)} Returns null upon errors
+     */
+    _parseCircularAnimation(circEl) {
+        if(circEl.tagName != 'circular') throw "Unexpected element";
+
+        // parse the attributes
+        let parsedAttrs = this._parseAttributes(circEl, {
+            id: 'ss', 
+            span: 'ff',
+            center: 'ss',
+            radius: 'ff',
+            startang: 'ff',
+            rotang: 'ff'
+        });
+
+        if(parsedAttrs === null)
+            return null; // failed to parse attributes
+
+        // altough the center was parsed as string, it contains three floating point values
+        let counter = 0;
+        let centerCoord = {};
+        for(let el of parsedAttrs.center.split(' ')) {
+            if(el === ' ') break; // skip
+            
+            let num = Number(el);
+            if(isNaN(num)) {
+                this.onXMLError("Invalid whatever center coords");
+                return null;
+            }
+
+            switch(counter) {
+                case 0: 
+                    centerCoord.x = num;
+                    break;
+                case 1:
+                    centerCoord.y = num;
+                    break;
+                case 2: 
+                    centerCoord.z = num;
+                    break;
+                default:
+                    this.onXMLMinorError("Unexpected number values");
+            }
+
+            counter++;
+        };
+
+        // save animation properties
+        parsedAttrs.type = circEl.tagName;
+        parsedAttrs.center = centerCoord;
+        this.animations.set(parsedAttrs.id, parsedAttrs);
     }
 }
