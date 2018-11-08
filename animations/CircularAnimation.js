@@ -29,10 +29,11 @@ class CircularAnimation extends Animation {
 
         // translate to the circular path
         let ang = this.angleStart + this.angleCurr;
+        console.log(this.radius*Math.cos(ang), 0, this.radius*Math.sin(ang));
         scene.translate(this.radius*Math.cos(ang), 0, this.radius*Math.sin(ang));
         
-        // apply inicial rotation relative to positive XX axis
-        // this.scene.rotate(this.angleStart, 1, 0, 0);
+        // update horizontal orientation
+        scene.rotate(ang, 0, 1, 0);
     }
 
     update(currSysTime) {
