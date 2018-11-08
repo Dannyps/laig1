@@ -247,7 +247,8 @@ function _initOwnAnimations(sceneGraph, animationIDs) {
         let animProperties = sceneGraph.parsedAnimations.get(animationID);
         if(animProperties.type === 'linear')
             animations.push(new LinearAnimation(animProperties));
-        //TODO
+        else if(animProperties.type === 'circular')
+            animations.push(new CircularAnimation(animProperties));
     });
 
     return animations;

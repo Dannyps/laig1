@@ -199,7 +199,7 @@
         <!-- ao angulo inicial (em graus) e -->
         <!-- total de rota¢gcdo (em graus) -->
 
-        <circular id="TESTE2" span="10" center="5 0 0" radius="5" startang="0" rotang="180" />
+        <circular id="TESTE2" span="10" center="0 0 0" radius="1" startang="0" rotang="360" />
     </animations>
 
 
@@ -633,6 +633,9 @@
             <children>
                 <componentref id="semaforo"/>
             </children>
+            <animations>
+                <animationref id="TESTE2" />
+            </animations>
         </component>
 
         <component id="semaforo2">
