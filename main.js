@@ -18,6 +18,7 @@ serialInclude(['lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.js',
 'animations/Animation.js', 'animations/LinearAnimation.js', 'animations/CircularAnimation.js',
 'primitives/Nurbs.js',
 'primitives/Plane.Nurbs.js',
+'primitives/Patch.Nurbs.js',
 
 
 main=function()

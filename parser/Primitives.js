@@ -307,11 +307,18 @@ class Primitives extends GenericParser {
 			this.sceneGraph.onXMLError("NURBS Patch (id: '" + attrs.id + "') specifies " + controlPointsEls.length + " controlpoint(s), but it should specify " + ret.npointsU + "*" + ret.npointsV + "=" + ret.npointsU * ret.npointsV + ".");
 		}
 
-		ret.ControlPoints = this._parseControlPoints(patchNurbsEl.children);
+		let ControlPoints = this._parseControlPoints(patchNurbsEl.children);
 
-		
+		ret.controlVertexes = [];
 
-		debugger;
+		for (let i = 0; i < ret.npointsU; i++) {
+//			ret.ControlVertexes.push([]);
+			ret.controlVertexes[i] = [
+				ControlPoints[i*3+0],
+				ControlPoints[i*3+1],
+				ControlPoints[i*3+2]
+			];
+		}
 		return ret;
 	}
 
