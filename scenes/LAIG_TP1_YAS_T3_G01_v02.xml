@@ -233,7 +233,7 @@
 
         <!-- Nova primitiva: plano, gerado por NURBS -->
         <primitive id="pPlane">
-            <plane npartsU="ii" npartsV="ii" />
+            <plane npartsU="5" npartsV="8" />
         </primitive>
         <!-- ex: <plane npartsU="5" npartsU="8" /> um plano de dimensões -->
         <!-- 1 x 1 unidades assente em XZ, centrado na origem -->
