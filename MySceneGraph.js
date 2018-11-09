@@ -355,6 +355,22 @@ class MySceneGraph {
 
             this.parsedComponents.get(this.idRoot).findCycles(null);
         }
+
+        this.makeSurface("0", 1, // degree on U: 2 control vertexes U
+						 1, // degree on V: 2 control vertexes on V
+						[	// U = 0
+							[ // V = 0..1;
+								 [-2.0, -2.0, 0.0, 1 ],
+								 [-2.0,  2.0, 0.0, 1 ]
+								
+							],
+							// U = 1
+							[ // V = 0..1
+								 [ 2.0, -2.0, 0.0, 1 ],
+								 [ 2.0,  2.0, 0.0, 1 ]							 
+							]
+						], // translation of surface 
+						[-7.5,0,0]);
     }
 
     /*
@@ -416,4 +432,24 @@ class MySceneGraph {
         //TODO: Render loop starting at root of graph
         this.parsedComponents.get(this.idRoot).display(null);
     }
+
+    /**
+     * 
+     * @param {*} id 
+     * @param {*} degree1 
+     * @param {*} degree2 
+     * @param {*} controlvertexes 
+     * @param {*} translation 
+     */
+    makeSurface(id, degree1, degree2, controlvertexes, translation) {
+			
+		var nurbsSurface = new CGFnurbsSurface(degree1, degree2, controlvertexes);
+
+		var obj = new CGFnurbsObject(this, 20, 20, nurbsSurface ); // must provide an object with the function getPoint(u, v) (CGFnurbsSurface has it)
+		
+		this.surfaces.push(obj);	
+		this.translations.push(translation);
+
+	}
+
 }
