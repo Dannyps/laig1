@@ -3,8 +3,11 @@ class LinearAnimation extends Animation {
     constructor(parsedLinearAnim) {
         super();
 
+        // the control points. Are relative positions
         this.ctrlPoints = parsedLinearAnim.ctrlPoints;
+        // the current animation trajectory
         this.currentStage = 0;
+        // the time to be spent on each trajectory
         this.timeForEachTrajectory = parsedLinearAnim.span/(parsedLinearAnim.ctrlPoints.length - 1);
         
         // Holds the current displacement from control point N to control point N+1, in direction x,y,z
@@ -21,9 +24,11 @@ class LinearAnimation extends Animation {
             z: this.ctrlPoints[0].zz
         };
 
-        /** @description Use to store last system time in milliseconds */
+        /** @description Used to store last system time in milliseconds */
+        // TODO this is common to CIRC and LINEAR
         this.lastSysTime;
 
+        // TODO shared by CIRC and LINEAR
         this.animationEnded = false;
     }
 
@@ -67,9 +72,17 @@ class LinearAnimation extends Animation {
         // not sure if this is the best criterium.. if at least in one direction the current position exceeds the control point that sets the end of the ongoing trajectory
         // then move to the next trajectory, if any
         for(let coord of ['x', 'y', 'z']) {
-            if(Math.abs(this.currentPosition[coord]) > Math.abs(this.ctrlPoints[this.currentStage + 1][coord + coord])) {
-                this._nextStage();
-                break;
+            let diff = this.ctrlPoints[this.currentStage + 1][coord + coord] -  this.ctrlPoints[this.currentStage][coord + coord];
+            if(diff > 0 ) {
+                if(this.currentPosition[coord] >= this.ctrlPoints[this.currentStage + 1][coord + coord]) {
+                    this._nextStage();
+                    break;
+                }
+            } else if(diff < 0) {
+                if(this.currentPosition[coord] <= this.ctrlPoints[this.currentStage + 1][coord + coord]) {
+                    this._nextStage();
+                    break;
+                }
             }
         }
         
@@ -96,13 +109,6 @@ class LinearAnimation extends Animation {
             x: this.ctrlPoints[n+1].xx - this.ctrlPoints[n].xx,
             y: this.ctrlPoints[n+1].yy - this.ctrlPoints[n].yy,
             z: this.ctrlPoints[n+1].zz - this.ctrlPoints[n].zz,
-        };
-
-        // Holds the current animation coordinates, incremented within every update
-        this.currentPosition = {
-            x: this.ctrlPoints[n].xx,
-            y: this.ctrlPoints[n].yy,
-            z: this.ctrlPoints[n].zz
         };
     }
 }
