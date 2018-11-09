@@ -223,6 +223,9 @@ class Component {
             case 'torus':
                 cgfObj = new MyTorus(this.scene, primitive.inner, primitive.outer, primitive.slices, primitive.loops);
                 break;
+            case 'plane':
+                cgfObj = new Plane_Nurbs(this.scene, primitive.npartsU, primitive.npartsV);
+                break;
             default:
                 break;
         }
@@ -239,15 +242,15 @@ class Component {
  * @return {Animation[]}
  */
 function _initOwnAnimations(sceneGraph, animationIDs) {
-    if(!animationIDs) return [];
+    if (!animationIDs) return [];
 
     let animations = [];
 
     animationIDs.forEach(animationID => {
         let animProperties = sceneGraph.parsedAnimations.get(animationID);
-        if(animProperties.type === 'linear')
+        if (animProperties.type === 'linear')
             animations.push(new LinearAnimation(animProperties));
-        else if(animProperties.type === 'circular')
+        else if (animProperties.type === 'circular')
             animations.push(new CircularAnimation(animProperties));
     });
 
