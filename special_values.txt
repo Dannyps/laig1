@@ -1,4 +1,0 @@
-near 0.1
-far 1000
-lens angle: 60
-cam pos: x:15 y:15 z:15, target: x:0, y:0, z:0
