@@ -88,6 +88,19 @@ class Primitives extends GenericParser {
 			npartsV: 1
 		}
 
+		this.defaultPatch = {
+			npointsU: 1,
+			npointsV: 1,
+			npartsU: 1,
+			npartsV: 1
+		}
+
+		this.defaultControlPoints = {
+			xx: 1,
+			yy: 1,
+			zz: 1
+		}
+
 		/** @description data container with all primitives @type {Map.<string, (parsedRectangle | parsedTriangle | parsedCylinder | parsedSphere)>} */
 		this.primitives = new Map();
 	}
@@ -179,11 +192,14 @@ class Primitives extends GenericParser {
 			case 'plane':
 				parsedPrimitive = this._parsePlane(childNode);
 				break;
+			case 'patch':
+				parsedPrimitive = this._parsePatch(attrs, childNode);
+				break;
 			default:
 				this.onXMLMinorError("Unknown type of primitive");
 				return -5;
 		}
-		
+
 		// check for errors
 		if (parsedPrimitive === null)
 			return null;
@@ -274,5 +290,42 @@ class Primitives extends GenericParser {
 			npartsU: 'ff',
 			npartsV: 'ff'
 		}, this.defaultPlane);
+	}
+
+	_parsePatch(attrs, patchNurbsEl) {
+
+		let ret = this._parseAttributes(patchNurbsEl, {
+			npointsU: 'ii',
+			npointsV: 'ii',
+			npartsU: 'ii',
+			npartsV: 'ii'
+		}, this.defaultPatch);
+
+		let controlPointsEls = patchNurbsEl.children;
+
+		if (controlPointsEls.length != ret.npointsU * ret.npointsV) {
+			this.sceneGraph.onXMLError("NURBS Patch (id: '" + attrs.id + "') specifies " + controlPointsEls.length + " controlpoint(s), but it should specify " + ret.npointsU + "*" + ret.npointsV + "=" + ret.npointsU * ret.npointsV + ".");
+		}
+
+		ret.ControlPoints = this._parseControlPoints(patchNurbsEl.children);
+
+		
+
+		debugger;
+		return ret;
+	}
+
+	_parseControlPoints(elements) {
+		let ret = [];
+		for (let i = 0; i < elements.length; i++) {
+			let el = elements[i];
+			ret[i] = Object.values(this._parseAttributes(el, {
+				xx: 'ff',
+				yy: 'ff',
+				zz: 'ff'
+			}, this.defaultControlPoints));
+		}
+
+		return ret;
 	}
 }
