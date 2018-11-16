@@ -33,7 +33,15 @@ class LinearAnimation extends Animation {
     }
 
     apply(scene) {
+        // translate
         scene.translate(this.currentPosition.x, this.currentPosition.y, this.currentPosition.z);
+        
+        // rotation relate to self vertical axis
+        let ang = Math.atan(this.currentDisplacement.z/this.currentDisplacement.x);
+        if(!isNaN(ang)){
+            console.log(ang);
+            scene.rotate(ang, 0, 1, 0);
+        }
     }
 
     update(currSysTime) {
