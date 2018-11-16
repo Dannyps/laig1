@@ -17,7 +17,6 @@ class Plane_Nurbs extends CGFobject {
                  [ 1.0,  1.0, 0.0, 1 ]							 
             ]
         ]
-        
         let obj = new Nurbs(this.scene, 1, 1, controlVertexes, npartsu, npartsv);
         return obj;
     }

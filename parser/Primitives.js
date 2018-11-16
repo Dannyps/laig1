@@ -98,7 +98,8 @@ class Primitives extends GenericParser {
 		this.defaultControlPoints = {
 			xx: 1,
 			yy: 1,
-			zz: 1
+			zz: 1,
+			ww: 1
 		}
 
 		/** @description data container with all primitives @type {Map.<string, (parsedRectangle | parsedTriangle | parsedCylinder | parsedSphere)>} */
@@ -312,13 +313,13 @@ class Primitives extends GenericParser {
 		ret.controlVertexes = [];
 
 		for (let i = 0; i < ret.npointsU; i++) {
-//			ret.ControlVertexes.push([]);
-			ret.controlVertexes[i] = [
-				ControlPoints[i*3+0],
-				ControlPoints[i*3+1],
-				ControlPoints[i*3+2]
-			];
+			ret.controlVertexes[i] = [];
+			for(let j = 0 ; j < ret.npointsV;j++){
+				ret.controlVertexes[i][j] = ControlPoints[i+j];
+			}
+			
 		}
+		debugger;
 		return ret;
 	}
 
@@ -329,7 +330,8 @@ class Primitives extends GenericParser {
 			ret[i] = Object.values(this._parseAttributes(el, {
 				xx: 'ff',
 				yy: 'ff',
-				zz: 'ff'
+				zz: 'ff',
+				ww: 'ff'
 			}, this.defaultControlPoints));
 		}
 

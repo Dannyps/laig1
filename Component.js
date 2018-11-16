@@ -227,7 +227,7 @@ class Component {
                 cgfObj = new Plane_Nurbs(this.scene, primitive.npartsU, primitive.npartsV);
                 break;
             case 'patch':
-                cgfObj = new Patch_Nurbs(this.scene, primitive.npointsU, primitive.npointsV, primitive.npartsU, primitive.npartsV, primitive.controlVertexes);
+                cgfObj = new Patch_Nurbs(this.scene, primitive.npartsU, primitive.npartsV, primitive.controlVertexes, primitive.npointsU, primitive.npointsV);
                 break;
             default:
                 break;
