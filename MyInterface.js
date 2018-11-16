@@ -1,72 +1,60 @@
-/**
-* MyInterface class, creating a GUI interface.
-*/
-class MyInterface extends CGFinterface {
-    /**
-     * @constructor
-     */
-    constructor() {
-        super();
-    }
+// returns obj index on array a, or -1 if a does not contain obj
+function contains(a, obj) {
+	for (var i = 0; i < a.length; i++) {
+		if (a[i] === obj) {
+			return i;
+		}
+	}
 
-    /**
-     * Initializes the interface.
-     * @param {CGFapplication} application
-     */
-    init(application) {
-        super.init(application);
-        // init GUI. For more information on the methods, check:
-        //  http://workshop.chromeexperiments.com/examples/gui
-
-        this.gui = new dat.GUI();
-
-        // add a group of controls (and open/expand by defult)
-
-        return true;
-    }
-
-    /**
-     * Setup key pressing support
-     */
-
-    initKeys() {
-        this.scene.gui=this;
-    }
-    
-    processKeyboard(event) {
-        console.log(event);
-        if(event.key === 'm' || event.key === 'M') {
-            this.scene.updateMaterials = true;
-        }
-    }
-
-    /**
-     * Adds a folder containing the IDs of the lights passed as parameter.
-     * @param {array} lights
-     */
-    addLightsGroup(lights) {
-        let group = this.gui.addFolder("Lights");
-        group.open();
-
-        this.scene.graph.parsedLights.forEach((light, id) => {
-            this.scene.lightValues[id] = light.enabled;
-            group.add(this.scene.lightValues, id);
-        });
-    }
-
-    addViewsGroup() {
-        let viewsID = [];
-        this.scene.views.forEach((value, id) => {
-            viewsID.push(id);
-        });
-
-        let ctrl = this.gui.add(this.scene, 'activeCamera', viewsID);
-        ctrl.onChange(function(val) {
-            this.scene.camera = this.scene.views.get(val);
-            this.setActiveCamera(this.scene.camera);    
-        }.bind(this));
-
-        // force to update view
-        ctrl.setValue(this.scene.activeCamera);
-    }
+	return -1;
 }
+
+/**
+* MyInterface
+* @constructor
+*/
+function MyInterface() {
+	//call CGFinterface constructor 
+	CGFinterface.call(this);
+	
+};
+
+MyInterface.prototype = Object.create(CGFinterface.prototype);
+MyInterface.prototype.constructor = MyInterface;
+
+/**
+* init
+* @param {CGFapplication} application
+*/
+MyInterface.prototype.init = function(application) {
+	// call CGFinterface init
+	CGFinterface.prototype.init.call(this, application);
+	
+	// init GUI. For more information on the methods, check:
+	// http://workshop.chromeexperiments.com/examples/gui
+	this.gui = new dat.GUI();
+
+	this.gui.add(this.scene, 'selectedExampleShader', {
+			'Flat Shading': 0, 
+			'Passing a scale as uniform': 1, 
+			'Passing a varying parameter from VS -> FS': 2, 
+			'Simple texturing': 3, 
+			'Multiple textures in the FS': 4, 
+			'Multiple textures in VS and FS': 5,
+			'Sepia': 6,
+			'Convolution': 7
+			
+	}).name('Shader examples');
+
+	obj=this;
+	this.gui.add(this.scene, 'wireframe').onChange(function(v)
+		{ obj.scene.updateWireframe(v)	});
+
+	this.gui.add(this.scene, 'scaleFactor',-50,50).onChange(function(v)
+	{
+		obj.scene.updateScaleFactor(v);
+	});
+
+	return true;
+};
+
