@@ -249,11 +249,13 @@
         <!-- primitiva patch € npointsU * npointsV -->
 
         <primitive id="nPatch">
-            <patch npointsU="2" npointsV="2" npartsU="2" npartsV="2">
-                <controlpoint xx="-1" yy="-1" zz="0" ww="1"/>
-                <controlpoint xx="-1" yy="1" zz="0" ww="1"/>
-                <controlpoint xx="1" yy="-1" zz="0" ww="1"/>
-                <controlpoint xx="1" yy="1" zz="0" ww="1"/>
+            <patch npointsU="2" npointsV="3" npartsU="20" npartsV="20">
+                <controlpoint xx="0" yy="3" zz="0" />
+                <controlpoint xx="0" yy="3" zz="0" />
+                <controlpoint xx="1" yy="3" zz="0" />
+                <controlpoint xx="-2" yy="0" zz="0" />
+                <controlpoint xx="-3" yy="0" zz="0" />
+                <controlpoint xx="0" yy="0" zz="0" />
             </patch>
         </primitive>
         <!-- Nova primitiva vehicle: corresponde a um veiculo voador. Inclui
