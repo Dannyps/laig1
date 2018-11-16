@@ -195,6 +195,9 @@ class Primitives extends GenericParser {
 			case 'patch':
 				parsedPrimitive = this._parsePatch(attrs, childNode);
 				break;
+			case 'cylinder2':
+				parsedPrimitive = this._parseCylinder2(childNode);
+				break;
 			default:
 				this.onXMLMinorError("Unknown type of primitive");
 				return -5;
@@ -310,14 +313,14 @@ class Primitives extends GenericParser {
 		let ControlPoints = this._parseControlPoints(patchNurbsEl.children);
 
 		ret.controlVertexes = [];
-		let c=0
+		let c = 0
 		for (let i = 0; i < ret.npointsU; i++) {
 			ret.controlVertexes[i] = [];
-			for(let j = 0 ; j < ret.npointsV;j++){
+			for (let j = 0; j < ret.npointsV; j++) {
 				ControlPoints[c].push(1); // add missing w
 				ret.controlVertexes[i][j] = ControlPoints[c];
 				c++;
-			}	
+			}
 		}
 		return ret;
 	}
@@ -335,4 +338,15 @@ class Primitives extends GenericParser {
 
 		return ret;
 	}
+
+	_parseCylinder2(cylinderEl) {
+		return this._parseAttributes(cylinderEl, {
+			base: 'ff',
+			top: 'ff',
+			height: 'ff',
+			slices: 'ii',
+			stacks: 'ii'
+		}, this.defaultCylinder);
+	}
+
 }

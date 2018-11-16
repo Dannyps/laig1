@@ -268,7 +268,7 @@
         <!-- — Nova primitiva: cilindro baseado em NURBS -->
         <!-- paradmetros iguais ao cilindro original -->
         <primitive id="nCylinder2">
-            <cylinder2 base="ff" top="ff" height="ff" slices="ii" stacks="ii" />
+            <cylinder2 base="2" top="0" height="1" slices="50" stacks="5" />
         </primitive>
         <!-- Nova primitiva: terreno baseado em shaders -->
         <!-- parametros: -->
@@ -1214,6 +1214,19 @@
             </children>
         </component>
 
+        <component id="nurbs_cylinder">
+            <transformation>
+                <translate x="0" y="4" z="5"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="nCylinder2" />
+            </children>
+        </component>
+
         <component id="root">
             <transformation></transformation>
             <materials>
@@ -1248,6 +1261,7 @@
                 <componentref id="streetLamp4" />
                 <componentref id="nurbs_plane" />
                 <componentref id="nurbs_patch" />
+                <componentref id="nurbs_cylinder" />
             </children>
         </component>
     </components>

@@ -229,6 +229,9 @@ class Component {
             case 'patch':
                 cgfObj = new Patch_Nurbs(this.scene, primitive.npartsU, primitive.npartsV, primitive.controlVertexes, primitive.npointsU, primitive.npointsV);
                 break;
+            case 'cylinder2':
+                cgfObj = new Cylinder_Nurbs(this.scene, primitive.base, primitive.top, primitive.height, primitive.slices, primitive.stacks);
+                break;
             default:
                 break;
         }
