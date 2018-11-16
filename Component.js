@@ -232,6 +232,9 @@ class Component {
             case 'cylinder2':
                 cgfObj = new Cylinder_Nurbs(this.scene, primitive.base, primitive.top, primitive.height, primitive.slices, primitive.stacks);
                 break;
+            case 'vehicle':
+                cgfObj = new Vehicle(this.scene);
+                break;
             default:
                 break;
         }

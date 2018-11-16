@@ -198,6 +198,9 @@ class Primitives extends GenericParser {
 			case 'cylinder2':
 				parsedPrimitive = this._parseCylinder2(childNode);
 				break;
+			case 'vehicle':
+				parsedPrimitive = {type:"nvehicle"};
+				break;
 			default:
 				this.onXMLMinorError("Unknown type of primitive");
 				return -5;

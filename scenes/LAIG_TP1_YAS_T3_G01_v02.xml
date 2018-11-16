@@ -1227,6 +1227,19 @@
             </children>
         </component>
 
+        <component id="nvehicle">
+            <transformation>
+                <translate x="0" y="4" z="5"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="nVehicle" />
+            </children>
+        </component>
+
         <component id="root">
             <transformation></transformation>
             <materials>
@@ -1259,9 +1272,10 @@
                 <componentref id="streetLamp2" />
                 <componentref id="streetLamp3" />
                 <componentref id="streetLamp4" />
-                <componentref id="nurbs_plane" />
+                <componentref id="nvehicle" />
+                <!--<componentref id="nurbs_plane" />
                 <componentref id="nurbs_patch" />
-                <componentref id="nurbs_cylinder" />
+                <componentref id="nurbs_cylinder" />-->
             </children>
         </component>
     </components>
