@@ -20,6 +20,8 @@ serialInclude(['lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.js',
 'primitives/Plane.Nurbs.js',
 'primitives/Patch.Nurbs.js',
 'primitives/Cylinder.Nurbs.js',
+'primitives/Balloon.Nurbs.js',
+'primitives/Cylinder.Inside.Nurbs.js',
 'primitives/Vehicle.js',
 
 
