@@ -101,6 +101,13 @@ class Primitives extends GenericParser {
 			zz: 1
 		}
 
+
+		this.defaultWater = {
+			parts: 20,
+			heightscale: 1,
+			texscale: 1
+		}
+
 		/** @description data container with all primitives @type {Map.<string, (parsedRectangle | parsedTriangle | parsedCylinder | parsedSphere)>} */
 		this.primitives = new Map();
 	}
@@ -199,7 +206,10 @@ class Primitives extends GenericParser {
 				parsedPrimitive = this._parseCylinder2(childNode);
 				break;
 			case 'vehicle':
-				parsedPrimitive = {type:"nvehicle"};
+				parsedPrimitive = { type: "nvehicle" };
+				break;
+			case 'water':
+				parsedPrimitive = this._parseWater(childNode);
 				break;
 			default:
 				this.onXMLMinorError("Unknown type of primitive");
@@ -350,6 +360,16 @@ class Primitives extends GenericParser {
 			slices: 'ii',
 			stacks: 'ii'
 		}, this.defaultCylinder);
+	}
+
+	_parseWater(waterEl) {
+		return this._parseAttributes(waterEl, {
+			idtexture: 'ss',
+			idwavemap: 'ss',
+			parts: 'ii',
+			heightscale: 'ff',
+			texscale: 'ff'
+		}, this.defaultWater)
 	}
 
 }
