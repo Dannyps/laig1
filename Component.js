@@ -223,6 +223,18 @@ class Component {
             case 'torus':
                 cgfObj = new MyTorus(this.scene, primitive.inner, primitive.outer, primitive.slices, primitive.loops);
                 break;
+            case 'plane':
+                cgfObj = new Plane_Nurbs(this.scene, primitive.npartsU, primitive.npartsV);
+                break;
+            case 'patch':
+                cgfObj = new Patch_Nurbs(this.scene, primitive.npartsU, primitive.npartsV, primitive.controlVertexes, primitive.npointsU, primitive.npointsV);
+                break;
+            case 'cylinder2':
+                cgfObj = new Cylinder_Nurbs(this.scene, primitive.base, primitive.top, primitive.height, primitive.slices, primitive.stacks);
+                break;
+            case 'vehicle':
+                cgfObj = new Vehicle(this.scene);
+                break;
             default:
                 break;
         }
@@ -239,15 +251,15 @@ class Component {
  * @return {Animation[]}
  */
 function _initOwnAnimations(sceneGraph, animationIDs) {
-    if(!animationIDs) return [];
+    if (!animationIDs) return [];
 
     let animations = [];
 
     animationIDs.forEach(animationID => {
         let animProperties = sceneGraph.parsedAnimations.get(animationID);
-        if(animProperties.type === 'linear')
+        if (animProperties.type === 'linear')
             animations.push(new LinearAnimation(animProperties));
-        else if(animProperties.type === 'circular')
+        else if (animProperties.type === 'circular')
             animations.push(new CircularAnimation(animProperties));
     });
 

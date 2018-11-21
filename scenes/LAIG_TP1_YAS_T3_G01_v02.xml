@@ -236,8 +236,8 @@
         </primitive>
 
         <!-- Nova primitiva: plano, gerado por NURBS -->
-        <primitive id="pPlane">
-            <plane npartsU="ii" npartsV="ii" />
+        <primitive id="nPlane">
+            <plane npartsU="5" npartsV="8" />
         </primitive>
         <!-- ex: <plane npartsU="5" npartsU="8" /> um plano de dimensões -->
         <!-- 1 x 1 unidades assente em XZ, centrado na origem -->
@@ -252,22 +252,27 @@
         <!-- - o numero de pontos de controlo dentro da -->
         <!-- primitiva patch € npointsU * npointsV -->
 
-        <primitive id="pPatch">
-            <patch npointsU="ii" npointsV="ii" npartsU="ii" npartsV="ii">
-                <controlpoint xx="ff" yy="ff" zz="ff" />
+        <primitive id="nPatch">
+            <patch npointsU="2" npointsV="3" npartsU="20" npartsV="20">
+                <controlpoint xx="0" yy="3" zz="0" />
+                <controlpoint xx="0" yy="3" zz="0" />
+                <controlpoint xx="1" yy="3" zz="0" />
+                <controlpoint xx="-2" yy="0" zz="0" />
+                <controlpoint xx="-3" yy="0" zz="0" />
+                <controlpoint xx="0" yy="0" zz="0" />
             </patch>
         </primitive>
         <!-- Nova primitiva vehicle: corresponde a um veiculo voador. Inclui
         pelo menos uma superficie não plana gerada utilizando NURBS e
         em codigo javascript -->
-        <primitive id="pVehicle">
+        <primitive id="nVehicle">
             <vehicle/>
-        </primitive> 
+        </primitive>
 
         <!-- — Nova primitiva: cilindro baseado em NURBS -->
         <!-- paradmetros iguais ao cilindro original -->
-        <primitive id="pCylinder2">
-            <cylinder2 base="ff" top="ff" height="ff" slices="ii" stacks="ii" />
+        <primitive id="nCylinder2">
+            <cylinder2 base="2" top="0" height="1" slices="50" stacks="5" />
         </primitive>
         <!-- Nova primitiva: terreno baseado em shaders -->
         <!-- parametros: -->
@@ -278,7 +283,7 @@
         <!-- numero de divisoes em s e t (parts="5" => plano com 5x5
         divisoes -->
         <!-- fator de escala das alturas -->
-        <primitive id="pTerrain">
+        <primitive id="nTerrain">
             <terrain idtexture="ss" idheightmap="ss" parts="i1i" heightscale="ff"/>
         </primitive>
         <!-- Nova primitiva: plano de agua baseado em shaders -->
@@ -1187,6 +1192,58 @@
             </children>
         </component>
 
+        <component id="nurbs_plane">
+            <transformation>
+                <translate x="0" y="8" z="1"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="nPlane" />
+            </children>
+        </component>
+
+        <component id="nurbs_patch">
+            <transformation>
+                <translate x="0" y="4" z="1"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="nPatch" />
+            </children>
+        </component>
+
+        <component id="nurbs_cylinder">
+            <transformation>
+                <translate x="0" y="4" z="5"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="nCylinder2" />
+            </children>
+        </component>
+
+        <component id="nvehicle">
+            <transformation>
+                <translate x="0" y="4" z="5"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="nVehicle" />
+            </children>
+        </component>
+
         <component id="root">
             <transformation></transformation>
             <materials>
@@ -1219,6 +1276,10 @@
                 <componentref id="streetLamp2" />
                 <componentref id="streetLamp3" />
                 <componentref id="streetLamp4" />
+                <componentref id="nvehicle" />
+                <!--<componentref id="nurbs_plane" />
+                <componentref id="nurbs_patch" />
+                <componentref id="nurbs_cylinder" />-->
             </children>
         </component>
     </components>

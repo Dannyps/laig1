@@ -16,6 +16,14 @@ serialInclude(['lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.js',
 'primitives/MyRectangle.js', 'primitives/MyTriangle.js', 'primitives/MyCircle.js', 'primitives/MyCylinderNoCovers.js', 'primitives/MyCylinder.js', 'primitives/MySphere.js', 'primitives/MyTorus.js',
 'utils/Normals.js',
 'animations/Animation.js', 'animations/LinearAnimation.js', 'animations/CircularAnimation.js',
+'primitives/Nurbs.js',
+'primitives/Plane.Nurbs.js',
+'primitives/Patch.Nurbs.js',
+'primitives/Cylinder.Nurbs.js',
+'primitives/Balloon.Nurbs.js',
+'primitives/Cylinder.Inside.Nurbs.js',
+'primitives/Vehicle.js',
+
 
 main=function()
 {
