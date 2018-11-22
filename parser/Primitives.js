@@ -101,11 +101,15 @@ class Primitives extends GenericParser {
 			zz: 1
 		}
 
-
 		this.defaultWater = {
 			parts: 20,
 			heightscale: 1,
 			texscale: 1
+		}
+
+		this.defaultTerrain = {
+			parts: 20,
+			heightscale: 1
 		}
 
 		/** @description data container with all primitives @type {Map.<string, (parsedRectangle | parsedTriangle | parsedCylinder | parsedSphere)>} */
@@ -362,7 +366,7 @@ class Primitives extends GenericParser {
 		}, this.defaultCylinder);
 	}
 
-	_parseWater(waterEl) {
+	_parseWater(waterEl) {	
 		return this._parseAttributes(waterEl, {
 			idtexture: 'ss',
 			idwavemap: 'ss',
@@ -370,6 +374,15 @@ class Primitives extends GenericParser {
 			heightscale: 'ff',
 			texscale: 'ff'
 		}, this.defaultWater)
+	}
+
+	_parseTerrain(terrainEl) {	
+		return this._parseAttributes(terrainEl, {
+			idtexture: 'ss',
+			idheightmap: 'ss',
+			parts: 'ii',
+			heightscale: 'ff'
+		}, this.defaultTerrain)
 	}
 
 }
