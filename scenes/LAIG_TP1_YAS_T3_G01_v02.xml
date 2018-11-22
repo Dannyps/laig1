@@ -284,7 +284,7 @@
         divisoes -->
         <!-- fator de escala das alturas -->
         <primitive id="nTerrain">
-            <terrain idtexture="ss" idheightmap="ss" parts="i1i" heightscale="ff"/>
+            <terrain idtexture="ss" idheightmap="ss" parts="ii" heightscale="ff"/>
         </primitive>
         <!-- Nova primitiva: plano de agua baseado em shaders -->
         <!-- parametros: -->
