@@ -215,6 +215,9 @@ class Primitives extends GenericParser {
 			case 'water':
 				parsedPrimitive = this._parseWater(childNode);
 				break;
+			case 'terrain':
+				parsedPrimitive = this._parseTerrain(childNode);
+				break;
 			default:
 				this.onXMLMinorError("Unknown type of primitive");
 				return -5;
