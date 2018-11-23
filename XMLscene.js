@@ -60,6 +60,8 @@ class XMLscene extends CGFscene {
         this.setUpdatePeriod(100); // every ~100 ms call updateTime callback
 
         this.terrainTex= new CGFtexture(this, "scenes/images/height.png");
+        this.terrainTex.length_s=50;
+        this.terrainTex.length_t=50;
         this.terrain=new Plane_Nurbs(this, 200, 200);
 
         this.shader = new CGFshader(this.gl, "shaders/texture3.vert", "shaders/texture3.frag");
@@ -227,9 +229,10 @@ class XMLscene extends CGFscene {
 
             this.terrainTex.bind(1);
             this.appearance.apply();
-            this.translate(0,1,0);
-            this.scale(5,50,5);
-            this.rotate(-Math.PI/2, 1, 0, 0);	
+            this.translate(0, -20.01, 0);
+            this.scale(50, 20, 50);
+            this.rotate(Math.PI/2, -1, 0, 0);	
+            this.rotate(Math.PI, 0, 0, 1);	
             this.terrain.display();
             this.popMatrix();
     
