@@ -39,7 +39,7 @@ class LinearAnimation extends Animation {
         // rotation relate to self vertical axis
         let ang = Math.atan(this.currentDisplacement.z/this.currentDisplacement.x);
         if(!isNaN(ang)){
-            console.log(ang);
+            //console.log(ang);
             scene.rotate(ang, 0, 1, 0);
         }
     }

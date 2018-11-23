@@ -40,7 +40,7 @@
     <!--         -->
     <ambient>
         <ambient r="0.2" g="0.2" b="0.2" a="1" />
-        <background r="0.0" g="0.2" b="0.3" a="1" />
+        <background r="0.0" g="0.4" b="0.55" a="1" />
     </ambient>
     <!--        -->
     <!-- LIGHTS -->
@@ -203,7 +203,7 @@
         <!-- ao angulo inicial (em graus) e -->
         <!-- total de rota¢gcdo (em graus) -->
 
-        <circular id="TESTE2" span="30" center="0 0 0" radius="1" startang="0" rotang="180" />
+        <circular id="TESTE2" span="3" center="0 0 0" radius="2" startang="0" rotang="360" />
     </animations>
 
 
@@ -642,9 +642,6 @@
             <children>
                 <componentref id="semaforo"/>
             </children>
-            <animations>
-                <animationref id="TESTE2" />
-            </animations>
         </component>
 
         <component id="semaforo2">
@@ -1233,7 +1230,7 @@
 
         <component id="nvehicle">
             <transformation>
-                <translate x="0" y="4" z="5"/>
+                <translate x="0" y="10" z="5"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -1242,6 +1239,9 @@
             <children>
                 <primitiveref id="nVehicle" />
             </children>
+            <animations>
+                <!--<animationref id="TESTE2" />-->
+            </animations>
         </component>
 
         <component id="root">

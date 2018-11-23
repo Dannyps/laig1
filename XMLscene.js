@@ -57,6 +57,13 @@ class XMLscene extends CGFscene {
         this.axis = new CGFaxis(this);
 
         this.setUpdatePeriod(100); // every ~100 ms call updateTime callback
+
+        this.terrainTex= new CGFtexture(this, "scene/images/height.png");
+        this.terrain=new Plane_Nurbs(this, 50, 50);
+
+        this.shader = new CGFshader(this.gl, "shaders/texture3.vert", "shaders/texture3.frag");
+
+        this.shader.setUniformsValues({uSampler2: 1, normScale: 500});
     }
 
     /**
@@ -202,6 +209,20 @@ class XMLscene extends CGFscene {
         }
 
         this.popMatrix();
+
+        this.setActiveShader(this.shader);
+
+        this.pushMatrix();
+
+            this.terrainTex.bind(1);
+        
+            this.translate(0,1,0);
+            //this.scale(0.05,0.05,0.05);
+            this.rotate(-Math.PI/2, 1, 0, 0);	
+            this.terrain.display();
+            this.popMatrix();
+    
+        this.setActiveShader(this.defaultShader);
         // ---- END Background, camera and axis setup
     }
 }
