@@ -222,7 +222,7 @@ class XMLscene extends CGFscene {
         }
 
         this.popMatrix();
-
+/*
         this.setActiveShader(this.shader);
     
         this.pushMatrix();
@@ -236,7 +236,7 @@ class XMLscene extends CGFscene {
             this.terrain.display();
             this.popMatrix();
     
-        this.setActiveShader(this.defaultShader);
+        this.setActiveShader(this.defaultShader);*/
         // ---- END Background, camera and axis setup
     }
 }

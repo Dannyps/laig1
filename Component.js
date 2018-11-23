@@ -235,6 +235,9 @@ class Component {
             case 'vehicle':
                 cgfObj = new Vehicle(this.scene);
                 break;
+            case 'terrain':
+                cgfObj = new MyTerrain(this.scene, primitive.idtexture, primitive.idheightmap, primitive.parts, primitive.heightscale);
+                break;
             default:
                 break;
         }
