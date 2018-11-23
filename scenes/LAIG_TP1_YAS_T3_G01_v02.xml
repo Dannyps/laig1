@@ -785,7 +785,7 @@
             </materials>
             <texture id="none" length_s="1" length_t="1" />
             <children>
-                <componentref id="roadLane1p1" />
+                <!-- <componentref id="roadLane1p1" /> -->
                 <componentref id="roadLane1p2" />
                 <componentref id="roadLane2p1" />
                 <componentref id="roadLane2p2" />
@@ -1258,23 +1258,23 @@
                 <componentref id="semaforo2" />
                 <componentref id="semaforo3" />
                 <componentref id="semaforo4" />
-                <componentref id="ground" />
+<!--                <componentref id="ground" />-->
                 <componentref id="road" />
                 <componentref id="passeio1" />
-                <componentref id="passeio2" />
+                <!-- <componentref id="passeio2" /> -->
                 <componentref id="passeio3" />
                 <componentref id="passeio4" />
                 <componentref id="passeio5" />
                 <componentref id="passeio6" />
-                <componentref id="passeio7" />
+                <!-- <componentref id="passeio7" /> -->
                 <componentref id="passeio8" />
                 <componentref id="casa1" />
                 <componentref id="casa2" />
                 <componentref id="casa3" />
                 <componentref id="casa4" />
                 <componentref id="streetLamp1" />
-                <componentref id="streetLamp2" />
-                <componentref id="streetLamp3" />
+                <!-- <componentref id="streetLamp2" />
+                <componentref id="streetLamp3" /> -->
                 <componentref id="streetLamp4" />
                 <componentref id="nvehicle" />
                 <!--<componentref id="nurbs_plane" />
