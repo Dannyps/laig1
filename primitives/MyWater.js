@@ -1,15 +1,15 @@
-class MyTerrain extends CGFobject {
-    constructor(scene, idtexture, idheightmap, parts, heightscale) {
+class MyWater extends CGFobject {
+    constructor(scene, idtexture, idwavemap, parts, heightscale, texscale) {
         super(scene);
 
         this.scene = scene;
         // the shader
-        this.shader = new CGFshader(this.scene.gl, "shaders/terrain.vert", "shaders/terrain.frag");
+        this.shader = new CGFshader(this.scene.gl, "shaders/water.vert", "shaders/water.frag");
         this.shader.setUniformsValues({uSampler2: 1, normScale: 1});
         // the shader texture
         this.texture = scene.graph.parsedTextures.get(idtexture);
         // the shader height map
-        this.heightmap = scene.graph.parsedTextures.get(idheightmap);
+        this.heightmap = scene.graph.parsedTextures.get(idwavemap);
         // an appareance
         this.appearance = new CGFappearance(scene);
         this.appearance.setTexture(this.texture);

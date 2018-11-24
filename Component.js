@@ -238,6 +238,9 @@ class Component {
             case 'terrain':
                 cgfObj = new MyTerrain(this.scene, primitive.idtexture, primitive.idheightmap, primitive.parts, primitive.heightscale);
                 break;
+            case 'water':
+                cgfObj = new MyWater(this.scene, primitive.idtexture, primitive.idwavemap, primitive.parts, primitive.heightscale, primitive.texscale);
+                break;
             default:
                 break;
         }
