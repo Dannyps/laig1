@@ -8,7 +8,7 @@ uniform sampler2D uSampler;
 uniform sampler2D uSampler2;
 
 void main() {
-	vec4 color = texture2D(uSampler, vTextureCoord*1.0);
+	vec4 color = texture2D(uSampler, vTextureCoord*vec2(1.75, 0.5));
 	vec4 filter = texture2D(uSampler2, vTextureCoord);
 
 	// if (filter.r != 64.0/255.0)
