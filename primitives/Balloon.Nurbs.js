@@ -1,7 +1,15 @@
 'use strict';
 
+/**
+ * The vehicle's baloon
+ */
 class Balloon_Nurbs extends CGFobject {
 
+    /**
+     *Creates an instance of Balloon_Nurbs.
+     * @param {*} scene
+     * @memberof Balloon_Nurbs
+     */
     constructor(scene) {
         super(scene);
 
@@ -57,6 +65,12 @@ class Balloon_Nurbs extends CGFobject {
         this.text.setShininess(1);
     }
 
+
+    /**
+     * Display the baloon
+     *
+     * @memberof Balloon_Nurbs
+     */
     display(){
         this.scene.pushMatrix();
             this.text.apply();

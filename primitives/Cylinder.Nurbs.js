@@ -2,6 +2,17 @@
 
 class Cylinder_Nurbs extends CGFobject {
 
+
+    /**
+     *Creates an instance of Cylinder_Nurbs.
+     * @param {*} scene
+     * @param {*} base
+     * @param {*} top
+     * @param {*} height
+     * @param {*} slices
+     * @param {*} stacks
+     * @memberof Cylinder_Nurbs
+     */
     constructor(scene, base, top, height, slices, stacks) {
         super(scene);
 

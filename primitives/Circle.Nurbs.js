@@ -2,6 +2,14 @@
 
 class Circle_Nurbs extends CGFobject {
 
+    /**
+     *Creates an instance of Circle_Nurbs.
+     * @param {*} scene
+     * @param {*} base
+     * @param {*} slices
+     * @param {*} stacks
+     * @memberof Circle_Nurbs
+     */
     constructor(scene, base, slices, stacks) {
         super(scene);
 
