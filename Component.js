@@ -80,7 +80,7 @@ class Component {
             anim.update(this.scene.currSysTime);
             anim.apply(this.scene);
         });
-
+        
         // apply transformations
         for (let i = 0; i < this.transformation.length; i++) {
             let transf = this.transformation[i];
@@ -147,7 +147,7 @@ class Component {
         let lt = tc[1];
 
         this.material.apply();
-
+        
         // iterate over the children
         // primitives
         this.children.primitivesID.forEach((primitiveId) => {
