@@ -20,12 +20,6 @@ class Vehicle extends CGFobject {
 		this.scene.popMatrix();
 
 		this.scene.pushMatrix();
-			this.scene.translate(0, 2, 0);
-			this.scene.rotate(Math.PI * 1 / 2, -1, 0, 0);
-			this.balloon.display();
-		this.scene.popMatrix();
-
-		this.scene.pushMatrix();
 			this.scene.translate(0.2, -1, 0);
 			this.scene.scale(0.8, 1, 0.8);
 			this.scene.rotate(Math.PI * 1 / 2, -1, 0, 0);
@@ -51,6 +45,12 @@ class Vehicle extends CGFobject {
 			this.scene.translate(-0.635, 1, 0);
 			this.scene.rotate(Math.PI * 1 / 2, 1, 0, 0);
 			this.rope.display();
+		this.scene.popMatrix();
+		
+		this.scene.pushMatrix();
+			this.scene.translate(0, 2, 0);
+			this.scene.rotate(Math.PI * 1 / 2, -1, 0, 0);
+			this.balloon.display();
 		this.scene.popMatrix();
 	}
 };

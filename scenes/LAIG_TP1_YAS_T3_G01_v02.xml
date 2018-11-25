@@ -58,6 +58,18 @@
 			<diffuse r="0.5" g="0.5" b="0.5" a="1" />
 			<specular r="0.2" g="0.2" b="0.2" a="1" />
 		</omni>
+		<omni id="streetlamp3" enabled="1">
+			<location x="-16" y="5.5" z="-6" w="1" />
+			<ambient r="0" g="0" b="0" a="1" />
+			<diffuse r="0.5" g="0.5" b="0.5" a="1" />
+			<specular r="0.2" g="0.2" b="0.2" a="1" />
+		</omni>
+		<omni id="streetlamp4" enabled="1">
+			<location x="16" y="5.5" z="-6" w="1" />
+			<ambient r="0" g="0" b="0" a="1" />
+			<diffuse r="0.5" g="0.5" b="0.5" a="1" />
+			<specular r="0.2" g="0.2" b="0.2" a="1" />
+		</omni>
 		<spot id="ls1" enabled="1" angle="10" exponent="10">
 			<location x="-7.2" y="3" z="10.2" w="1" />
 			<target x="-7.3" y="2" z="10.2" />
@@ -788,7 +800,7 @@
 		</component>
 		<component id="streetLamp2">
 			<transformation>
-				<translate x="6" y=".35" z="-14" />
+				<translate x="16" y=".35" z="-6" />
 			</transformation>
 			<materials>
 				<material id="inherit" />
@@ -800,7 +812,7 @@
 		</component>
 		<component id="streetLamp3">
 			<transformation>
-				<translate x="-6" y=".35" z="-14" />
+				<translate x="-16" y=".35" z="-6" />
 			</transformation>
 			<materials>
 				<material id="inherit" />
@@ -1207,10 +1219,10 @@
 				<componentref id="casa3" />
 				<componentref id="casa4" />
 				<componentref id="streetLamp1" />
-				<!--
+				
 				<componentref id="streetLamp2" />
 				<componentref id="streetLamp3" />
-				-->
+				
 				<componentref id="streetLamp4" />
 				<componentref id="nvehicle" />
 				<!--
