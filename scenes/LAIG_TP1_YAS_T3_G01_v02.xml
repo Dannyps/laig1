@@ -646,22 +646,6 @@
 				<componentref id="semaforo" />
 			</children>
 		</component>
-		<component id="semaforo4">
-			<transformation>
-				<translate x="-5.8" y="0" z="-5.8" />
-				<rotate axis="y" angle="90" />
-			</transformation>
-			<materials>
-				<material id="semaforo" />
-			</materials>
-			<texture id="metal" length_s="1" length_t="1" />
-			<children>
-				<componentref id="semaforo" />
-			</children>
-			<animations>
-				<animationref id="TESTE" />
-			</animations>
-		</component>
 		<!-- ROAD -->
 		<component id="roadLane">
 			<transformation>
@@ -1194,7 +1178,6 @@
 				<componentref id="semaforo1" />
 				<componentref id="semaforo2" />
 				<componentref id="semaforo3" />
-				<componentref id="semaforo4" />
 				<componentref id="road" />
 				<componentref id="passeio1" />
 				<componentref id="passeio3" />
