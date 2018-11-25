@@ -32,7 +32,7 @@ class CircularAnimation extends Animation {
         scene.translate(this.radius*Math.cos(ang), 0, this.radius*Math.sin(ang));
         
         // update horizontal orientation
-        scene.rotate(ang, 0, 1, 0);
+        scene.rotate(ang, 0, -1, 0);
     }
 
     update(currSysTime) {

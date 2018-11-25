@@ -195,7 +195,7 @@
 		<!-- startang e rotang correspondem, nomeadamente, -->
 		<!-- ao angulo inicial (em graus) e -->
 		<!-- total de rota¢gcdo (em graus) -->
-		<circular id="circular1" span="200" center="0 0 -12" radius="0" startang="0" rotang="3600" />
+		<circular id="circular1" span="200" center="0 0 -12" radius="4" startang="0" rotang="3600" />
 	</animations>
 	<!--  -->
 	<!-- PRIMITIVES -->
