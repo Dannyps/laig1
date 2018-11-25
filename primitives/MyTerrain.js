@@ -10,10 +10,6 @@ class MyTerrain extends CGFobject {
         this.texture = scene.graph.parsedTextures.get(idtexture);
         // the shader height map
         this.heightmap = scene.graph.parsedTextures.get(idheightmap);
-        // an appareance
-        this.appearance = new CGFappearance(scene);
-        this.appearance.setTexture(this.texture);
-        this.appearance.setTextureWrap ('REPEAT', 'REPEAT');
         // the height scale
         this.heightscale = heightscale;
         // the plane nurb
@@ -22,10 +18,9 @@ class MyTerrain extends CGFobject {
 
     display() {
         this.scene.setActiveShader(this.shader);
-    
+       	
         this.scene.pushMatrix();
             this.heightmap.bind(1);
-            this.appearance.apply();	
             this.planeNURB.display();
         this.scene.popMatrix();
         this.scene.setActiveShader(this.scene.defaultShader);

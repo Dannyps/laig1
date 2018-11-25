@@ -281,7 +281,7 @@
 		<!-- fator de escala das alturas -->
 		<!-- fator de escala das coordenadas de textura (para o numero de repeticoes no plano) -->
 		<primitive id="pWater">
-			<water idtexture="water" idwavemap="waves" parts="30" heightscale="1" texscale="1" />
+			<water idtexture="water" idwavemap="water" parts="30" heightscale="1" texscale="1" />
 		</primitive>
 	</primitives>
 	<components>
@@ -571,9 +571,9 @@
 				<scale x="50" y="50" z="19.94" />
 			</transformation>
 			<materials>
-				<material id="greenLight" />
+				<material id="passeio" />
 			</materials>
-			<texture id="none" />
+			<texture id="grass" />
 			<children>
 				<primitiveref id="nTerrain" />
 			</children>
@@ -588,7 +588,7 @@
 			<materials>
 				<material id="light" />
 			</materials>
-			<texture id="none" />
+			<texture id="water" />
 			<children>
 				<primitiveref id="pWater" />
 			</children>
