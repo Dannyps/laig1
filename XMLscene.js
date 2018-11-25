@@ -57,7 +57,7 @@ class XMLscene extends CGFscene {
 
         this.axis = new CGFaxis(this);
 
-        this.setUpdatePeriod(100); // every ~100 ms call updateTime callback
+        this.setUpdatePeriod(10); // every ~100 ms call updateTime callback
     }
 
     /**
