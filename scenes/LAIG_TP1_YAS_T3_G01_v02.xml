@@ -183,7 +183,7 @@
 		<!-- startang e rotang correspondem, nomeadamente, -->
 		<!-- ao angulo inicial (em graus) e -->
 		<!-- total de rota¢gcdo (em graus) -->
-		<circular id="TESTE2" span="3" center="0 0 0" radius="2" startang="0" rotang="360" />
+		<circular id="circular1" span="200" center="0 0 -12" radius="0" startang="0" rotang="3600" />
 	</animations>
 	<!--  -->
 	<!-- PRIMITIVES -->
@@ -874,6 +874,8 @@
 		<component id="passeio3">
 			<transformation>
 				<rotate axis="y" angle="180" />
+				<scale x="2.5" y="1" z="1" />
+				<translate x="-15" y="0" z="0" />
 			</transformation>
 			<materials>
 				<material id="inherit" />
@@ -1165,7 +1167,7 @@
 		</component>
 		<component id="nvehicle">
 			<transformation>
-				<translate x="0" y="10" z="5" />
+				<translate x="0" y="10" z="-12" />
 			</transformation>
 			<materials>
 				<material id="inherit" />
@@ -1175,7 +1177,7 @@
 				<primitiveref id="nVehicle" />
 			</children>
 			<animations>
-				<!-- <animationref id="TESTE2" /> -->
+				<animationref id="circular1" />
 			</animations>
 		</component>
 		<component id="root">
@@ -1199,7 +1201,7 @@
 				<componentref id="passeio4" />
 				<componentref id="passeio5" />
 				<componentref id="passeio6" />
-				<componentref id="passeio8" />
+				<!-- <componentref id="passeio8" /> -->
 				<componentref id="casa1" />
 				<componentref id="casa2" />
 				<componentref id="casa3" />
@@ -1209,10 +1211,8 @@
 				<componentref id="streetLamp2" />
 				<componentref id="streetLamp3" />
 				-->
-				<!--
 				<componentref id="streetLamp4" />
 				<componentref id="nvehicle" />
-				-->
 				<!--
 				<componentref id="nurbs_plane" />
 				<componentref id="nurbs_patch" />
