@@ -47,7 +47,20 @@ class Balloon_Nurbs extends CGFobject {
                 [ t,  0, 2, 1], // 1						 
             ]
         ]
-        let obj = new Nurbs(this.scene, 2, 8, controlVertexes, 30, 30);
-        return obj;
+        this.obj = new Nurbs(this.scene, 2, 8, controlVertexes, 30, 30);
+
+        this.text = new CGFappearance(this.scene);
+        this.text.loadTexture("scenes/images/x.png");
+        this.text.setAmbient(0.1,0.1,0.1,0.0);
+        this.text.setDiffuse(0.5, 0.5, 0.5, 1);
+        this.text.setSpecular(0.2, 0.2, 0.2, 1);
+        this.text.setShininess(1);
+    }
+
+    display(){
+        this.scene.pushMatrix();
+            this.text.apply();
+            this.obj.display();
+        this.scene.popMatrix();
     }
 };
