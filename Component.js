@@ -96,11 +96,13 @@ class Component {
             }
         }
 
-                // apply animation
-                this.animations.forEach(anim => {
-                    anim.update(this.scene.currSysTime);
-                    anim.apply(this.scene);
-                });
+        // apply animation
+        for(let anim of this.animations) {
+            anim.update(this.scene.currSysTime);
+            anim.apply(this.scene);
+            if(!anim.animationEnded)
+                break;
+        }
                 
         // apply material
         // check if M was pressed
