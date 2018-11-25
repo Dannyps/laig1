@@ -19,8 +19,9 @@ class MyWater extends CGFobject {
 
     display() {
         this.scene.setActiveShader(this.shader);
-        let rr = Math.sin(this.scene.lastUpdate/1000)*2-0.99;
+        let rr = Math.cos(this.scene.lastUpdate/500)*0.5;
         this.shader.setUniformsValues({randval: rr});
+        console.log(rr);
         this.scene.pushMatrix();
             this.heightmap.bind(1);
             this.planeNURB.display();
