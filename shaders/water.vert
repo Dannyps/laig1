@@ -28,11 +28,11 @@ float rand(float n){return fract(sin(n) * 43758.5453123);}
 // }
 
 void main() {
-	vec3 offset=vec3(0.0,0.0,0.0);
+	vec3 offset=vec3(0.0,0.0,sin(aVertexPosition[1]*3.14*6.0)*0.2*randval);
 	
 	vTextureCoord = aTextureCoord;
 
-	offset=aVertexNormal*(normScale+texture2D(uSampler2, aTextureCoord).b * randval);
+	offset+=aVertexNormal*(normScale+texture2D(uSampler2, aTextureCoord).b * aVertexPosition);
 
 	gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition+offset, 1.0);
 }
