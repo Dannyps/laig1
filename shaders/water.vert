@@ -28,7 +28,7 @@ float rand(float n){return fract(sin(n) * 43758.5453123);}
 // }
 
 void main() {
-	vec3 offset=vec3(0.0,0.0,sin(aVertexPosition[1]*3.14*6.0)*0.2*randval);
+	vec3 offset=vec3(0.0,0.0,sin(aVertexPosition[1]*3.14*6.0)*0.8*randval);
 	
 	vTextureCoord = aTextureCoord;
 
