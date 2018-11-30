@@ -13,13 +13,13 @@
 	<!--  -->
 	<!-- SCENE -->
 	<!--  -->
-	<scene root="root" axis_length="0" />
+	<scene root="root" axis_length="5" />
 	<!--  -->
 	<!-- VIEWS -->
 	<!--  -->
 	<views default="vp1">
-		<perspective id="vp1" near="0.1" far="500" angle="55">
-			<from x="25" y="25" z="25" />
+		<perspective id="vp1" near="0.1" far="500" angle="45">
+			<from x="20" y="20" z="20" />
 			<to x="0" y="0" z="0" />
 		</perspective>
 		<perspective id="vehicleFrontView" near="0.1" far="500" angle="80">
@@ -47,36 +47,11 @@
 	<!--  -->
 	<lights>
 		<omni id="streetlamp1" enabled="1">
-			<location x="6" y="5.5" z="14" w="1" />
+			<location x="0" y="10" z="0" w="1" />
 			<ambient r="0" g="0" b="0" a="1" />
 			<diffuse r="0.5" g="0.5" b="0.5" a="1" />
 			<specular r="0.2" g="0.2" b="0.2" a="1" />
 		</omni>
-		<omni id="streetlamp2" enabled="1">
-			<location x="-6" y="5.5" z="14" w="1" />
-			<ambient r="0" g="0" b="0" a="1" />
-			<diffuse r="0.5" g="0.5" b="0.5" a="1" />
-			<specular r="0.2" g="0.2" b="0.2" a="1" />
-		</omni>
-		<omni id="streetlamp3" enabled="1">
-			<location x="-16" y="5.5" z="-6" w="1" />
-			<ambient r="0" g="0" b="0" a="1" />
-			<diffuse r="0.5" g="0.5" b="0.5" a="1" />
-			<specular r="0.2" g="0.2" b="0.2" a="1" />
-		</omni>
-		<omni id="streetlamp4" enabled="1">
-			<location x="16" y="5.5" z="-6" w="1" />
-			<ambient r="0" g="0" b="0" a="1" />
-			<diffuse r="0.5" g="0.5" b="0.5" a="1" />
-			<specular r="0.2" g="0.2" b="0.2" a="1" />
-		</omni>
-		<spot id="ls1" enabled="1" angle="10" exponent="10">
-			<location x="-7.2" y="3" z="10.2" w="1" />
-			<target x="-7.3" y="2" z="10.2" />
-			<ambient r="0" g="0" b="0" a="0" />
-			<diffuse r="0.6" g="0.5" b="0.5" a="1" />
-			<specular r="0.2" g="0.2" b="0.2" a="1" />
-		</spot>
 	</lights>
 	<!--  -->
 	<!-- TEXTURES -->
@@ -122,7 +97,23 @@
 			<plane npartsU="5" npartsV="8" />
 		</primitive>
 	</primitives>
+
+	<!--  -->
+	<!-- COMPONENTS -->
+	<!--  -->
 	<components>
+		<component id="gameBoard">
+			<transformation>
+				<rotate angle="-90" axis="x" />
+			</transformation>
+			<materials>
+				<material id="defaultAppearance" />
+			</materials>
+			<texture id="none" />
+			<children>
+				<primitiveref id="board" />
+			</children>
+		</component>
 		<component id="root">
 			<transformation></transformation>
 			<materials>
@@ -130,7 +121,7 @@
 			</materials>
 			<texture id="none" />
 			<children>
-				<primitiveref id="board">
+				<componentref id="gameBoard" />
 			</children>
 		</component>
 	</components>
