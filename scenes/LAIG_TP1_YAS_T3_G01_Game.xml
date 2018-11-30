@@ -1,0 +1,137 @@
+<!-- Os comentarios devem ter espacos no inicio e no fim, a -->
+<!-- separar dos hifens -->
+<!-- Nao devem ser usados caracteres especiais (p.ex. acentos) -->
+<!-- Todas as tags e atributos sao obrigatorios, exceto onde for -->
+<!-- referido o contrario -->
+<!-- Na descricao abaixo, os simbolos utilizados tem o seguinte significado: -->
+<!-- ii: integer value -->
+<!-- ff: float value -->
+<!-- ss: string value -->
+<!-- cc: character "x" or "y" or "z" -->
+<!-- tt: "0" or "1" with Boolean significance -->
+<yas xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="yas.xsd">
+	<!--  -->
+	<!-- SCENE -->
+	<!--  -->
+	<scene root="root" axis_length="0" />
+	<!--  -->
+	<!-- VIEWS -->
+	<!--  -->
+	<views default="vp1">
+		<perspective id="vp1" near="0.1" far="500" angle="55">
+			<from x="25" y="25" z="25" />
+			<to x="0" y="0" z="0" />
+		</perspective>
+		<perspective id="vehicleFrontView" near="0.1" far="500" angle="80">
+			<from x="0" y="2" z="25" />
+			<to x="0" y="20" z="-10" />
+		</perspective>
+        <perspective id="vehicleSideView" near="0.1" far="500" angle="60">
+			<from x="40" y="5" z="0" />
+			<to x="-10" y="25" z="1" />
+		</perspective>
+		<ortho id="vehicleTopView" near="0.1" far="500" left="-15" right="15" top="15" bottom="-15">
+			<from x="1" y="30" z="0" />
+			<to x="0" y="5" z="0" />
+		</ortho>
+	</views>
+	<!--  -->
+	<!-- AMBIENT -->
+	<!--  -->
+	<ambient>
+		<ambient r="0.2" g="0.2" b="0.2" a="1" />
+		<background r="0.0" g="0.4" b="0.55" a="1" />
+	</ambient>
+	<!--  -->
+	<!-- LIGHTS -->
+	<!--  -->
+	<lights>
+		<omni id="streetlamp1" enabled="1">
+			<location x="6" y="5.5" z="14" w="1" />
+			<ambient r="0" g="0" b="0" a="1" />
+			<diffuse r="0.5" g="0.5" b="0.5" a="1" />
+			<specular r="0.2" g="0.2" b="0.2" a="1" />
+		</omni>
+		<omni id="streetlamp2" enabled="1">
+			<location x="-6" y="5.5" z="14" w="1" />
+			<ambient r="0" g="0" b="0" a="1" />
+			<diffuse r="0.5" g="0.5" b="0.5" a="1" />
+			<specular r="0.2" g="0.2" b="0.2" a="1" />
+		</omni>
+		<omni id="streetlamp3" enabled="1">
+			<location x="-16" y="5.5" z="-6" w="1" />
+			<ambient r="0" g="0" b="0" a="1" />
+			<diffuse r="0.5" g="0.5" b="0.5" a="1" />
+			<specular r="0.2" g="0.2" b="0.2" a="1" />
+		</omni>
+		<omni id="streetlamp4" enabled="1">
+			<location x="16" y="5.5" z="-6" w="1" />
+			<ambient r="0" g="0" b="0" a="1" />
+			<diffuse r="0.5" g="0.5" b="0.5" a="1" />
+			<specular r="0.2" g="0.2" b="0.2" a="1" />
+		</omni>
+		<spot id="ls1" enabled="1" angle="10" exponent="10">
+			<location x="-7.2" y="3" z="10.2" w="1" />
+			<target x="-7.3" y="2" z="10.2" />
+			<ambient r="0" g="0" b="0" a="0" />
+			<diffuse r="0.6" g="0.5" b="0.5" a="1" />
+			<specular r="0.2" g="0.2" b="0.2" a="1" />
+		</spot>
+	</lights>
+	<!--  -->
+	<!-- TEXTURES -->
+	<!--  -->
+	<textures>
+		<texture id="tt1" file="scenes/images/vidral.jpg" />
+	</textures>
+	<!--  -->
+	<!-- MATERIALS -->
+	<!--  -->
+	<materials>
+		<material id="defaultAppearance" shininess="10">
+			<ambient r="0.2" g="0.2" b="0.2" a="1" />
+			<diffuse r="0.5" g="0.5" b="0.5" a="1" />
+			<specular r="0.5" g="0.5" b="0.5" a="1" />
+			<emission r="0" g="0" b="0" a="1" />
+		</material>
+	</materials>
+	<!--  -->
+	<!-- TRANSFORMATIONS -->
+	<!--  -->
+	<transformations>
+		<transformation id="dummy">
+			<translate x="2" y="0" z="0" />
+			<rotate axis="z" angle="180" />
+			<scale x="1" y="2" z="1" />
+		</transformation>
+	</transformations>
+	<!--  -->
+	<!-- ANIMATIONS -->
+	<!--  -->
+	<animations>
+		<linear id="linear1" span="20">
+			<controlpoint xx="0" yy="0" zz="0" />
+			<controlpoint xx="0" yy="0" zz="0" />
+		</linear>
+	</animations>
+	<!--  -->
+	<!-- PRIMITIVES -->
+	<!--  -->
+	<primitives>
+		<primitive id="board">
+			<plane npartsU="5" npartsV="8" />
+		</primitive>
+	</primitives>
+	<components>
+		<component id="root">
+			<transformation></transformation>
+			<materials>
+				<material id="defaultAppearance" />
+			</materials>
+			<texture id="none" />
+			<children>
+				<primitiveref id="board">
+			</children>
+		</component>
+	</components>
+</yas>
