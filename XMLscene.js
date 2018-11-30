@@ -202,6 +202,9 @@ class XMLscene extends CGFscene {
             this.axis.display();
         }
 
+        let boardTeste = new GameBoard(this, 10);
+        boardTeste.display();
+
         this.popMatrix();
         // ---- END Background, camera and axis setup
     }
