@@ -94,7 +94,7 @@
 	<!--  -->
 	<primitives>
 		<primitive id="board">
-			<plane npartsU="5" npartsV="8" />
+			<gameboard size="10" />
 		</primitive>
 	</primitives>
 

@@ -36,8 +36,6 @@ class GameBoard extends CGFobject
             this.fillBoard();
             this.hasSizeChanged = false;
         }
-
-        this.scene.rotate(-Math.PI/2, 1, 0, 0);
         // Mais 0.5 porque queremos que o translate fique no centro da tile quadrada que vai ser renderizada
         this.scene.translate(-this.size/2+0.5, -this.size/2+0.5, 0);
         for(let i = 0; i < this.size; i++) {

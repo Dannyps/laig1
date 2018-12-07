@@ -243,6 +243,8 @@ class Component {
             case 'water':
                 cgfObj = new MyWater(this.scene, primitive.idtexture, primitive.idwavemap, primitive.parts, primitive.heightscale, primitive.texscale);
                 break;
+            case 'gameboard':
+                cgfObj = new GameBoard(this.scene, primitive.size);
             default:
                 break;
         }

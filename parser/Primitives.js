@@ -218,6 +218,9 @@ class Primitives extends GenericParser {
 			case 'terrain':
 				parsedPrimitive = this._parseTerrain(childNode);
 				break;
+			case 'gameboard':
+				parsedPrimitive = this._parseGameBoard(childNode);
+				break;
 			default:
 				this.onXMLMinorError("Unknown type of primitive");
 				return -5;
@@ -386,6 +389,12 @@ class Primitives extends GenericParser {
 			parts: 'ii',
 			heightscale: 'ff'
 		}, this.defaultTerrain)
+	}
+
+	_parseGameBoard(boardEl) {
+		return this._parseAttributes(boardEl, {
+			size: 'ii'
+		});
 	}
 
 }
