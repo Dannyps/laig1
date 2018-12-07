@@ -58,6 +58,8 @@ class XMLscene extends CGFscene {
         this.axis = new CGFaxis(this);
 
         this.setUpdatePeriod(10); // every ~100 ms call updateTime callback
+
+        this.boardTeste = new GameBoard(this, 10);
     }
 
     /**
@@ -202,8 +204,7 @@ class XMLscene extends CGFscene {
             this.axis.display();
         }
 
-        let boardTeste = new GameBoard(this, 10);
-        boardTeste.display();
+        this.boardTeste.display();
 
         this.popMatrix();
         // ---- END Background, camera and axis setup
