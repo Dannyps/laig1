@@ -16,12 +16,14 @@ class GameBoard extends CGFobject
 
         this.darkPlace = new CGFappearance(scene);
         this.darkPlace.setAmbient(0,0,0,1);
+
+        this.boardTile = new Plane_Nurbs(this.scene,10,10);
     };
     
     display() {
         this.scene.rotate(-Math.PI/2, 1, 0, 0);
+        // Mais 0.5 porque queremos que o translate fique no centro da tile quadrada que vai ser renderizada
         this.scene.translate(-this.size/2+0.5, -this.size/2+0.5, 0);
-        let boardTile = new Plane_Nurbs(this.scene,10,10); 
         for(let i = 0; i < this.size; i++) {
             for(let j = 0; j < this.size; j++) {
                 if((i+j) % 2)
@@ -29,11 +31,18 @@ class GameBoard extends CGFobject
                 else
                     this.whitePlace.apply();
                 
-                boardTile.display();
+                this.boardTile.display();
                 this.scene.translate(1, 0, 0);
             }
             this.scene.translate(-this.size,1,0);
-        }
-        
+        }  
+    }
+
+    incBoardSize() {
+        this.size++;
+    }
+
+    setBoardSize(newSize) {
+        this.size = newSize;
     }
 };
