@@ -20,7 +20,7 @@ class GameBoard extends CGFobject
     
     display() {
         this.scene.rotate(-Math.PI/2, 1, 0, 0);
-        this.scene.translate(-this.size/2, -this.size/2, 0);
+        this.scene.translate(-this.size/2+0.5, -this.size/2+0.5, 0);
         let boardTile = new Plane_Nurbs(this.scene,10,10); 
         for(let i = 0; i < this.size; i++) {
             for(let j = 0; j < this.size; j++) {
