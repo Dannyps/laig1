@@ -45,6 +45,7 @@ class GameBoard extends CGFobject
                 else
                     this.whitePlace.apply();
                 
+                this.scene.registerForPick(i*this.size+j+1, this.board[i][j]);
                 this.board[i][j].display();
                 this.scene.translate(1, 0, 0);
             }

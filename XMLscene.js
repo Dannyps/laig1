@@ -57,8 +57,8 @@ class XMLscene extends CGFscene {
 
         this.axis = new CGFaxis(this);
 
-        this.setUpdatePeriod(10); // every ~100 ms call updateTime callback
-
+        this.setUpdatePeriod(100); // every ~100 ms call updateTime callback
+        this.setPickEnabled(true);
     }
 
     /**
@@ -148,10 +148,26 @@ class XMLscene extends CGFscene {
         this.currSysTime = currTime;  // current system time in miliseconds
     }
 
+    logPicking() {
+        if (this.pickResults != null && this.pickResults.length > 0) {
+			for (var i = 0; i < this.pickResults.length; i++) {
+				var obj = this.pickResults[i][0];
+				if (obj) {
+					var customId = this.pickResults[i][1];
+					console.log("Picked object: " + obj + ", with pick id " + customId);
+				}
+			}
+			this.pickResults.splice(0, this.pickResults.length);
+		}
+    }
+
     /**
      * Displays the scene.
      */
     display() {
+        // display log
+        this.logPicking();
+        this.clearPickRegistration();
         // ---- BEGIN Background, camera and axis setup
 
         // Clear image and depth buffer everytime we update the scene
