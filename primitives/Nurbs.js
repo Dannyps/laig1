@@ -15,7 +15,7 @@ class Nurbs extends CGFobject {
 
         var nurbsSurface = new CGFnurbsSurface(degree1, degree2, controlvertexes);
 
-        var obj = new CGFnurbsObject(this.scene, npartsu, npartsv, nurbsSurface, texT, texS); // must provide an object with the function getPoint(u, v) (CGFnurbsSurface has it)
+        var obj = new MyCGFnurbsObject(this.scene, npartsu, npartsv, nurbsSurface); // must provide an object with the function getPoint(u, v) (CGFnurbsSurface has it)
         
         return obj;
     }

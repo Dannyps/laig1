@@ -167,6 +167,12 @@ class Component {
                 ];
             }
 
+            if(primitiveId == "nPlane"){
+
+                myprim.texCoords = [];
+                myprim.newTexCoords(ls, lt);
+            }
+
             myprim.updateTexCoordsGLBuffers();
             myprim.display(this);
 

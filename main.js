@@ -27,6 +27,7 @@ serialInclude(['lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.js',
 'primitives/MyWater.js',
 'primitives/GameBoard.js',
 'primitives/BoardSpot.js',
+'primitives/MyCGFnurbsObject.js',
 main=function()
 {
 	// Standard application, scene and interface setup

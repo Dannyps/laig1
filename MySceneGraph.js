@@ -245,8 +245,8 @@ class MySceneGraph {
                 let parsedTextures = textures.getParsedTextures();
                 // create the CFGtexture for each texture
                 parsedTextures.forEach((value, key) => {
-                    let cgfAppearance = new CGFtexture (this.scene, ""+value);
-                    this.parsedTextures.set(key, cgfAppearance);
+                    let cgfTexture = new CGFtexture (this.scene, ""+value);
+                    this.parsedTextures.set(key, cgfTexture);
                 });
                 this.info('Parsed textures');
             }
@@ -272,6 +272,7 @@ class MySceneGraph {
                     cgfAppearance.setEmission(value.emission.r, value.emission.g, value.emission.b, value.emission.a);
                     cgfAppearance.setSpecular(value.specular.r, value.specular.g, value.specular.b, value.specular.a);
                     cgfAppearance.setShininess(value.shininess);
+                    //cgfAppearance.setTextureWrap('REPEAT', 'REPEAT');
                     this.parsedMaterials.set(key, cgfAppearance);
                 });
                 this.info('Parsed materials');
