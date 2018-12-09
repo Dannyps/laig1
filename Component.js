@@ -229,7 +229,7 @@ class Component {
                 cgfObj = new Plane_Nurbs(this.scene, primitive.npartsU, primitive.npartsV);
                 break;
             case 'patch':
-                cgfObj = new Patch_Nurbs(this.scene, primitive.npartsU, primitive.npartsV, primitive.controlVertexes, primitive.npointsU, primitive.npointsV);
+                cgfObj = new Patch_Nurbs(this.scene, primitive.npartsU, primitive.npartsV, primitive.controlVertexes, primitive.npointsU, primitive.npointsV, tex_t, tex_s);
                 break;
             case 'cylinder2':
                 cgfObj = new Cylinder_Nurbs(this.scene, primitive.base, primitive.top, primitive.height, primitive.slices, primitive.stacks);

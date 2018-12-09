@@ -12,9 +12,9 @@ class Patch_Nurbs extends CGFobject {
      * @param {*} npointsv control points in v
      * @memberof Patch_Nurbs
      */
-    constructor(scene, npartsu, npartsv, controlVertexes, npointsu, npointsv) {
+    constructor(scene, npartsu, npartsv, controlVertexes, npointsu, npointsv, texT, texS) {
         super(scene);
-        let obj = new Nurbs(this.scene, npointsu-1, npointsv-1, controlVertexes, npartsu, npartsv);
+        let obj = new Nurbs(this.scene, npointsu-1, npointsv-1, controlVertexes, npartsu, npartsv, texS, texT);
         return obj;
     }
 };
