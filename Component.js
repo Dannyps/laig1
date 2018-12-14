@@ -74,7 +74,7 @@ class Component {
 
         this.parent = parent;
         this.scene.pushMatrix();
-    
+
         // apply transformations
         for (let i = 0; i < this.transformation.length; i++) {
             let transf = this.transformation[i];
@@ -97,13 +97,13 @@ class Component {
         }
 
         // apply animation
-        for(let anim of this.animations) {
+        for (let anim of this.animations) {
             anim.update(this.scene.currSysTime);
             anim.apply(this.scene);
-            if(!anim.animationEnded)
+            if (!anim.animationEnded)
                 break;
         }
-                
+
         // apply material
         // check if M was pressed
         if (this.scene.updateMaterials)
@@ -149,7 +149,7 @@ class Component {
         let lt = tc[1];
 
         this.material.apply();
-        
+
         // iterate over the children
         // primitives
         this.children.primitivesID.forEach((primitiveId) => {
@@ -167,7 +167,7 @@ class Component {
                 ];
             }
 
-            if(primitiveId == "nPlane" || primitiveId == "nFloor"){
+            if (primitiveId == "nPlane" || primitiveId == "nFloor") {
 
                 myprim.texCoords = [];
                 myprim.newTexCoords(ls, lt);
@@ -251,6 +251,10 @@ class Component {
                 break;
             case 'gameboard':
                 cgfObj = new GameBoard(this.scene, primitive.size);
+                break;
+            case 'piece':
+                cgfObj = new MyPiece(this.scene, primitive.colour);
+                break;
             default:
                 break;
         }

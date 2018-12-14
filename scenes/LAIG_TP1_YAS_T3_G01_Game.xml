@@ -47,7 +47,7 @@
 	<!--  -->
 	<lights>
 		<omni id="hover1" enabled="1">
-			<location x="0" y="10" z="0" w="1" />
+			<location x="3" y="7" z="0" w="1" />
 			<ambient r="0.3" g="0.3" b="0.3" a="1" />
 			<diffuse r="1" g="1" b="1" a="1" />
 			<specular r=".8" g="0.8" b="0.8" a="1" />
@@ -122,6 +122,12 @@
 		</primitive>
 		<primitive id="nFloor">
 			<plane npartsU="60" npartsV="60" />
+		</primitive>
+		<primitive id="pieceW">
+			<piece colour="white" />
+		</primitive>
+		<primitive id="pieceB">
+			<piece colour="black" />
 		</primitive>
 	</primitives>
 	<!--  -->
@@ -506,6 +512,19 @@
 					<primitiveref id="nFloor" />
 				</children>
 			</component>
+			<component id="pieceW">
+				<transformation>
+					<scale x="0.7" y="0.7" z="0.7"/>
+					<translate x="2.15" y="0.05" z="2.15" />
+				</transformation>
+				<materials>
+					<material id="defaultAppearance" />
+				</materials>
+				<texture id="inherit" />
+				<children>
+					<primitiveref id="pieceW" />
+				</children>
+			</component>
 			<component id="root">
 				<transformation>
 				</transformation>
@@ -523,6 +542,7 @@
 					<componentref id="floor" />
 					<componentref id="wall1" />
 					<componentref id="wall2" />
+					<componentref id="pieceW" />
 				</children>
 			</component>
 		</component>

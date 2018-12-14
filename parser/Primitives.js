@@ -210,7 +210,9 @@ class Primitives extends GenericParser {
 				parsedPrimitive = this._parseCylinder2(childNode);
 				break;
 			case 'vehicle':
-				parsedPrimitive = { type: "nvehicle" };
+				parsedPrimitive = {
+					type: "nvehicle"
+				};
 				break;
 			case 'water':
 				parsedPrimitive = this._parseWater(childNode);
@@ -220,6 +222,9 @@ class Primitives extends GenericParser {
 				break;
 			case 'gameboard':
 				parsedPrimitive = this._parseGameBoard(childNode);
+				break;
+			case 'piece':
+				parsedPrimitive = this._parsePiece(childNode);
 				break;
 			default:
 				this.onXMLMinorError("Unknown type of primitive");
@@ -372,7 +377,7 @@ class Primitives extends GenericParser {
 		}, this.defaultCylinder);
 	}
 
-	_parseWater(waterEl) {	
+	_parseWater(waterEl) {
 		return this._parseAttributes(waterEl, {
 			idtexture: 'ss',
 			idwavemap: 'ss',
@@ -382,7 +387,7 @@ class Primitives extends GenericParser {
 		}, this.defaultWater)
 	}
 
-	_parseTerrain(terrainEl) {	
+	_parseTerrain(terrainEl) {
 		return this._parseAttributes(terrainEl, {
 			idtexture: 'ss',
 			idheightmap: 'ss',
@@ -394,6 +399,12 @@ class Primitives extends GenericParser {
 	_parseGameBoard(boardEl) {
 		return this._parseAttributes(boardEl, {
 			size: 'ii'
+		});
+	}
+
+	_parsePiece(pieceEl) {
+		return this._parseAttributes(pieceEl, {
+			colour: 'ss'
 		});
 	}
 
