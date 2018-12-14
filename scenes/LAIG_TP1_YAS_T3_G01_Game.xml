@@ -46,16 +46,10 @@
 	<!-- LIGHTS -->
 	<!--  -->
 	<lights>
-		<omni id="streetlamp1" enabled="1">
+		<omni id="hover1" enabled="1">
 			<location x="0" y="10" z="0" w="1" />
-			<ambient r="0" g="0" b="0" a="1" />
-			<diffuse r="0.8" g="0.8" b="0.8" a="1" />
-			<specular r="0.2" g="0.2" b="0.2" a="1" />
-		</omni>
-		<omni id="under_the_table" enabled="1">
-			<location x="0" y="-2" z="0" w="1" />
-			<ambient r="1" g="1" b="1" a="1" />
-			<diffuse r="0.8" g="0.8" b="0.8" a="1" />
+			<ambient r="0.3" g="0.3" b="0.3" a="1" />
+			<diffuse r="1" g="1" b="1" a="1" />
 			<specular r="0.2" g="0.2" b="0.2" a="1" />
 		</omni>
 	</lights>
