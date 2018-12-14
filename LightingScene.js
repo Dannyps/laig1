@@ -20,8 +20,9 @@ class LightingScene extends CGFscene
 		// Scene elements
 		
 		this.suzanne = new CGFOBJModel(this, 'models/suzanne.obj');
-		this.santa = new CGFOBJModel(this, 'models/santa/12165_Santa_Claus_v1_l2.obj');
+		this.pagoda = new CGFOBJModel(this, 'models/pagoda/Pagoda.obj');
 		this.navigator = new CGFOBJModel(this, 'models/navigator.obj', true);
+		this.tex = new CGFtexture(this, "models/pagoda/Pagoda_BaseColor.png");
 		
 		// Materials
 		this.materialDefault = new CGFappearance(this);
@@ -111,24 +112,22 @@ class LightingScene extends CGFscene
 
 		// male
 		this.pushMatrix();
-		this.rotate(-Math.PI/2, 1, 0, 0);
-		this.scale(0.05, 0.05, 0.05);
-
-		this.santa.display();
+		this.tex.bind();
+		this.pagoda.display();
 
 		this.popMatrix();
 
 
 		// navigator
 		this.pushMatrix();
-
+/*
 		this.translate(-10, 0, 0);
 		this.scale(2, 2, 2);
 		this.translate(0, 3, 0);
 		this.rotate(-Math.PI/2, 1, 0, 0);
 
 		this.navigator.display();
-
+*/
 		this.popMatrix();
 
 		// ---- END Primitive drawing section
