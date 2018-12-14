@@ -167,7 +167,7 @@ class Component {
                 ];
             }
 
-            if(primitiveId == "nPlane"){
+            if(primitiveId == "nPlane" || primitiveId == "nFloor"){
 
                 myprim.texCoords = [];
                 myprim.newTexCoords(ls, lt);

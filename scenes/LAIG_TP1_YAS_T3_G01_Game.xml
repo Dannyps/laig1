@@ -18,8 +18,8 @@
 	<!-- VIEWS -->
 	<!--  -->
 	<views default="vp1">
-		<perspective id="vp1" near="0.1" far="500" angle="45">
-			<from x="20" y="20" z="20" />
+		<perspective id="vp1" near="0.1" far="500" angle="50">
+			<from x="30" y="30" z="30" />
 			<to x="0" y="0" z="0" />
 		</perspective>
 		<perspective id="vehicleFrontView" near="0.1" far="500" angle="80">
@@ -64,7 +64,9 @@
 	<!--  -->
 	<textures>
 		<texture id="tt1" file="scenes/images/vidral.jpg" />
+		<texture id="floor" file="scenes/images/floor.jpg" />
 		<texture id="wood" file="scenes/images/wood.jpg" />
+		<texture id="wall" file="scenes/images/wall.jpg" />
 	</textures>
 	<!--  -->
 	<!-- MATERIALS -->
@@ -76,10 +78,16 @@
 			<specular r="0.5" g="0.5" b="0.5" a="1" />
 			<emission r="0" g="0" b="0" a="1" />
 		</material>
-		<material id="wood" shininess="1">
+		<material id="wood" shininess="10">
 			<ambient r="0.54" g="0.27" b="0.07" a="1" />
 			<diffuse r="0.54" g="0.27" b="0.07" a="1" />
 			<specular r="0.25" g="0.1" b="0.07" a="1" />
+			<emission r="0" g="0" b="0" a="1" />
+		</material>
+		<material id="dwood" shininess="10">
+			<ambient r="0.34" g="0.17" b="0.007" a="1" />
+			<diffuse r="0.34" g="0.17" b="0.007" a="1" />
+			<specular r="0.15" g="0.1" b="0.007" a="1" />
 			<emission r="0" g="0" b="0" a="1" />
 		</material>
 	</materials>
@@ -111,6 +119,9 @@
 		</primitive>
 		<primitive id="nPlane">
 			<plane npartsU="5" npartsV="8" />
+		</primitive>
+		<primitive id="nFloor">
+			<plane npartsU="30" npartsV="30" />
 		</primitive>
 	</primitives>
 	<!--  -->
@@ -231,7 +242,7 @@
 			<materials>
 				<material id="inherit" />
 			</materials>
-			<texture id="wood" length_s="0.5" length_t="3" />
+			<texture id="wood" length_s="0.3" length_t="3" />
 			<children>
 				<componentref id="cube" />
 			</children>
@@ -244,7 +255,7 @@
 			<materials>
 				<material id="inherit" />
 			</materials>
-			<texture id="wood" length_s="1" length_t="1" />
+			<texture id="wood" length_s="0.3" length_t="3" />
 			<children>
 				<componentref id="cube" />
 			</children>
@@ -257,7 +268,7 @@
 			<materials>
 				<material id="inherit" />
 			</materials>
-			<texture id="wood" length_s="1" length_t="1" />
+			<texture id="wood" length_s="0.3" length_t="3" />
 			<children>
 				<componentref id="cube" />
 			</children>
@@ -270,7 +281,7 @@
 			<materials>
 				<material id="inherit" />
 			</materials>
-			<texture id="wood" length_s="1" length_t="1" />
+			<texture id="wood" length_s="0.3" length_t="3" />
 			<children>
 				<componentref id="cube" />
 			</children>
@@ -290,29 +301,230 @@
 				<componentref id="table_leg4" />
 			</children>
 		</component>
-		<component id="gameBoard">
+		<component id="chair_seat">
 			<transformation>
-				<rotate angle="-90" axis="x" />
+				<translate x="0" y="-4" z="0" />
+				<scale x="7" y="0.5" z="7" />
 			</transformation>
 			<materials>
-				<material id="defaultAppearance" />
+				<material id="inherit" />
 			</materials>
-			<texture id="none" />
+			<texture id="wood" length_s="2" length_t="2" />
 			<children>
-				<primitiveref id="board" />
+				<componentref id="cube" />
 			</children>
 		</component>
-		<component id="root">
+		<component id="chair_back">
+			<transformation>
+				<translate x="0" y="-0.25" z="3.25" />
+				<scale x="7" y="7" z="0.5" />
+			</transformation>
+			<materials>
+				<material id="inherit" />
+			</materials>
+			<texture id="wood" length_s="3" length_t="3" />
+			<children>
+				<componentref id="cube" />
+			</children>
+		</component>
+		<component id="chair_leg">
+			<transformation>
+				<scale x="0.5" y="4.5" z="0.5" />
+			</transformation>
+			<materials>
+				<material id="inherit" />
+			</materials>
+			<texture id="wood" length_s="0.4" length_t="4" />
+			<children>
+				<componentref id="cube" />
+			</children>
+		</component>
+		<component id="chair_leg1">
+			<transformation>
+				<translate x="3.25" y="-6.5" z="3.25" />
+			</transformation>
+			<materials>
+				<material id="inherit" />
+			</materials>
+			<texture id="inherit" />
+			<children>
+				<componentref id="chair_leg" />
+			</children>
+		</component>
+		<component id="chair_leg2">
+			<transformation>
+				<translate x="3.25" y="-6.5" z="-3.25" />
+			</transformation>
+			<materials>
+				<material id="inherit" />
+			</materials>
+			<texture id="inherit" />
+			<children>
+				<componentref id="chair_leg" />
+			</children>
+		</component>
+		<component id="chair_leg3">
+			<transformation>
+				<translate x="-3.25" y="-6.5" z="-3.25" />
+			</transformation>
+			<materials>
+				<material id="inherit" />
+			</materials>
+			<texture id="inherit" />
+			<children>
+				<componentref id="chair_leg" />
+			</children>
+		</component>
+		<component id="chair_leg4">
+			<transformation>
+				<translate x="-3.25" y="-6.5" z="3.25" />
+			</transformation>
+			<materials>
+				<material id="inherit" />
+			</materials>
+			<texture id="inherit" />
+			<children>
+				<componentref id="chair_leg" />
+			</children>
+		</component>
+		<component id="chair">
 			<transformation>
 			</transformation>
 			<materials>
-				<material id="defaultAppearance" />
+				<material id="dwood" />
 			</materials>
-			<texture id="none" />
+			<texture id="wood" length_s="1" length_t="1" />
 			<children>
-				<componentref id="table" />
-				<componentref id="gameBoard" />
+				<componentref id="chair_seat" />
+				<componentref id="chair_back" />
+				<componentref id="chair_leg1" />
+				<componentref id="chair_leg2" />
+				<componentref id="chair_leg3" />
+				<componentref id="chair_leg4" />
 			</children>
+		</component>
+		<component id="chair1">
+			<transformation>
+				<translate x="6" y="-1.75" z="10" />
+			</transformation>
+			<materials>
+				<material id="dwood" />
+			</materials>
+			<texture id="wood" length_s="1" length_t="1" />
+			<children>
+				<componentref id="chair" />
+			</children>
+		</component>
+		<component id="chair2">
+			<transformation>
+				<translate x="-6" y="-1.75" z="-10" />
+				<rotate axis="y" angle="180" />
+			</transformation>
+			<materials>
+				<material id="dwood" />
+			</materials>
+			<texture id="wood" length_s="1" length_t="1" />
+			<children>
+				<componentref id="chair" />
+			</children>
+			<component id="chair3">
+				<transformation>
+					<translate x="-6" y="-1.75" z="10" />
+				</transformation>
+				<materials>
+					<material id="dwood" />
+				</materials>
+				<texture id="wood" length_s="1" length_t="1" />
+				<children>
+					<componentref id="chair" />
+				</children>
+			</component>
+			<component id="chair4">
+				<transformation>
+					<translate x="6" y="-1.75" z="-10" />
+					<rotate axis="y" angle="180" />
+				</transformation>
+				<materials>
+					<material id="dwood" />
+				</materials>
+				<texture id="wood" length_s="1" length_t="1" />
+				<children>
+					<componentref id="chair" />
+				</children>
+			</component>
+			<component id="gameBoard">
+				<transformation>
+					<rotate angle="-90" axis="x" />
+				</transformation>
+				<materials>
+					<material id="defaultAppearance" />
+				</materials>
+				<texture id="none" />
+				<children>
+					<primitiveref id="board" />
+				</children>
+			</component>
+			<component id="floor">
+				<transformation>
+					<translate x="0" y="-10" z="0" />
+					<scale x="60" y="1" z="60" />
+					<rotate angle="-90" axis="x" />
+				</transformation>
+				<materials>
+					<material id="defaultAppearance" />
+				</materials>
+				<texture id="floor" length_s="4" length_t="4" />
+				<children>
+					<primitiveref id="nFloor" />
+				</children>
+			</component>
+			<component id="wall1">
+				<transformation>
+					<translate x="-30" y="5" z="0" />
+					<scale x="1" y="30" z="60" />
+					<rotate angle="90" axis="y" />
+				</transformation>
+				<materials>
+					<material id="defaultAppearance" />
+				</materials>
+				<texture id="wall" length_s="4" length_t="2" />
+				<children>
+					<primitiveref id="nFloor" />
+				</children>
+			</component>
+			<component id="wall2">
+				<transformation>
+					<translate x="0" y="5" z="-30" />
+					<scale x="60" y="30" z="1" />
+					<rotate angle="0" axis="y" />
+				</transformation>
+				<materials>
+					<material id="defaultAppearance" />
+				</materials>
+				<texture id="wall" length_s="4" length_t="2" />
+				<children>
+					<primitiveref id="nFloor" />
+				</children>
+			</component>
+			<component id="root">
+				<transformation>
+				</transformation>
+				<materials>
+					<material id="defaultAppearance" />
+				</materials>
+				<texture id="none" />
+				<children>
+					<componentref id="table" />
+					<componentref id="gameBoard" />
+					<componentref id="chair1" />
+					<componentref id="chair2" />
+					<componentref id="chair3" />
+					<componentref id="chair4" />
+					<componentref id="floor" />
+					<componentref id="wall1" />
+					<componentref id="wall2" />
+				</children>
+			</component>
 		</component>
 	</components>
 </yas>
