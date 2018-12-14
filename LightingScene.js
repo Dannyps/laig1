@@ -20,7 +20,7 @@ class LightingScene extends CGFscene
 		// Scene elements
 		
 		this.suzanne = new CGFOBJModel(this, 'models/suzanne.obj');
-		this.male = new CGFOBJModel(this, 'models/male.obj');
+		this.santa = new CGFOBJModel(this, 'models/santa/12165_Santa_Claus_v1_l2.obj');
 		this.navigator = new CGFOBJModel(this, 'models/navigator.obj', true);
 		
 		// Materials
@@ -111,10 +111,10 @@ class LightingScene extends CGFscene
 
 		// male
 		this.pushMatrix();
+		this.rotate(-Math.PI/2, 1, 0, 0);
+		this.scale(0.05, 0.05, 0.05);
 
-		this.scale(0.5, 0.5, 0.5);
-
-		this.male.display();
+		this.santa.display();
 
 		this.popMatrix();
 
