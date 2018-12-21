@@ -12,7 +12,9 @@ class MyPiece extends CGFobject {
 
 
 	display() {
-
+		// register for picking
+		this.scene.myRegisterForPick(this);
+		
 		this.scene.pushMatrix();
 			this.scene.rotate(Math.PI * 1 / 2, -1, 0, 0);
 			this.pieceTop.display();
@@ -47,5 +49,6 @@ class MyPiece extends CGFobject {
 			this.scene.popMatrix();
 
 		this.scene.popMatrix();
+		this.scene.clearPickRegistration();
 	}
 };
