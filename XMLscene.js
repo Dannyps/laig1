@@ -36,6 +36,15 @@ class XMLscene extends CGFscene {
 
         /** @description Holds the current system time and it's updated aproximatelly every ~100ms in update() callback */
         this.currSysTime;
+
+        this.lastRegisteredPickId = 1;
+    }
+
+    /**
+     * Returns a new unique register pick id
+     */
+    myRegisterForPick(obj) {
+        this.registerForPick(this.lastRegisteredPickId++, obj);
     }
 
     /**
@@ -168,6 +177,7 @@ class XMLscene extends CGFscene {
         // display log
         this.logPicking();
         this.clearPickRegistration();
+        this.lastRegisteredPickId = 1; // reset
         // ---- BEGIN Background, camera and axis setup
 
         // Clear image and depth buffer everytime we update the scene

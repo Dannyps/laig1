@@ -44,14 +44,12 @@ class GameBoard extends CGFobject
                     this.darkPlace.apply();
                 else
                     this.whitePlace.apply();
-                
-                this.scene.registerForPick(i*this.size+j+1, this.board[i][j]);
+                this.scene.myRegisterForPick(this.board[i][j]);
                 this.board[i][j].display();
                 this.scene.translate(1, 0, 0);
             }
             this.scene.translate(-this.size,1,0);
         }
-        
         this.scene.clearPickRegistration();
     }
 
