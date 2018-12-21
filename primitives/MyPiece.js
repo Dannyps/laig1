@@ -8,10 +8,13 @@ class MyPiece extends CGFobject {
 		this.mat = new CGFappearance(scene);
 		this.mat.setAmbient(0.2, 0.2, 0.2,1);
 		this.mat.setDiffuse(1, 1, 1,1);
+		this.selected = false; // by default
 	};
 
 
 	display() {
+
+		this.pieceTop.selected = this.selected; // propagate changes
 
 		this.scene.pushMatrix();
 			this.scene.rotate(Math.PI * 1 / 2, -1, 0, 0);
@@ -47,5 +50,13 @@ class MyPiece extends CGFobject {
 			this.scene.popMatrix();
 
 		this.scene.popMatrix();
+	}
+
+	/**
+	 * 
+	 * @param Boolean is selected
+	 */
+	setSelected(sel){
+		this.selected = sel;
 	}
 };

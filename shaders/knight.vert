@@ -12,6 +12,7 @@ uniform sampler2D uSampler2;
 uniform float randval;
 
 uniform float normScale;
+uniform float selected;
 
 float rand(float n){return fract(sin(n) * 43758.5453123);}
 

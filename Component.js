@@ -194,6 +194,7 @@ class Component {
      * @param {*} primitive 
      */
     _initCGFprimitive(primitiveId) {
+        window.pieces = [];
         let primitive = this.graph.parsedPrimitives.get(primitiveId);
         if (primitive == undefined) {
             console.error("Broken primitive ref: " + primitiveId);
@@ -254,6 +255,7 @@ class Component {
                 break;
             case 'piece':
                 cgfObj = new MyPiece(this.scene, primitive.colour);
+                window.pieces.push(cgfObj);
                 break;
             default:
                 break;
