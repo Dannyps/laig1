@@ -50,7 +50,9 @@ class GameBoard extends CGFobject
                 this.scene.translate(1, 0, 0);
             }
             this.scene.translate(-this.size,1,0);
-        }  
+        }
+        
+        this.scene.clearPickRegistration();
     }
 
     incBoardSize() {
