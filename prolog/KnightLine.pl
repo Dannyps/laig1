@@ -327,7 +327,7 @@ remove_results(Board,[H|T],ResultList,List):-
 
 /*
 * This predicate is used get all the possible moves for
-* the positiona of every piece.
+* the position of every piece.
 */
 check_forall([], _, Acc, Acc).
 check_forall([H|T], Board, ListOfMoves, Acc):-
