@@ -38,6 +38,8 @@ class XMLscene extends CGFscene {
         this.currSysTime;
 
         this.lastRegisteredPickId = 1;
+
+        this.gameBoard;
     }
 
     /**
@@ -66,7 +68,7 @@ class XMLscene extends CGFscene {
 
         this.axis = new CGFaxis(this);
 
-        this.setUpdatePeriod(100); // every ~100 ms call updateTime callback
+        this.setUpdatePeriod(300); // every ~100 ms call updateTime callback
         this.setPickEnabled(true);
     }
 
@@ -146,6 +148,11 @@ class XMLscene extends CGFscene {
         // Add support for keys
         this.interface.initKeys();
 
+        // Create board
+        this.gameBoard = this.graph.parsedComponents.get('gameBoard');
+        this.game = new KnightLine(this.gameBoard);
+        console.log(this.gameBoard);
+        this.game.dummy_handshake();
         this.sceneInited = true;
     }
 

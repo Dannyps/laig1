@@ -52,6 +52,7 @@ serialInclude(['lib/CGF.js',
 'primitives/MyCGFnurbsObject.js',
 'primitives/MyPiece.js',
 'primitives/MyPieceTop.js',
+'KnightLine.js',
 main=function()
 {
 	// Standard application, scene and interface setup
