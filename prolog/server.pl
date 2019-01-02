@@ -107,11 +107,22 @@ print_header_line(_).
 parse_input(handshake, main_menu).
 parse_input(test(C,N), Res) :- test(C,Res,N).
 parse_input(quit, goodbye).
+parse_input(initPlayerVsPlayer, Board) :- initPlayerVsPlayer(Board).
+parse_input(get_valid_moves_white(Board), Moves) :- get_valid_moves_white(Board, Moves).
+parse_input(get_valid_moves_black(Board), Moves) :- get_valid_moves_black(Board, Moves).
 
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
 
-parse_input(initPlayerVsPlayer, Board) :- initPlayerVsPlayer(Board).
+
+% API
 
 initPlayerVsPlayer(Board):-
-    initialBoard(Board).	
+    initialBoard(Board).
+
+get_valid_moves_white(Board, Moves):-
+    valid_moves(Board,w,Moves).
+
+get_valid_moves_black(Board, Moves):-
+    valid_moves(Board,b,Moves).
+
