@@ -1,23 +1,28 @@
 class MyPiece extends CGFobject {
 	constructor(scene, colour) {
 		super(scene);
-		console.log(colour);
 		// initialize the top and bottom covers and the cylinder
 		this.pieceTop = new MyPieceTop(scene, 1);
 		this.pieceSides = new Plane_Nurbs(scene, 10, 10);
 		this.mat = new CGFappearance(scene);
-		this.mat.setAmbient(0.2, 0.2, 0.2,1);
-		this.mat.setDiffuse(1, 1, 1,1);
+
 		this.selected = false; // by default
+		if(colour == 'white'){
+			this.mat.setAmbient(0.2, 0.2, 0.2,1);
+			this.mat.setDiffuse(1, 1, 1,1);
+		}else{
+			this.mat.setAmbient(0.2, 0.2, 0.2,1);
+			this.mat.setDiffuse(0.2, 0.2, 0.2,1);
+		}
 	};
 
 
 	display() {
 
 		this.pieceTop.selected = this.selected; // propagate changes
-
+		this.mat.apply();
 		// register for picking
-		this.scene.myRegisterForPick(this);
+		this.scene.myRegisterForPick(this, 2000);
 		
 		this.scene.pushMatrix();
 			this.scene.rotate(Math.PI * 1 / 2, -1, 0, 0);

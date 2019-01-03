@@ -45,8 +45,8 @@ class XMLscene extends CGFscene {
     /**
      * Returns a new unique register pick id
      */
-    myRegisterForPick(obj) {
-        this.registerForPick(this.lastRegisteredPickId++, obj);
+    myRegisterForPick(obj, prefix = 0) {
+        this.registerForPick(prefix + this.lastRegisteredPickId++, obj);
     }
 
     /**
