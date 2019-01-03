@@ -1,15 +1,31 @@
 class KnightLine {
 
-	constructor(gameBoard) {
-		this.gameBoard = gameBoard;
+	constructor(scene) {
+		this.gameBoard = scene.graph.parsedComponents.get('gameBoard').CGFprimitives.get('board');
+		window.board = this.gameBoard; // TODOP remove this
+		this.gameControl = scene.gc;
 		this.boardSize = 10;
+	}
+
+	sgc_waiting() {
+		this.gameControl.status = 1;
+	}
+
+	sgc_running() {
+		this.gameControl.status = 2;
+	}
+
+	sgc_end() {
+		this.gameControl.status = 3;
 	}
 
 	dummy_handshake() {
 		let request = new XMLHttpRequest();
 		request.open('GET', 'http://localhost:8081/initPlayerVsPlayer');
+		this.sgc_waiting();
 		let that = this; // javascript is love
 		request.onload = function (ev) {
+			that.sgc_running();
 			console.log(request.responseText);
 			that.parsePrologBoard(request.responseText);
 		}
@@ -22,30 +38,41 @@ class KnightLine {
 
 		//
 		let reg = /(?:\[|\],|\])/; // meh, not that clean..
-		let rows = (boardStr.split(reg)).filter(e => e!=='');
-		let row_number = 0, collumn_number = 0;
+		let rows = (boardStr.split(reg)).filter(e => e !== '');
+		
+		let numberOfRows = rows.length;
+		let numberOfCols;
 		rows.forEach(row => {
 			let tiles = row.split(',');
-			for(let tile of tiles) {
+			numberOfCols = tiles.length;
+			for (let tile of tiles) {
 				// Empty tile, nothing to see here
-				if(tile == "e") {
+				if (tile == "e") {
 					tile++;
 					continue;
 				}
 
 				let tile_type;
-				if(tile.charAt(0) == 'b') {
+				if (tile.charAt(0) == 'b') {
 					tile_type = "BLACK";
 				} else if (tile.charAt(0) == 'w') {
 					tile_type = "WHITE";
 				} else throw "Unknown tile";
-				
+
 				// parse number of tiles
 				let numberTiles = parseInt(tile.substring(2));
 				console.log(`Found ${numberTiles} ${tile_type} tiles`);
-				collumn_number++;
 			}
+			//this.gameBoard.setBoardSize(this.max(numberOfRows, numberOfCols));
 		});
+
+		this.gameBoard.readyForFirstGame();
+	}
+
+	max(a, b) {
+		if (a > b)
+			return a;
+		return b;
 	}
 
 }

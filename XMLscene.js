@@ -18,7 +18,7 @@ class XMLscene extends CGFscene {
          */
         this.activeCamera; // holds the ID of the active camera
         this.views = new Map(); // maps the ID to a CFGCamera or CGFCameraOrtho
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15,15,15), vec3.fromValues(0,0,0)); // the LIB requires this...
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0)); // the LIB requires this...
 
         /**
          * Lights. The scene has an array of CGFlights, and an object to be used by the interface. 
@@ -60,7 +60,7 @@ class XMLscene extends CGFscene {
 
         this.enableTextures(true);
 
-        this.gl.clearColor(0,0,0, 1.0);
+        this.gl.clearColor(0, 0, 0, 1.0);
         this.gl.clearDepth(10000.0);
         this.gl.enable(this.gl.DEPTH_TEST);
         this.gl.enable(this.gl.CULL_FACE);
@@ -68,7 +68,7 @@ class XMLscene extends CGFscene {
 
         this.axis = new CGFaxis(this);
 
-        this.setUpdatePeriod(300); // every ~100 ms call updateTime callback
+        this.setUpdatePeriod(10); // every ~100 ms call updateTime callback
         this.setPickEnabled(true);
     }
 
@@ -77,18 +77,16 @@ class XMLscene extends CGFscene {
      */
     initCameras() {
         this.graph.views.forEach((view, id) => {
-            if(view.type === 'perspective') {
+            if (view.type === 'perspective') {
                 this.views.set(id, new CGFcamera(
-                    view.fieldView, view.near, view.far, 
-                    vec3.fromValues(view.from.x, view.from.y, view.from.z), 
-                    vec3.fromValues(view.to.x, view.to.y, view.to.z))
-                );
-            } else if(view.type === 'ortho') {
+                    view.fieldView, view.near, view.far,
+                    vec3.fromValues(view.from.x, view.from.y, view.from.z),
+                    vec3.fromValues(view.to.x, view.to.y, view.to.z)));
+            } else if (view.type === 'ortho') {
                 this.views.set(id, new CGFcameraOrtho(
-                    view.left, view.right, view.bottom, view.top, view.near, view.far, 
-                    vec3.fromValues(view.from.x, view.from.y, view.from.z), 
-                    vec3.fromValues(view.to.x, view.to.y, view.to.z), vec3.fromValues(0,1,0))
-                );
+                    view.left, view.right, view.bottom, view.top, view.near, view.far,
+                    vec3.fromValues(view.from.x, view.from.y, view.from.z),
+                    vec3.fromValues(view.to.x, view.to.y, view.to.z), vec3.fromValues(0, 1, 0)));
             }
         });
 
@@ -112,9 +110,9 @@ class XMLscene extends CGFscene {
             this.lights[i].setSpecular(light.specular.r, light.specular.g, light.specular.b, light.specular.a);
             this.lights[i].setVisible(true);
 
-            if(light.enabled) 
-                this.lights[i].enable(); 
-            else 
+            if (light.enabled)
+                this.lights[i].enable();
+            else
                 this.lights[i].disable();
 
             i++;
@@ -133,7 +131,7 @@ class XMLscene extends CGFscene {
         this.initCameras();
 
         // Change ambient and background details according to parsed graph
-        let background =  this.graph.ambientBackgroundColor;
+        let background = this.graph.ambientBackgroundColor;
         this.gl.clearColor(background.r, background.g, background.b, background.a);
 
         let ambLight = this.graph.ambientLight;
@@ -148,12 +146,23 @@ class XMLscene extends CGFscene {
         // Add support for keys
         this.interface.initKeys();
 
-        // Create board
-        this.gameBoard = this.graph.parsedComponents.get('gameBoard');
-        this.game = new KnightLine(this.gameBoard);
-        console.log(this.gameBoard);
-        this.game.dummy_handshake();
+        this.gc = {
+            status: 0
+        };
+
+        this.interface.addGameControl(this.gc);
+
         this.sceneInited = true;
+
+        setTimeout(() => {
+            // Create board
+            this.gameBoard = this.graph.parsedComponents.get('gameBoard');
+            this.game = new KnightLine(this);
+            console.log(this.gameBoard);
+            this.game.dummy_handshake();
+            
+        }, 1000);
+        
     }
 
     /**
@@ -161,20 +170,20 @@ class XMLscene extends CGFscene {
      * @param {*} currTime 
      */
     update(currTime) {
-        this.currSysTime = currTime;  // current system time in miliseconds
+        this.currSysTime = currTime; // current system time in miliseconds
     }
 
     logPicking() {
         if (this.pickResults != null && this.pickResults.length > 0) {
-			for (var i = 0; i < this.pickResults.length; i++) {
-				var obj = this.pickResults[i][0];
-				if (obj) {
-					var customId = this.pickResults[i][1];
-					console.log("Picked object: " + obj + ", with pick id " + customId);
-				}
-			}
-			this.pickResults.splice(0, this.pickResults.length);
-		}
+            for (var i = 0; i < this.pickResults.length; i++) {
+                var obj = this.pickResults[i][0];
+                if (obj) {
+                    var customId = this.pickResults[i][1];
+                    console.log("Picked object: " + obj + ", with pick id " + customId);
+                }
+            }
+            this.pickResults.splice(0, this.pickResults.length);
+        }
     }
 
     /**
@@ -191,9 +200,9 @@ class XMLscene extends CGFscene {
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
-        this.gl.canvas.addEventListener('wheel',function(event){
-            if(event.shiftKey) console.log(event);
-            return false; 
+        this.gl.canvas.addEventListener('wheel', function (event) {
+            if (event.shiftKey) console.log(event);
+            return false;
         });
 
         // Initialize Model-View matrix as identity (no transformation
@@ -216,8 +225,7 @@ class XMLscene extends CGFscene {
                     if (this.lightValues[key]) {
                         this.lights[i].setVisible(true);
                         this.lights[i].enable();
-                    }
-                    else {
+                    } else {
                         this.lights[i].setVisible(false);
                         this.lights[i].disable();
                     }
@@ -226,7 +234,7 @@ class XMLscene extends CGFscene {
                 }
             }
 
-            if(this.updateMaterials) {
+            if (this.updateMaterials) {
                 console.log("Update the materials");
             }
 
@@ -235,8 +243,7 @@ class XMLscene extends CGFscene {
 
             // set the flag to false
             this.updateMaterials = false;
-        }
-        else {
+        } else {
             // Draw axis
             this.axis.display();
         }

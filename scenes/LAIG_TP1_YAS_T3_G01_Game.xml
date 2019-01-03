@@ -17,7 +17,7 @@
 	<!--  -->
 	<!-- VIEWS -->
 	<!--  -->
-	<views default="vp1">
+	<views default="overview">
 		<perspective id="overview" near="0.1" far="500" angle="50">
 			<from x="30" y="30" z="30" />
 			<to x="0" y="0" z="0" />

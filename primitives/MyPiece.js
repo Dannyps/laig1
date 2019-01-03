@@ -21,7 +21,9 @@ class MyPiece extends CGFobject {
 		
 		this.scene.pushMatrix();
 			this.scene.rotate(Math.PI * 1 / 2, -1, 0, 0);
-			this.pieceTop.display();
+			//this.pieceTop.display();
+				this.scene.translate(0, 0, 1/5);
+				this.pieceSides.display();
 		this.scene.popMatrix();
 
 		this.mat.apply();

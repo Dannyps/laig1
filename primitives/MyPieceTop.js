@@ -19,7 +19,7 @@ class MyPieceTop extends CGFobject {
         // the height scale
         this.heightscale = heightscale;
         // the plane nurb
-        this.planeNURB = new Plane_Nurbs(scene, 50, 50);
+        this.planeNURB = new Plane_Nurbs(scene, 10, 10);
     }
 
     display() {

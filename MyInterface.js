@@ -1,6 +1,6 @@
 /**
-* MyInterface class, creating a GUI interface.
-*/
+ * MyInterface class, creating a GUI interface.
+ */
 class MyInterface extends CGFinterface {
     /**
      * @constructor
@@ -30,12 +30,12 @@ class MyInterface extends CGFinterface {
      */
 
     initKeys() {
-        this.scene.gui=this;
+        this.scene.gui = this;
     }
-    
+
     processKeyboard(event) {
         console.log(event);
-        if(event.key === 'm' || event.key === 'M') {
+        if (event.key === 'm' || event.key === 'M') {
             this.scene.updateMaterials = true;
         }
     }
@@ -61,12 +61,26 @@ class MyInterface extends CGFinterface {
         });
 
         let ctrl = this.gui.add(this.scene, 'activeCamera', viewsID);
-        ctrl.onChange(function(val) {
+        ctrl.onChange(function (val) {
             this.scene.camera = this.scene.views.get(val);
-            this.setActiveCamera(this.scene.camera);    
+            this.setActiveCamera(this.scene.camera);
         }.bind(this));
 
         // force to update view
         ctrl.setValue(this.scene.activeCamera);
+    }
+
+    addGameControl(gc) {
+        
+        let gg = this.gui.addFolder("Game Control");
+        gg.open();
+        gg.add(gc, 'status', {
+            'Starting': 0,
+            'Waiting for Server': 1,
+            'Running': 2,
+            'Finished': 3
+        }).listen();
+
+        // todo disable select
     }
 }

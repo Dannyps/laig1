@@ -19,16 +19,9 @@ player(w).
 %%% Boards %%%%%
 
 initialBoard([
-        [e,e,e,e,e,e,e,e,e,e],
-        [e,e,e,e,e,e,e,e,e,e],
-        [e,e,e,e,e,e,e,e,e,e],
-        [e,e,e,e,e,e,e,e,e,e],
-        [e,e,e,e,e,e,e,e,e,e],
-        [e,e,e,e,b-20,w-20,e,e,e,e],
-        [e,e,e,e,e,e,e,e,e,e],
-        [e,e,e,e,e,e,e,e,e,e],
-        [e,e,e,e,e,e,e,e,e,e],
-        [e,e,e,e,e,e,e,e,e,e]
+    [e,e,e,e],
+    [e,b-20,w-20,e],
+    [e,e,e,e]
     ]).
 
 

@@ -59,7 +59,7 @@ main=function()
     var app = new CGFapplication(document.body);
     var myInterface = new MyInterface();
     var myScene = new XMLscene(myInterface);
-
+    window.scene = myScene; // TODO remove before delivery
     app.init();
 
     app.setScene(myScene);
