@@ -40,13 +40,33 @@ class XMLscene extends CGFscene {
         this.lastRegisteredPickId = 1;
 
         this.gameBoard;
+
+        this.lastRegisteredSpotID = 1000;
+        this.lastRegisteredPieceID = 2000;
     }
 
     /**
      * Returns a new unique register pick id
+     * @deprecated
      */
     myRegisterForPick(obj, prefix = 0) {
         this.registerForPick(prefix + this.lastRegisteredPickId++, obj);
+    }
+
+    /**
+     * Registers a BoardSpot for picking. Each BoardSpot has a unique id starting from 1000
+     * @param {BoardSpot} obj 
+     */
+    registerSpotForPick(obj) {
+        this.registerForPick(this.lastRegisteredSpotID++, obj);
+    }
+
+    /**
+     * Registers a MyPiece for picking. Each Piece has an unique id starting from 2000
+     * @param {MyPiece} obj 
+     */
+    registerPieceForPick(obj) {
+        this.registerForPick(this.lastRegisteredPieceID++, obj);
     }
 
     /**
@@ -196,6 +216,8 @@ class XMLscene extends CGFscene {
         this.logPicking();
         this.clearPickRegistration();
         this.lastRegisteredPickId = 1; // reset
+        this.lastRegisteredSpotID = 1000;
+        this.lastRegisteredPieceID = 2000;
         // ---- BEGIN Background, camera and axis setup
 
         // Clear image and depth buffer everytime we update the scene

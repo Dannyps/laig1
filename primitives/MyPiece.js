@@ -22,7 +22,7 @@ class MyPiece extends CGFobject {
 		this.pieceTop.selected = this.selected; // propagate changes
 		this.mat.apply();
 		// register for picking
-		this.scene.myRegisterForPick(this, 2000);
+		this.scene.registerPieceForPick(this);
 		
 		this.scene.pushMatrix();
 			this.scene.rotate(Math.PI * 1 / 2, -1, 0, 0);
