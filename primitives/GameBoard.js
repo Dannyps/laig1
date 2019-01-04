@@ -96,4 +96,27 @@ class GameBoard extends CGFobject {
             }
         }
     }
+
+    /**
+     * Maps spot pick IDs to board coordinates
+     * @param {*} pickId 
+     * @return {{i: Number, j: Number}}
+     */
+    _pick_id_to_coords(pickId) {
+        let id = pickId%1e3; // remove prefix
+        let i, j;
+        /**
+         * (i)
+         * |
+         * |
+         * |       O
+         * |
+         * |______________ (j)
+         */
+
+        i = Math.trunc(id/this.size) - this.size/2;
+        j = id%this.size - this.size/2;
+
+        return {i: i, j: j};
+    }
 };
