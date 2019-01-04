@@ -38,6 +38,8 @@ class GameBoard extends CGFobject {
             this.fillBoard();
             this.hasSizeChanged = false;
         }
+
+        // display spots and pieces
         let edgeCoord = this.size / 2;
 
         // Mais 0.5 porque queremos que o translate fique no centro da tile quadrada que vai ser renderizada
@@ -75,5 +77,23 @@ class GameBoard extends CGFobject {
 
         for (let i = 0; i < 20; i++)
             this.board[0][1].pieces.push(new MyPiece(this.scene, 'black'));
+    }
+
+    updateState() {
+        debugger;
+        if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
+            for (let i = 0; i < this.scene.pickResults.length; i++) {
+                let obj = this.scene.pickResults[i][0];
+                if (obj) {
+                    let customId = this.scene.pickResults[i][1];
+                    //console.log("Picked object: " + obj + ", with pick id " + customId);
+                    if(Math.trunc(customId / 1e3) == 2) {
+                        console.log("Picked tile");
+                    } else if (Math.trunc(customId / 1e3) == 1) {
+                        console.log("Picked board spot");
+                    }
+                }
+            }
+        }
     }
 };

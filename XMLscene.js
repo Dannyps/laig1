@@ -156,9 +156,9 @@ class XMLscene extends CGFscene {
 
         setTimeout(() => {
             // Create board
-            this.gameBoard = this.graph.parsedComponents.get('gameBoard');
+            this.gameBoardCGFObj = this.graph.parsedComponents.get('gameBoard').CGFprimitives.get('board');
             this.game = new KnightLine(this);
-            console.log(this.gameBoard);
+            console.log(this.gameBoardCGFObj);
             this.game.dummy_handshake();
             
         }, 1000);
@@ -190,6 +190,8 @@ class XMLscene extends CGFscene {
      * Displays the scene.
      */
     display() {
+        if(this.gameBoardCGFObj)
+            this.gameBoardCGFObj.updateState();
         // display log
         this.logPicking();
         this.clearPickRegistration();
