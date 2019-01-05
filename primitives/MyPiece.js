@@ -1,5 +1,7 @@
+let _id = 0;
+
 class MyPiece extends CGFobject {
-	constructor(scene, colour) {
+	constructor(scene, colour, position_i, position_j) {
 		super(scene);
 		// initialize the top and bottom covers and the cylinder
 		this.pieceTop = new MyPieceTop(scene, 1);
@@ -14,6 +16,11 @@ class MyPiece extends CGFobject {
 			this.mat.setAmbient(0.2, 0.2, 0.2,1);
 			this.mat.setDiffuse(0.2, 0.2, 0.2,1);
 		}
+
+		this.position_i = position_i;
+		this.position_j = position_j;
+
+		this.id = _id++;
 	};
 
 
@@ -69,5 +76,18 @@ class MyPiece extends CGFobject {
 	 */
 	setSelected(sel){
 		this.selected = sel;
+	}
+
+	getPosition() {
+		return {i: this.position_i, j: this.position_j};
+	}
+
+	setPosition(i, j) {
+		this.position_i = i;
+		this.position_j = j;
+	}
+
+	getId() {
+		return this.id;
 	}
 };
