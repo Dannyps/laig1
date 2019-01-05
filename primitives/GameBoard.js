@@ -19,16 +19,17 @@ class GameBoard extends CGFobject {
         this.scene = scene;
         this.size = initialSize;
 
-        this.whitePlace = new CGFappearance(scene);
-        this.whitePlace.setAmbient(1, 1, 1, 1);
+        this.whiteSpot = new CGFappearance(scene);
+        this.whiteSpot.setAmbient(1, 1, 1, 1);
 
-        this.darkPlace = new CGFappearance(scene);
-        this.darkPlace.setAmbient(0, 0, 0, 1);
+        this.darkSpot = new CGFappearance(scene);
+        this.darkSpot.setAmbient(0, 0, 0, 1);
 
         this.board = []; // matrix
         this.hasSizeChanged = true; // if true, build a new board, else use the current board
 
         this.state = GameState.WHITE_PLAYER_TURN;
+        this.validMoves; /**> @type {Array<{{i: Number, j: Number}}>} Array of objects representing the valid moves for current turn */
         this.lastPickedPiece; /**> @type {MyPiece} @description Holds the last picked tile, if any */
     };
 
@@ -58,10 +59,14 @@ class GameBoard extends CGFobject {
         this.scene.translate(-this.size / 2 + 0.5, -this.size / 2 + 0.5, 0);
         for (let i = -edgeCoord; i < edgeCoord; i++) {
             for (let j = -edgeCoord; j < edgeCoord; j++) {
-                if ((i + j) % 2)
-                    this.darkPlace.apply();
+                
+                if(this.board[i][j].isHighlighted)
+                    this.highlightSpot.apply();
+                else if ((i + j) % 2)
+                    this.darkSpot.apply();
                 else
-                    this.whitePlace.apply();
+                    this.whiteSpot.apply();
+                
                 this.scene.registerSpotForPick(this.board[i][j]);
                 this.board[i][j].display();
                 this.scene.translate(1, 0, 0);
@@ -103,10 +108,15 @@ class GameBoard extends CGFobject {
                 }, 50 * 10 + 50 * i);
             }));
 
+        /** Get the valid moves for first round */
+        await this._getParsedValidMoves().then(result => {
+            this.validMoves = result;
+        });
+
         await Promise.all(promises);
     }
 
-    updateState() {
+    async updateState() {
         if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
             for (let i = 0; i < this.scene.pickResults.length; i++) {
                 let obj = this.scene.pickResults[i][0];
@@ -135,18 +145,28 @@ class GameBoard extends CGFobject {
                         
                         // save the picked piece
                         this.lastPickedPiece = obj;
+                        await this._getParsedValidMoves().then(result => {
+                            this.validMoves = result;
+                        });
 
                     } else if (Math.trunc(customId / 1e3) == 1) {
                         if(this.state == GameState.WHITE_PLAYER_PICKED_PIECE) {
                             let spotCoords = this._pick_id_to_coords(customId);
-                            this._move_pieces(spotCoords);
-                            this.state = GameState.BLACK_PLAYER_TURN;
-                            this.scene.game.sgc_setMessage("[Black] Your turn");
+                            if(this._move_pieces(spotCoords)) {
+                                this.state = GameState.BLACK_PLAYER_TURN;
+                                this.scene.game.sgc_setMessage("[Black] Your turn");
+                            } else {
+                                this.scene.game.sgc_setMessage("[White] Invalid move");
+                            }
                         } else if (this.state == GameState.BLACK_PLAYER_PICKED_PIECE) {
                             let spotCoords = this._pick_id_to_coords(customId);
-                            this._move_pieces(spotCoords);
-                            this.state = GameState.WHITE_PLAYER_TURN;
-                            this.scene.game.sgc_setMessage("[White] Your turn");
+                            if(this._move_pieces(spotCoords)) {
+                                this.state = GameState.WHITE_PLAYER_TURN;
+                                this.scene.game.sgc_setMessage("[White] Your turn");
+                            } else {
+                                this.scene.game.sgc_setMessage("[Black] Invalid move");
+                            }
+                            
                         }
                     }
                 }
@@ -182,30 +202,60 @@ class GameBoard extends CGFobject {
 
     /**
      * Moves all pieces above the last clicked piece to new position in the board
-     * @param {*} spotCoords 
+     * @param {*} spotCoords
+     * @return Returns true if the move is valid, false otherwise 
      */
     _move_pieces(spotCoords) {
+        // ensure it's a valid move
+        let isValid = false;
+        for(let position of this.validMoves) {
+            if(position.i == spotCoords.i && position.j == spotCoords.j) {
+                isValid = true;
+                break;
+            }
+        }
+
+        if(!isValid) return false;
+
+        // get the coordinates of the last picked piece
+        let pieceCoords = this.lastPickedPiece.getPosition();
+        // iterate over the stack where the piece belongs
+        while (1) {
+            // get the top piece of the stack and move it to the new spot
+            let top_piece = this.board[pieceCoords.i][pieceCoords.j].pieces.slice(-1)[0]; // short way to get last member of array
+            // remove it from stack
+            let aux = this.board[pieceCoords.i][pieceCoords.j].pieces.pop();
+            // set its new position
+            aux.setPosition(spotCoords.i, spotCoords.j);
+            // add it to the new spot stack
+            this.board[spotCoords.i][spotCoords.j].pieces.push(aux);
+            // if the moved piece is the clicked piece, stop
+            if (top_piece.getId() == this.lastPickedPiece.getId())
+                break;
+        }
+
+        return true;
+    }
+
+    /**
+     * Requests to prolog the valid moves for current active player and game board and parses it
+     */
+    async _getParsedValidMoves() {
+        let player;
+        if(this.state === GameState.WHITE_PLAYER_TURN || this.state === GameState.WHITE_PLAYER_PICKED_PIECE)
+            player = 'white';
+        else if(this.state === GameState.BLACK_PLAYER_TURN || this.state === GameState.BLACK_PLAYER_PICKED_PIECE)
+            player = 'black';
+        
         let prologBoardStr = this._generatePrologBoard();
         let that = this;
-        this.scene.game.getValidMoves('white', prologBoardStr).then(function(response) {
-            // get the coordinates of the last picked piece
-            let pieceCoords = that.lastPickedPiece.getPosition();
-            // iterate over the stack where the piece belongs
-            while (1) {
-                // get the top piece of the stack and move it to the new spot
-                let top_piece = that.board[pieceCoords.i][pieceCoords.j].pieces.slice(-1)[0]; // short way to get last member of array
-                // remove it from stack
-                let aux = that.board[pieceCoords.i][pieceCoords.j].pieces.pop();
-                // set its new position
-                aux.setPosition(spotCoords.i, spotCoords.j);
-                // add it to the new spot stack
-                that.board[spotCoords.i][spotCoords.j].pieces.push(aux);
-                // if the moved piece is the clicked piece, stop
-                if (top_piece.getId() == that.lastPickedPiece.getId())
-                    break;
-            }
-
+        let p = new Promise(resolve => {
+            this.scene.game.getValidMoves(player, prologBoardStr).then(function(response) {
+                let parsedCoords = that._prolog_coords_to_board(response);
+                resolve(parsedCoords);
+            });
         });
+        return p;
     }
 
     _generatePrologBoard() {

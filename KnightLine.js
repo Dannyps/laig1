@@ -92,7 +92,7 @@ class KnightLine {
 				that.sgc_running();
 				resolve(request.responseText);
 			}
-		})
+		});
 		request.send();
 		return p;
 	}
