@@ -47,29 +47,36 @@
 	<!--  -->
 	<lights>
 		<omni id="hover1" enabled="1">
-			<location x="5" y="15" z="5" w="1" />
+			<location x="30" y="0" z="5" w="1" />
 			<ambient r="0.01" g="0.01" b="0.01" a="1" />
 			<diffuse r="0.3" g="0.3" b="0.28" a="1" />
 			<specular r="0.1" g="0.1" b="0.08" a="1" />
 		</omni>
 		<omni id="hover2" enabled="1">
-			<location x="-5" y="15" z="5" w="1" />
+			<location x="-30" y="15" z="0" w="1" />
 			<ambient r="0.01" g="0.01" b="0.01" a="1" />
 			<diffuse r="0.3" g="0.3" b="0.28" a="1" />
 			<specular r="0.1" g="0.1" b="0.08" a="1" />
 		</omni>
 		<omni id="hover3" enabled="1">
-			<location x="5" y="15" z="-5" w="1" />
+			<location x="0" y="15" z="30" w="1" />
 			<ambient r="0.01" g="0.01" b="0.01" a="1" />
 			<diffuse r="0.3" g="0.3" b="0.28" a="1" />
 			<specular r="0.1" g="0.1" b="0.08" a="1" />
 		</omni>
 		<omni id="hover4" enabled="1">
-			<location x="-5" y="15" z="-5" w="1" />
+			<location x="0" y="15" z="-30" w="1" />
 			<ambient r="0.01" g="0.01" b="0.01" a="1" />
 			<diffuse r="0.3" g="0.3" b="0.28" a="1" />
 			<specular r="0.1" g="0.1" b="0.08" a="1" />
 		</omni>
+		<spot id="ls1" enabled="1" angle="10" exponent="10">
+			<location x="0" y="15" z="0" w="1" />
+			<target x="0" y="0" z="0" />
+			<ambient r="0" g="0" b="0" a="0" />
+			<diffuse r="0.5" g="0.0" b="0.0" a="1" />
+			<specular r="0.1" g="0.1" b="0.1" a="1" />
+		</spot>
 	</lights>
 	<!--  -->
 	<!-- TEXTURES -->
@@ -137,7 +144,7 @@
 			<gameboard size="10" />
 		</primitive>
 		<primitive id="nPlane">
-			<plane npartsU="5" npartsV="8" />
+			<plane npartsU="10" npartsV="10" />
 		</primitive>
 		<primitive id="nFloor">
 			<plane npartsU="60" npartsV="60" />

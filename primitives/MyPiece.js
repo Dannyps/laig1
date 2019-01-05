@@ -10,10 +10,8 @@ class MyPiece extends CGFobject {
 		this.colour = colour;
 		this.selected = false; // by default
 		if(colour == 'white'){
-			this.mat.setAmbient(0.2, 0.2, 0.2,1);
-			this.mat.setDiffuse(1, 1, 1,1);
+			this.mat.setDiffuse(0.8, 0.8, 0.8,1);
 		}else{
-			this.mat.setAmbient(0.2, 0.2, 0.2,1);
 			this.mat.setDiffuse(0.2, 0.2, 0.2,1);
 		}
 

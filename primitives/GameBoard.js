@@ -20,7 +20,7 @@ class GameBoard extends CGFobject {
         this.size = initialSize;
 
         this.whiteSpot = new CGFappearance(scene);
-        this.whiteSpot.setAmbient(1, 1, 1, 1);
+        this.whiteSpot.setDiffuse(1, 1, 1, 1);
 
         this.darkSpot = new CGFappearance(scene);
         this.darkSpot.setAmbient(0, 0, 0, 1);
