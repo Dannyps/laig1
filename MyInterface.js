@@ -46,12 +46,11 @@ class MyInterface extends CGFinterface {
      */
     addLightsGroup(lights) {
         let group = this.gui.addFolder("Lights");
-        group.open();
-
         this.scene.graph.parsedLights.forEach((light, id) => {
             this.scene.lightValues[id] = light.enabled;
             group.add(this.scene.lightValues, id);
         });
+
     }
 
     addViewsGroup() {
@@ -62,8 +61,9 @@ class MyInterface extends CGFinterface {
 
         let ctrl = this.gui.add(this.scene, 'activeCamera', viewsID);
         ctrl.onChange(function (val) {
-            this.scene.camera = this.scene.views.get(val);
-            this.setActiveCamera(this.scene.camera);
+            let oldCam = this.scene.camera;
+            let newCam = this.scene.views.get(val);
+            this.scene.animateCamera(oldCam, newCam);
         }.bind(this));
 
         // force to update view
@@ -71,16 +71,42 @@ class MyInterface extends CGFinterface {
     }
 
     addGameControl(gc) {
-        
+
         let gg = this.gui.addFolder("Game Control");
         gg.open();
-        gg.add(gc, 'status', {
+        let status = gg.add(gc, 'status', {
             'Starting': 0,
             'Waiting for Server': 1,
             'Running': 2,
             'Finished': 3
         }).listen();
 
+        gg.add(gc, 'type', {
+            'Player vs Player': 0,
+            'Player vs Bot': 1,
+            'Bot vs Bot': 2,
+            'unset': -1
+        }).onChange(val => {
+            if (val == -1 || val == 0) {
+                difficulty.domElement.childNodes[0].disabled = true;
+            } else {
+                difficulty.domElement.childNodes[0].disabled = false;
+            }
+        });
+
+        let difficulty = gg.add(gc, 'difficulty', {
+            'Low': 0,
+            'Medium': 1,
+            'High': 2,
+            'unset': -1
+        });
+        let statusStr = gg.add(gc, 'statusStr').listen();
+
+        status.domElement.childNodes[0].disabled = true;
+        difficulty.domElement.childNodes[0].disabled = true;
+        statusStr.domElement.childNodes[0].disabled = true;
+
         // todo disable select
     }
+
 }

@@ -19,6 +19,10 @@ class KnightLine {
 		this.gameControl.status = 3;
 	}
 
+	sgc_setMessage(str){
+		this.gameControl.statusStr = str;
+	}
+
 	dummy_handshake() {
 		let request = new XMLHttpRequest();
 		request.open('GET', 'http://localhost:8081/initPlayerVsPlayer');
@@ -32,7 +36,7 @@ class KnightLine {
 		request.send();
 	}
 
-	parsePrologBoard(boardStr) {
+	async parsePrologBoard(boardStr) {
 		// remove the first and last bracket
 		boardStr = boardStr.substring(1, boardStr.length - 1);
 
@@ -66,7 +70,8 @@ class KnightLine {
 			//this.gameBoard.setBoardSize(this.max(numberOfRows, numberOfCols));
 		});
 
-		this.gameBoard.readyForFirstGame();
+		await this.gameBoard.readyForFirstGame();
+		this.sgc_setMessage("Ready");
 	}
 
 	max(a, b) {
