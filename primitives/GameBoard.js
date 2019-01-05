@@ -114,25 +114,40 @@ class GameBoard extends CGFobject {
                     let customId = this.scene.pickResults[i][1];
                     //console.log("Picked object: " + obj + ", with pick id " + customId);
                     if (Math.trunc(customId / 1e3) == 2) {
-                        console.log("Picked tile");
-                        if(this.state === GameState.WHITE_PLAYER_TURN)
+                        // validate moves
+                        if(this.state === GameState.WHITE_PLAYER_TURN || this.state === GameState.WHITE_PLAYER_PICKED_PIECE) {
+                            if(obj.colour === 'black') {
+                                this.state = GameState.WHITE_PLAYER_TURN;
+                                this.scene.game.sgc_setMessage("Choose white pieces!");
+                                continue;
+                            }
                             this.state = GameState.WHITE_PLAYER_PICKED_PIECE;
-                        else
+                            this.scene.game.sgc_setMessage("[White] Choose the spot");
+                        } else if(this.state === GameState.BLACK_PLAYER_TURN || this.state === GameState.BLACK_PLAYER_PICKED_PIECE) {
+                            if(obj.colour === 'white') {
+                                this.state = GameState.BLACK_PLAYER_TURN;
+                                this.scene.game.sgc_setMessage("Choose black pieces!");
+                                continue;
+                            }
                             this.state = GameState.BLACK_PLAYER_PICKED_PIECE;
-
+                            this.scene.game.sgc_setMessage("[Black] Choose the spot");
+                        }
+                        
+                        // save the picked piece
                         this.lastPickedPiece = obj;
+
                     } else if (Math.trunc(customId / 1e3) == 1) {
                         if(this.state == GameState.WHITE_PLAYER_PICKED_PIECE) {
                             let spotCoords = this._pick_id_to_coords(customId);
                             this._move_pieces(spotCoords);
                             this.state = GameState.BLACK_PLAYER_TURN;
+                            this.scene.game.sgc_setMessage("[Black] Your turn");
                         } else if (this.state == GameState.BLACK_PLAYER_PICKED_PIECE) {
                             let spotCoords = this._pick_id_to_coords(customId);
                             this._move_pieces(spotCoords);
                             this.state = GameState.WHITE_PLAYER_TURN;
+                            this.scene.game.sgc_setMessage("[White] Your turn");
                         }
-
-                        console.log("Picked board spot");
                         console.log(this._generatePrologBoard());
                     }
                 }
