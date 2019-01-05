@@ -124,11 +124,6 @@ class GameBoard extends CGFobject {
                 }, 50 * 10 + 50 * i);
             }));
 
-        /** Get the valid moves for first round */
-        await this._getParsedValidMoves().then(result => {
-            this.validMoves = result;
-        });
-
         await Promise.all(promises);
     }
 
