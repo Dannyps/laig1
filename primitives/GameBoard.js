@@ -148,7 +148,6 @@ class GameBoard extends CGFobject {
                             this.state = GameState.WHITE_PLAYER_TURN;
                             this.scene.game.sgc_setMessage("[White] Your turn");
                         }
-                        console.log(this._generatePrologBoard());
                     }
                 }
             }
@@ -229,5 +228,29 @@ class GameBoard extends CGFobject {
         }
 
         return `[${str}]`;
+    }
+
+    /**
+     * Maps prolog coords to game board coords
+     * @param {String} coords String in format [x1-y1, x2-y2, ...] 
+     */
+    _prolog_coords_to_board(coords) {
+        let result = [];
+        // stip the brackets [ and ]
+        coords = coords.substring(1, coords.length - 1);
+        for(let pair of coords.split(',')) {
+            // extract both coordinate values
+            let dashCharIndex = pair.indexOf('-');
+            let j = Number(pair.substring(0, dashCharIndex));
+            let i = Number(pair.substring(dashCharIndex+1));
+            if(isNaN(i) || isNaN(j)) throw "Failed to parse coordinates: " + pair;
+            
+            // map them to game board coordinates
+            let mapped_i = (this.size - 1) - i - this.size/2;
+            let mapped_j = j - this.size/2;
+            result.push({i: mapped_i, j: mapped_j});
+        }
+
+        return result;
     }
 };
