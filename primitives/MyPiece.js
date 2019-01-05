@@ -19,7 +19,7 @@ class MyPiece extends CGFobject {
 
 		this.position_i = position_i;
 		this.position_j = position_j;
-
+		this.texture = this.scene.graph.parsedTextures.get('knight');
 		this.id = _id++;
 	};
 
@@ -33,6 +33,7 @@ class MyPiece extends CGFobject {
 			this.scene.rotate(Math.PI * 1 / 2, -1, 0, 0);
 			//this.pieceTop.display();
 				this.scene.translate(0, 0, 1/5);
+				this.texture.bind();
 				this.pieceSides.display();
 		this.scene.popMatrix();
 

@@ -100,7 +100,9 @@ class MyInterface extends CGFinterface {
             'High': 2,
             'unset': -1
         });
-        let statusStr = gg.add(gc, 'statusStr').listen();
+        let statusStr = gg.add(gc, 'statusStr').listen()
+        
+        gg.add(gc, 'undo');
 
         status.domElement.childNodes[0].disabled = true;
         difficulty.domElement.childNodes[0].disabled = true;
