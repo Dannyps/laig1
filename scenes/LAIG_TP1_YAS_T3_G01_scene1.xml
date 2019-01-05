@@ -253,7 +253,7 @@
 			<materials>
 				<material id="inherit" />
 			</materials>
-			<texture id="wood" length_s="4" length_t="5" />
+			<texture id="wood" length_s="8" length_t="10" />
 			<children>
 				<componentref id="cube" />
 			</children>
