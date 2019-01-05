@@ -25,11 +25,17 @@ class GameBoard extends CGFobject {
         this.darkSpot = new CGFappearance(scene);
         this.darkSpot.setAmbient(0, 0, 0, 1);
 
+        this.highlightSpotLight = new CGFappearance(scene);
+        this.highlightSpotLight.setDiffuse(0.7, 0, 0, 1);
+
+        this.highlightSpotDark = new CGFappearance(scene);
+        this.highlightSpotDark.setDiffuse(0.2, 0, 0, 1);
+
         this.board = []; // matrix
         this.hasSizeChanged = true; // if true, build a new board, else use the current board
 
         this.state = GameState.WHITE_PLAYER_TURN;
-        this.validMoves; /**> @type {Array<{{i: Number, j: Number}}>} Array of objects representing the valid moves for current turn */
+        this.validMoves = []; /**> @type {Array<{{i: Number, j: Number}}>} Array of objects representing the valid moves for current turn */
         this.lastPickedPiece; /**> @type {MyPiece} @description Holds the last picked tile, if any */
     };
 
@@ -60,12 +66,22 @@ class GameBoard extends CGFobject {
         for (let i = -edgeCoord; i < edgeCoord; i++) {
             for (let j = -edgeCoord; j < edgeCoord; j++) {
                 
-                if(this.board[i][j].isHighlighted)
-                    this.highlightSpot.apply();
-                else if ((i + j) % 2)
-                    this.darkSpot.apply();
-                else
-                    this.whiteSpot.apply();
+                // check if this is a valid position
+                let isValidPosition = false;
+                for(let validPositions of this.validMoves) {
+                    if(validPositions.i === i && validPositions.j === j) {
+                        isValidPosition = true;
+                        break;
+                    }
+                }
+
+                if ((i + j) % 2) {
+                    if(isValidPosition) this.highlightSpotDark.apply();
+                    else this.darkSpot.apply();
+                } else {
+                    if(isValidPosition) this.highlightSpotLight.apply();
+                    else this.whiteSpot.apply();
+                }   
                 
                 this.scene.registerSpotForPick(this.board[i][j]);
                 this.board[i][j].display();
@@ -234,6 +250,8 @@ class GameBoard extends CGFobject {
                 break;
         }
 
+        // clear the valid moves
+        this.validMoves = [];
         return true;
     }
 
