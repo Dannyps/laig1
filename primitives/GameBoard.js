@@ -138,7 +138,6 @@ class GameBoard extends CGFobject {
                         // validate moves
                         if (this.state === GameState.WHITE_PLAYER_TURN || this.state === GameState.WHITE_PLAYER_PICKED_PIECE) {
                             if (obj.colour === 'black') {
-                                this.state = GameState.WHITE_PLAYER_TURN;
                                 this.scene.game.sgc_setMessage("Choose white pieces!");
                                 continue;
                             }
@@ -146,7 +145,6 @@ class GameBoard extends CGFobject {
                             this.scene.game.sgc_setMessage("[White] Choose the spot");
                         } else if (this.state === GameState.BLACK_PLAYER_TURN || this.state === GameState.BLACK_PLAYER_PICKED_PIECE) {
                             if (obj.colour === 'white') {
-                                this.state = GameState.BLACK_PLAYER_TURN;
                                 this.scene.game.sgc_setMessage("Choose black pieces!");
                                 continue;
                             }
@@ -155,9 +153,13 @@ class GameBoard extends CGFobject {
                         }
 
                         // save the picked piece
+                        if(this.lastPickedPiece)
+                            this._removeHighlightStack();
                         this.lastPickedPiece = obj;
+                        
                         await this._getParsedValidMoves().then(result => {
                             this.validMoves = result;
+                            if(result.length) this._highlightStack();
                         });
 
                     } else if (Math.trunc(customId / 1e3) == 1) {
@@ -166,6 +168,7 @@ class GameBoard extends CGFobject {
                             if (this._move_pieces(spotCoords)) {
                                 this.state = GameState.BLACK_PLAYER_TURN;
                                 this.scene.game.sgc_setMessage("[Black] Your turn");
+                                this._removeHighlightStack();
                             } else {
                                 this.scene.game.sgc_setMessage("[White] Invalid move");
                             }
@@ -174,6 +177,7 @@ class GameBoard extends CGFobject {
                             if (this._move_pieces(spotCoords)) {
                                 this.state = GameState.WHITE_PLAYER_TURN;
                                 this.scene.game.sgc_setMessage("[White] Your turn");
+                                this._removeHighlightStack();
                             } else {
                                 this.scene.game.sgc_setMessage("[Black] Invalid move");
                             }
@@ -258,6 +262,26 @@ class GameBoard extends CGFobject {
         // clear the valid moves
         this.validMoves = [];
         return true;
+    }
+
+    /**
+     * Highlights the selected pieces to be moved
+     */
+    _highlightStack() {
+        let stackPosition = this.lastPickedPiece.getPosition();
+        let stackPieces = this.board[stackPosition.i][stackPosition.j].pieces;
+        for(let i = stackPieces.length - 1; i >= 0; i--) {
+            stackPieces[i].setSelected(true);
+            if(stackPieces[i].getId() == this.lastPickedPiece.getId()) break;
+        }
+    }
+
+    _removeHighlightStack() {
+        let stackPosition = this.lastPickedPiece.getPosition();
+        let stackPieces = this.board[stackPosition.i][stackPosition.j].pieces;
+        for(let stackPiece of stackPieces) {
+            stackPiece.setSelected(false);
+        }
     }
 
     /**

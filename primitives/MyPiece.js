@@ -7,12 +7,17 @@ class MyPiece extends CGFobject {
 		//this.pieceTop = new MyPieceTop(scene, 1);
 		this.pieceSides = new Plane_Nurbs(scene, 10, 10);
 		this.mat = new CGFappearance(scene);
+		this.matSelected = new CGFappearance(scene);
 		this.colour = colour;
 		this.selected = false; // by default
 		if(colour == 'white'){
 			this.mat.setDiffuse(0.8, 0.8, 0.8,1);
+			this.matSelected.setDiffuse(1, 1, 1, 1);
+			this.matSelected.setAmbient(1, 1, 1, 1);
 		}else{
 			this.mat.setDiffuse(0.2, 0.2, 0.2,1);
+			this.matSelected.setDiffuse(0.4, 0.4, 0.4, 1);
+			this.matSelected.setAmbient(0.4, 0.4, 0.4, 1);
 		}
 
 		this.position_i = position_i;
@@ -32,7 +37,9 @@ class MyPiece extends CGFobject {
 	}
 
 	display() {
-		this.mat.apply();
+		let material = this.selected ? this.matSelected :  this.mat;
+		
+		material.apply();
 		// register for picking
 		this.scene.registerPieceForPick(this);
 
@@ -48,7 +55,8 @@ class MyPiece extends CGFobject {
 					this.pieceSides.display();
 			this.scene.popMatrix();
 
-			this.mat.apply();
+			material.apply();
+
 			this.scene.pushMatrix();
 				this.scene.scale(1, 1/5, 1);
 
