@@ -270,12 +270,24 @@ class GameBoard extends CGFobject {
         else if (this.state === GameState.BLACK_PLAYER_TURN || this.state === GameState.BLACK_PLAYER_PICKED_PIECE)
             player = 'black';
 
+        
+        /**
+         * Ensure the pretended move will leave at least one tile behind
+         */
+        let pickedPosition = this.lastPickedPiece.getPosition();
+        if(this.lastPickedPiece.getId() == this.board[pickedPosition.i][pickedPosition.j].pieces[0].getId()) {
+            this.scene.game.sgc_setMessage("Can't move the whole stack");
+            return [];
+        }
+
+        /**
+         * Request valid moves
+         */
         let prologBoardStr = this._generatePrologBoard();
         let that = this;
         let p = new Promise(resolve => {
             this.scene.game.getValidMoves(player, prologBoardStr).then(function (response) {
                 let parsedCoords = that._prolog_coords_to_board(response);
-                let pickedPosition = that.lastPickedPiece.getPosition();
                 for(let i = 0; i < parsedCoords.length; i++) {
                     let coords = parsedCoords[i];
                     let diff_i = Math.abs(coords.i - pickedPosition.i);
