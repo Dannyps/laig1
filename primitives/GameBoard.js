@@ -82,17 +82,27 @@ class GameBoard extends CGFobject {
         this.hasSizeChanged = true;
     }
 
-    readyForFirstGame() {
+    async readyForFirstGame() {
+        let promises = [];
         for (let i = 0; i < 20; i++)
-            setTimeout(_ => {
-                this.board[0][0].pieces.push(new MyPiece(this.scene, 'white'));
-            }, 50 * i);
+            promises.push(new Promise((resolve) => {
+                setTimeout(_ => {
+                    this.board[0][0].pieces.push(new MyPiece(this.scene, 'white'));
+                    resolve();
+                }, 50 * i);
+            }));
 
 
+
         for (let i = 0; i < 20; i++)
-            setTimeout(_ => {
-                this.board[0][1].pieces.push(new MyPiece(this.scene, 'black'));
-            }, 50 * 10 + 50 * i);
+            promises.push(new Promise((resolve) => {
+                setTimeout(_ => {
+                    this.board[0][1].pieces.push(new MyPiece(this.scene, 'black'));
+                    resolve();
+                }, 50 * 10 + 50 * i);
+            }));
+
+        await Promise.all(promises);
     }
 
     updateState() {
@@ -107,12 +117,12 @@ class GameBoard extends CGFobject {
                         this.state = GameState.TILE_PICKING;
                         this.lastPickedPiece = obj;
                     } else if (Math.trunc(customId / 1e3) == 1) {
-                        if(this.state == GameState.TILE_PICKING) {
+                        if (this.state == GameState.TILE_PICKING) {
                             let spotCoords = this._pick_id_to_coords(customId);
                             this._move_pieces(spotCoords);
                             this.state = GameState.DEFAULT;
                         }
-                        
+
                         console.log("Picked board spot");
                     }
                 }
@@ -126,7 +136,7 @@ class GameBoard extends CGFobject {
      * @return {{i: Number, j: Number}}
      */
     _pick_id_to_coords(pickId) {
-        let id = pickId%1e3; // remove prefix
+        let id = pickId % 1e3; // remove prefix
         let i, j;
         /**
          * (i)
@@ -137,10 +147,13 @@ class GameBoard extends CGFobject {
          * |______________ (j)
          */
 
-        i = Math.trunc(id/this.size) - this.size/2;
-        j = id%this.size - this.size/2;
+        i = Math.trunc(id / this.size) - this.size / 2;
+        j = id % this.size - this.size / 2;
 
-        return {i: i, j: j};
+        return {
+            i: i,
+            j: j
+        };
     }
 
     /**
@@ -151,7 +164,7 @@ class GameBoard extends CGFobject {
         // get the coordinates of the last picked piece
         let pieceCoords = this.lastPickedPiece.getPosition();
         // iterate over the stack where the piece belongs
-        while(1) {
+        while (1) {
             // get the top piece of the stack and move it to the new spot
             let top_piece = this.board[pieceCoords.i][pieceCoords.j].pieces.slice(-1)[0]; // short way to get last member of array
             // remove it from stack
@@ -161,8 +174,8 @@ class GameBoard extends CGFobject {
             // add it to the new spot stack
             this.board[spotCoords.i][spotCoords.j].pieces.push(aux);
             // if the moved piece is the clicked piece, stop
-            if(top_piece.getId() == this.lastPickedPiece.getId())
-                break;    
+            if (top_piece.getId() == this.lastPickedPiece.getId())
+                break;
         }
     }
 };

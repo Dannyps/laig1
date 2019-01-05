@@ -212,7 +212,10 @@ class XMLscene extends CGFscene {
         this.interface.initKeys();
 
         this.gc = {
-            status: 0
+            status: 0,
+            type: -1,
+            statusStr: "Loading...",
+            difficulty: -1
         };
 
         this.interface.addGameControl(this.gc);
