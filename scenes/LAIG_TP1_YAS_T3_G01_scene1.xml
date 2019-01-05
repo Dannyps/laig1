@@ -79,6 +79,7 @@
 		<texture id="floor" file="scenes/images/floor.jpg" />
 		<texture id="wood" file="scenes/images/wood.jpg" />
 		<texture id="wall" file="scenes/images/wall.jpg" />
+		<texture id="knight" file="scenes/images/knight.png" />
 	</textures>
 	<!--  -->
 	<!-- MATERIALS -->
