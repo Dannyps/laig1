@@ -49,7 +49,7 @@ class XMLscene extends CGFscene {
      * Returns a new unique register pick id
      * @deprecated
      */
-    myRegisterForPick(obj, prefix = 0) {
+    xForPick(obj, prefix = 0) {
         this.registerForPick(prefix + this.lastRegisteredPickId++, obj);
     }
 
@@ -75,7 +75,7 @@ class XMLscene extends CGFscene {
      * @param {float} nv new value
      */
     civ(ov, nv, i, steps) {
-        let res = ov + ((nv - ov) / steps) * (i / 5);
+        let res = ov + ((nv - ov) / steps) * (i / 7);
         return res;
     }
 
@@ -173,14 +173,20 @@ class XMLscene extends CGFscene {
             this.lights[i].setAmbient(light.ambient.r, light.ambient.g, light.ambient.b, light.ambient.a);
             this.lights[i].setDiffuse(light.diffuse.r, light.diffuse.g, light.diffuse.b, light.diffuse.a);
             this.lights[i].setSpecular(light.specular.r, light.specular.g, light.specular.b, light.specular.a);
-            this.lights[i].setVisible(true);
+            this.lights[i].setVisible(false);
 
             if (light.enabled)
                 this.lights[i].enable();
             else
                 this.lights[i].disable();
 
-            i++;
+            if(light.type=="spot"){
+                this.lights[i].setSpotDirection(light.target.x-light.location.x, light.target.y-light.location.y, light.target.z-light.location.z);
+                this.lights[i].setSpotExponent(light.exponent);
+                this.lights[i].setSpotCutOff(light.angle);
+            }
+
+                i++;
         });
     }
 

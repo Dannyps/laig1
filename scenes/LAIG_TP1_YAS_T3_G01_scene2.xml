@@ -82,8 +82,9 @@
 		<texture id="roof" file="scenes/images/roof.jpg" />
 		<texture id="cement" file="scenes/images/cement.jpg" />
 		<texture id="heightMap" file="scenes/images/height.png" />
-        <texture id="water" file="scenes/images/water.png" />
-        <texture id="waves" file="scenes/images/waves.jpg" />
+		<texture id="water" file="scenes/images/water.png" />
+		<texture id="waves" file="scenes/images/waves.jpg" />
+		<texture id="knight" file="scenes/images/knight.png" />
 	</textures>
 	<!--  -->
 	<!-- MATERIALS -->
@@ -171,7 +172,7 @@
 			<!-- devem existir pelo menos dois pontos de controlo -->
 			<controlpoint xx="0" yy="0" zz="0" />
 			<controlpoint xx="10" yy="3" zz="0" />
-            <controlpoint xx="20" yy="10" zz="0" />
+			<controlpoint xx="20" yy="10" zz="0" />
 		</linear>
 		<!-- center corresponde ao ponto que serve -->
 		<!-- de centro da animacdo circular -->
@@ -186,7 +187,7 @@
 	<!-- PRIMITIVES -->
 	<!--  -->
 	<primitives>
-	<primitive id="board">
+		<primitive id="board">
 			<gameboard size="10" />
 		</primitive>
 		<primitive id="pRect">
@@ -283,14 +284,12 @@
 		<primitive id="pWater">
 			<water idtexture="water" idwavemap="water" parts="30" heightscale="1" texscale="1" />
 		</primitive>
-
 		<primitive id="pieceW">
 			<piece colour="white" />
 		</primitive>
 		<primitive id="pieceB">
 			<piece colour="black" />
 		</primitive>
-
 	</primitives>
 	<components>
 		<component id="cubeFrontFace">
@@ -586,7 +585,7 @@
 				<primitiveref id="nTerrain" />
 			</children>
 		</component>
-        <component id="water">
+		<component id="water">
 			<transformation>
 				<rotate axis="y" angle="180" />
 				<rotate axis="x" angle="-90" />
@@ -868,7 +867,7 @@
 			<materials>
 				<material id="inherit" />
 			</materials>
-			<texture id="inherit" length_s="3" length_t="1" />
+			<texture id="inherit" length_s="7" length_t="2" />
 			<children>
 				<componentref id="passeio" />
 			</children>
@@ -1156,7 +1155,7 @@
 		<component id="nvehicle">
 			<transformation>
 				<translate x="0" y="0.8" z="12" />
-                <rotate axis="y" angle="90" />
+				<rotate axis="y" angle="90" />
 			</transformation>
 			<materials>
 				<material id="inherit" />
@@ -1166,24 +1165,24 @@
 				<primitiveref id="nVehicle" />
 			</children>
 			<animations>
-                <animationref id="linear1" />
+				<animationref id="linear1" />
 				<animationref id="circular1" />
 			</animations>
 		</component>
 		<component id="gameBoard">
-				<transformation>
-					<translate x="0" y="0.5" z="0" />
-					<rotate angle="-90" axis="x" />
-					<scale x=".5" y=".5" z=".5" />
-				</transformation>
-				<materials>
-					<material id="defaultAppearance" />
-				</materials>
-				<texture id="none" />
-				<children>
-					<primitiveref id="board" />
-				</children>
-			</component>
+			<transformation>
+				<translate x="0" y="0.376" z="0" />
+				<rotate angle="-90" axis="x" />
+				<scale x=".5" y=".5" z=".5" />
+			</transformation>
+			<materials>
+				<material id="defaultAppearance" />
+			</materials>
+			<texture id="none" />
+			<children>
+				<primitiveref id="board" />
+			</children>
+		</component>
 		<component id="root">
 			<transformation>
 			</transformation>
@@ -1205,12 +1204,10 @@
 				<componentref id="casa3" />
 				<componentref id="casa4" />
 				<componentref id="streetLamp1" />
-				
 				<componentref id="streetLamp2" />
 				<componentref id="streetLamp3" />
-				
 				<componentref id="streetLamp4" />
-				<!--<componentref id="nvehicle" />-->
+				<!-- <componentref id="nvehicle" /> -->
 				<!--
 				<componentref id="nurbs_plane" />
 				<componentref id="nurbs_patch" />
@@ -1219,7 +1216,6 @@
 				<componentref id="ground" />
 				<componentref id="water" />
 				<componentref id="gameBoard" />
-
 			</children>
 		</component>
 	</components>
