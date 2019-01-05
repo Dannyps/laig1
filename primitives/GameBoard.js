@@ -84,10 +84,15 @@ class GameBoard extends CGFobject {
 
     readyForFirstGame() {
         for (let i = 0; i < 20; i++)
+        setTimeout(_=>{
             this.board[0][0].pieces.push(new MyPiece(this.scene, 'white', 0, 0));
+        }, 50*i);
+            
 
         for (let i = 0; i < 20; i++)
+        setTimeout(_=>{
             this.board[0][1].pieces.push(new MyPiece(this.scene, 'black', 0, 1));
+        }, 50*10 + 50*i);
     }
 
     updateState() {

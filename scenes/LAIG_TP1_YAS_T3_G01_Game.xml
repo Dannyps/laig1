@@ -13,7 +13,7 @@
 	<!--  -->
 	<!-- SCENE -->
 	<!--  -->
-	<scene root="root" axis_length="5" />
+	<scene root="root" axis_length="0" />
 	<!--  -->
 	<!-- VIEWS -->
 	<!--  -->
