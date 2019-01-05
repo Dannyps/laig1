@@ -4,7 +4,7 @@ class MyPiece extends CGFobject {
 	constructor(scene, colour, position_i, position_j) {
 		super(scene);
 		// initialize the top and bottom covers and the cylinder
-		this.pieceTop = new MyPieceTop(scene, 1);
+		//this.pieceTop = new MyPieceTop(scene, 1);
 		this.pieceSides = new Plane_Nurbs(scene, 10, 10);
 		this.mat = new CGFappearance(scene);
 		this.colour = colour;
@@ -25,8 +25,6 @@ class MyPiece extends CGFobject {
 
 
 	display() {
-
-		this.pieceTop.selected = this.selected; // propagate changes
 		this.mat.apply();
 		// register for picking
 		this.scene.registerPieceForPick(this);

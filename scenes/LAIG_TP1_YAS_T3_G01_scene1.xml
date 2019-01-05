@@ -48,25 +48,25 @@
 	<lights>
 		<omni id="hover1" enabled="1">
 			<location x="5" y="15" z="5" w="1" />
-			<ambient r="0" g="0" b="0" a="1" />
+			<ambient r="0.01" g="0.01" b="0.01" a="1" />
 			<diffuse r="0.3" g="0.3" b="0.28" a="1" />
 			<specular r="0.1" g="0.1" b="0.08" a="1" />
 		</omni>
 		<omni id="hover2" enabled="1">
 			<location x="-5" y="15" z="5" w="1" />
-			<ambient r="0" g="0" b="0" a="1" />
+			<ambient r="0.01" g="0.01" b="0.01" a="1" />
 			<diffuse r="0.3" g="0.3" b="0.28" a="1" />
 			<specular r="0.1" g="0.1" b="0.08" a="1" />
 		</omni>
 		<omni id="hover3" enabled="1">
 			<location x="5" y="15" z="-5" w="1" />
-			<ambient r="0" g="0" b="0" a="1" />
+			<ambient r="0.01" g="0.01" b="0.01" a="1" />
 			<diffuse r="0.3" g="0.3" b="0.28" a="1" />
 			<specular r="0.1" g="0.1" b="0.08" a="1" />
 		</omni>
 		<omni id="hover4" enabled="1">
 			<location x="-5" y="15" z="-5" w="1" />
-			<ambient r="0" g="0" b="0" a="1" />
+			<ambient r="0.01" g="0.01" b="0.01" a="1" />
 			<diffuse r="0.3" g="0.3" b="0.28" a="1" />
 			<specular r="0.1" g="0.1" b="0.08" a="1" />
 		</omni>
@@ -253,7 +253,7 @@
 			<materials>
 				<material id="inherit" />
 			</materials>
-			<texture id="wood" length_s="4" length_t="5" />
+			<texture id="wood" length_s="8" length_t="10" />
 			<children>
 				<componentref id="cube" />
 			</children>
