@@ -171,23 +171,27 @@ class GameBoard extends CGFobject {
      * @param {*} spotCoords 
      */
     _move_pieces(spotCoords) {
-        //this.scene.game.getValidMoves('white').then(function(response) {});
-        // get the coordinates of the last picked piece
-        let pieceCoords = this.lastPickedPiece.getPosition();
-        // iterate over the stack where the piece belongs
-        while (1) {
-            // get the top piece of the stack and move it to the new spot
-            let top_piece = this.board[pieceCoords.i][pieceCoords.j].pieces.slice(-1)[0]; // short way to get last member of array
-            // remove it from stack
-            let aux = this.board[pieceCoords.i][pieceCoords.j].pieces.pop();
-            // set its new position
-            aux.setPosition(spotCoords.i, spotCoords.j);
-            // add it to the new spot stack
-            this.board[spotCoords.i][spotCoords.j].pieces.push(aux);
-            // if the moved piece is the clicked piece, stop
-            if (top_piece.getId() == this.lastPickedPiece.getId())
-                break;
-        }
+        let prologBoardStr = this._generatePrologBoard();
+        let that = this;
+        this.scene.game.getValidMoves('white', prologBoardStr).then(function(response) {
+            // get the coordinates of the last picked piece
+            let pieceCoords = that.lastPickedPiece.getPosition();
+            // iterate over the stack where the piece belongs
+            while (1) {
+                // get the top piece of the stack and move it to the new spot
+                let top_piece = that.board[pieceCoords.i][pieceCoords.j].pieces.slice(-1)[0]; // short way to get last member of array
+                // remove it from stack
+                let aux = that.board[pieceCoords.i][pieceCoords.j].pieces.pop();
+                // set its new position
+                aux.setPosition(spotCoords.i, spotCoords.j);
+                // add it to the new spot stack
+                that.board[spotCoords.i][spotCoords.j].pieces.push(aux);
+                // if the moved piece is the clicked piece, stop
+                if (top_piece.getId() == that.lastPickedPiece.getId())
+                    break;
+            }
+
+        });
     }
 
     _generatePrologBoard() {

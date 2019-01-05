@@ -80,4 +80,21 @@ class KnightLine {
 		return b;
 	}
 
+	getValidMoves(player, boardStr) {
+		if (player != 'white' && player != 'black') throw "Unexpected player. Use 'white' or 'black'";
+		let baseUrl = `http://localhost:8081/get_valid_moves_${player}(${boardStr})`;
+		let request = new XMLHttpRequest();
+		request.open('GET', baseUrl);
+		this.sgc_waiting();
+		let that = this; // javascript is love
+		let p = new Promise(resolve => {
+			request.onload = function (ev) {
+				that.sgc_running();
+				resolve(request.responseText);
+			}
+		})
+		request.send();
+		return p;
+	}
+
 }
