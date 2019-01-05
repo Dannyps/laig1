@@ -7,7 +7,7 @@ class MyPiece extends CGFobject {
 		this.pieceTop = new MyPieceTop(scene, 1);
 		this.pieceSides = new Plane_Nurbs(scene, 10, 10);
 		this.mat = new CGFappearance(scene);
-
+		this.colour = colour;
 		this.selected = false; // by default
 		if(colour == 'white'){
 			this.mat.setAmbient(0.2, 0.2, 0.2,1);

@@ -165,4 +165,26 @@ class GameBoard extends CGFobject {
                 break;    
         }
     }
+
+    _generatePrologBoard() {
+        let str = "";
+        let edgeCoord = this.size / 2;
+        for (let i = edgeCoord-1; i >= -edgeCoord; i--) {
+            let rowstr = "[";
+            for (let j = -edgeCoord; j < edgeCoord; j++) {
+                if(this.board[i][j].pieces.length === 0)
+                    rowstr += 'e';
+                else if (this.board[i][j].pieces[0].colour === 'white')
+                    rowstr += `w-${this.board[i][j].pieces.length}`;
+                else
+                    rowstr += `b-${this.board[i][j].pieces.length}`;
+
+                if(j !== (edgeCoord-1)) rowstr += ',';
+            }
+            str += rowstr + "]";
+            if(i !== -edgeCoord) str += ',';
+        }
+
+        return `[${str}]`;
+    }
 };

@@ -178,7 +178,6 @@ class XMLscene extends CGFscene {
             // Create board
             this.gameBoardCGFObj = this.graph.parsedComponents.get('gameBoard').CGFprimitives.get('board');
             this.game = new KnightLine(this);
-            console.log(this.gameBoardCGFObj);
             this.game.dummy_handshake();
             
         }, 1000);
