@@ -6,9 +6,11 @@
 
 // wanna be Enum in JS
 const GameState = {
-    DEFAULT: 0,
-    TILE_PICKING: 1,
-    SPOT_PICKING: 2
+    WHITE_PLAYER_TURN:0,
+    BLACK_PLAYER_TURN:1,
+    WHITE_PLAYER_PICKED_PIECE:2,
+    BLACK_PLAYER_PICKED_PIECE:3,
+    SPOT_PICKED: 4
 };
 
 class GameBoard extends CGFobject {
@@ -26,7 +28,7 @@ class GameBoard extends CGFobject {
         this.board = []; // matrix
         this.hasSizeChanged = true; // if true, build a new board, else use the current board
 
-        this.state = GameState.DEFAULT;
+        this.state = GameState.WHITE_PLAYER_TURN;
         this.lastPickedPiece; /**> @type {MyPiece} @description Holds the last picked tile, if any */
     };
 
@@ -36,17 +38,16 @@ class GameBoard extends CGFobject {
             let arr = [];
             for (let j = -edgeCoord; j < edgeCoord; j++) {
                 arr[j] = new BoardSpot(this.scene);
-                console.log(arr[j]);
             }
             this.board[i] = arr;
         }
-        console.log(this.board);
     }
 
     display() {
         // update the spot matrix
         if (this.hasSizeChanged) {
             this.fillBoard();
+            console.log(this._generatePrologBoard());
             this.hasSizeChanged = false;
         }
 
@@ -85,13 +86,13 @@ class GameBoard extends CGFobject {
     readyForFirstGame() {
         for (let i = 0; i < 20; i++)
         setTimeout(_=>{
-            this.board[0][0].pieces.push(new MyPiece(this.scene, 'white', 0, 0));
+            this.board[0][-1].pieces.push(new MyPiece(this.scene, 'white', 0, -1));
         }, 50*i);
             
 
         for (let i = 0; i < 20; i++)
         setTimeout(_=>{
-            this.board[0][1].pieces.push(new MyPiece(this.scene, 'black', 0, 1));
+            this.board[0][0].pieces.push(new MyPiece(this.scene, 'black', 0, 0));
         }, 50*10 + 50*i);
     }
 
@@ -104,16 +105,25 @@ class GameBoard extends CGFobject {
                     //console.log("Picked object: " + obj + ", with pick id " + customId);
                     if(Math.trunc(customId / 1e3) == 2) {
                         console.log("Picked tile");
-                        this.state = GameState.TILE_PICKING;
+                        if(this.state === GameState.WHITE_PLAYER_TURN)
+                            this.state = GameState.WHITE_PLAYER_PICKED_PIECE;
+                        else
+                            this.state = GameState.BLACK_PLAYER_PICKED_PIECE;
+
                         this.lastPickedPiece = obj;
                     } else if (Math.trunc(customId / 1e3) == 1) {
-                        if(this.state == GameState.TILE_PICKING) {
+                        if(this.state == GameState.WHITE_PLAYER_PICKED_PIECE) {
                             let spotCoords = this._pick_id_to_coords(customId);
                             this._move_pieces(spotCoords);
-                            this.state = GameState.DEFAULT;
+                            this.state = GameState.BLACK_PLAYER_TURN;
+                        } else if (this.state == GameState.BLACK_PLAYER_PICKED_PIECE) {
+                            let spotCoords = this._pick_id_to_coords(customId);
+                            this._move_pieces(spotCoords);
+                            this.state = GameState.WHITE_PLAYER_TURN;
                         }
                         
                         console.log("Picked board spot");
+                        console.log(this._generatePrologBoard());
                     }
                 }
             }
@@ -148,6 +158,7 @@ class GameBoard extends CGFobject {
      * @param {*} spotCoords 
      */
     _move_pieces(spotCoords) {
+        //this.scene.game.getValidMoves('white').then(function(response) {});
         // get the coordinates of the last picked piece
         let pieceCoords = this.lastPickedPiece.getPosition();
         // iterate over the stack where the piece belongs
