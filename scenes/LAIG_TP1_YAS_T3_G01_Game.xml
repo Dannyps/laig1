@@ -19,7 +19,7 @@
 	<!--  -->
 	<views default="overview">
 		<perspective id="overview" near="0.1" far="500" angle="50">
-			<from x="30" y="30" z="30" />
+			<from x="25" y="30" z="25" />
 			<to x="0" y="0" z="0" />
 		</perspective>
 		<perspective id="player1" near="0.1" far="500" angle="55">
@@ -47,25 +47,25 @@
 	<!--  -->
 	<lights>
 		<omni id="hover1" enabled="1">
-			<location x="3" y="15" z="3" w="1" />
+			<location x="5" y="15" z="5" w="1" />
 			<ambient r="0" g="0" b="0" a="1" />
 			<diffuse r="0.3" g="0.3" b="0.28" a="1" />
 			<specular r="0.1" g="0.1" b="0.08" a="1" />
 		</omni>
 		<omni id="hover2" enabled="1">
-			<location x="-3" y="15" z="3" w="1" />
+			<location x="-5" y="15" z="5" w="1" />
 			<ambient r="0" g="0" b="0" a="1" />
 			<diffuse r="0.3" g="0.3" b="0.28" a="1" />
 			<specular r="0.1" g="0.1" b="0.08" a="1" />
 		</omni>
 		<omni id="hover3" enabled="1">
-			<location x="3" y="15" z="-3" w="1" />
+			<location x="5" y="15" z="-5" w="1" />
 			<ambient r="0" g="0" b="0" a="1" />
 			<diffuse r="0.3" g="0.3" b="0.28" a="1" />
 			<specular r="0.1" g="0.1" b="0.08" a="1" />
 		</omni>
 		<omni id="hover4" enabled="1">
-			<location x="-3" y="15" z="-3" w="1" />
+			<location x="-5" y="15" z="-5" w="1" />
 			<ambient r="0" g="0" b="0" a="1" />
 			<diffuse r="0.3" g="0.3" b="0.28" a="1" />
 			<specular r="0.1" g="0.1" b="0.08" a="1" />
