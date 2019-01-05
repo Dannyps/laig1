@@ -275,6 +275,18 @@ class GameBoard extends CGFobject {
         let p = new Promise(resolve => {
             this.scene.game.getValidMoves(player, prologBoardStr).then(function (response) {
                 let parsedCoords = that._prolog_coords_to_board(response);
+                let pickedPosition = that.lastPickedPiece.getPosition();
+                for(let i = 0; i < parsedCoords.length; i++) {
+                    let coords = parsedCoords[i];
+                    let diff_i = Math.abs(coords.i - pickedPosition.i);
+                    let diff_j = Math.abs(coords.j - pickedPosition.j); 
+                    if(diff_i*diff_i + diff_j*diff_j !== 5) {
+                        // not valid, remove it
+                        let index = parsedCoords.indexOf(coords);
+                        parsedCoords.splice(index, 1);
+                        i--;
+                    } 
+                }
                 resolve(parsedCoords);
             });
         });
