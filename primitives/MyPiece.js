@@ -19,50 +19,64 @@ class MyPiece extends CGFobject {
 		this.position_j = position_j;
 		this.texture = this.scene.graph.parsedTextures.get('knight');
 		this.id = _id++;
+		this.ox = 0;
+		this.oy = 0;
+		this.oz = 0;
 	};
 
+	set_position_offset(x, y, z){
+		this.ox = x;
+		this.oy = y;
+		this.oz = z;
+		
+	}
 
 	display() {
 		this.mat.apply();
 		// register for picking
 		this.scene.registerPieceForPick(this);
+
+		this.scene.pushMatrix();
 		
-		this.scene.pushMatrix();
-			this.scene.rotate(Math.PI * 1 / 2, -1, 0, 0);
-			//this.pieceTop.display();
-				this.scene.translate(0, 0, 1/5);
-				this.texture.bind();
-				this.pieceSides.display();
-		this.scene.popMatrix();
-
-		this.mat.apply();
-		this.scene.pushMatrix();
-			this.scene.scale(1, 1/5, 1);
-
+			this.scene.translate(this.ox, this.oy, this.oz);
+			
 			this.scene.pushMatrix();
-				this.scene.translate(1/2, 0.5, 0);
-				this.scene.rotate(Math.PI * 1 / 2, 0, 1, 0);
-				this.pieceSides.display();
+				this.scene.rotate(Math.PI * 1 / 2, -1, 0, 0);
+				//this.pieceTop.display();
+					this.scene.translate(0, 0, 1/5);
+					this.texture.bind();
+					this.pieceSides.display();
 			this.scene.popMatrix();
 
+			this.mat.apply();
 			this.scene.pushMatrix();
-				this.scene.translate(0, 0.5, -1/2);
-				this.scene.rotate(Math.PI * 1, 0, 1, 0);
-				this.pieceSides.display();
-			this.scene.popMatrix();
+				this.scene.scale(1, 1/5, 1);
 
-			this.scene.pushMatrix();
-				this.scene.translate(-1/2, 0.5, 0);
-				this.scene.rotate(Math.PI * 1/2, 0, -1, 0);
-				this.pieceSides.display();
-			this.scene.popMatrix();
+				this.scene.pushMatrix();
+					this.scene.translate(1/2, 0.5, 0);
+					this.scene.rotate(Math.PI * 1 / 2, 0, 1, 0);
+					this.pieceSides.display();
+				this.scene.popMatrix();
 
-			this.scene.pushMatrix();
-				this.scene.translate(0, 0.5, 1/2);
-				this.scene.rotate(Math.PI * 1, 0, 0, 0);
-				this.pieceSides.display();
-			this.scene.popMatrix();
+				this.scene.pushMatrix();
+					this.scene.translate(0, 0.5, -1/2);
+					this.scene.rotate(Math.PI * 1, 0, 1, 0);
+					this.pieceSides.display();
+				this.scene.popMatrix();
 
+				this.scene.pushMatrix();
+					this.scene.translate(-1/2, 0.5, 0);
+					this.scene.rotate(Math.PI * 1/2, 0, -1, 0);
+					this.pieceSides.display();
+				this.scene.popMatrix();
+
+				this.scene.pushMatrix();
+					this.scene.translate(0, 0.5, 1/2);
+					this.scene.rotate(Math.PI * 1, 0, 0, 0);
+					this.pieceSides.display();
+				this.scene.popMatrix();
+
+			this.scene.popMatrix();
 		this.scene.popMatrix();
 		this.scene.clearPickRegistration();
 	}
