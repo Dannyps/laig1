@@ -215,7 +215,11 @@ class XMLscene extends CGFscene {
             status: 0,
             type: -1,
             statusStr: "Loading...",
-            difficulty: -1
+            difficulty: -1,
+            undo: function(){
+                // todo
+                alert("replace me with real code");
+            }
         };
 
         this.interface.addGameControl(this.gc);
