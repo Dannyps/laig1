@@ -79,7 +79,7 @@ class MySceneGraph {
          */
         /** @description all parsed materials @type {{Map.<string, CGFappearance}} */
         this.parsedMaterials = new Map();
-        
+
         /**
          * Transformations
          */
@@ -118,6 +118,24 @@ class MySceneGraph {
         this.reader.open('scenes/' + filename, this);
     }
 
+    reloadViews() {
+        let rootElement = this.reader.xmlDoc.documentElement;
+        var nodes = rootElement.children;
+        var nodeNames = [];
+
+        for (var i = 0; i < nodes.length; i++) {
+            nodeNames.push(nodes[i].nodeName);
+        }
+        let index = nodeNames.indexOf("views");
+        let views = new Views(this);
+        if (views.parse(nodes[index]))
+            return "Failed to parse the <views> tag. ABORT!";
+        else {
+            this.info('Parsed views');
+            this.defaultView = views.getDefaultViewID();
+            this.views = views.getParsedViews();
+        }
+    }
 
     /*
      * Callback to be executed after successful reading
@@ -171,7 +189,7 @@ class MySceneGraph {
 
             //Parse scene block
             let scene = new Scene(this);
-            if(scene.parse(nodes[index]))
+            if (scene.parse(nodes[index]))
                 return "Failed to parse the <scene> tag. ABORT!";
             else
                 this.info('Parsed scene');
@@ -186,7 +204,7 @@ class MySceneGraph {
 
             //Parse scene block
             let views = new Views(this);
-            if(views.parse(nodes[index]))
+            if (views.parse(nodes[index]))
                 return "Failed to parse the <views> tag. ABORT!";
             else {
                 this.info('Parsed views');
@@ -204,7 +222,7 @@ class MySceneGraph {
 
             //Parse ambient block
             let ambient = new Ambient(this);
-            if(ambient.parse(nodes[index]))
+            if (ambient.parse(nodes[index]))
                 return "Failed to parse the <ambient> tag. ABORT!";
             else {
                 this.info('Parsed ambient');
@@ -222,7 +240,7 @@ class MySceneGraph {
 
             //Parse ambient block
             let lights = new Lights(this);
-            if(lights.parse(nodes[index]))
+            if (lights.parse(nodes[index]))
                 return "Failed to parse the <lights> tag. ABORT!";
             else {
                 this.parsedLights = lights.getParsedLights();
@@ -239,13 +257,13 @@ class MySceneGraph {
 
             //Parse texture block
             let textures = new Textures(this);
-            if(textures.parse(nodes[index])) 
+            if (textures.parse(nodes[index]))
                 return "Failed to parse the <textures> tag. ABORT!";
             else {
                 let parsedTextures = textures.getParsedTextures();
                 // create the CFGtexture for each texture
                 parsedTextures.forEach((value, key) => {
-                    let cgfTexture = new CGFtexture (this.scene, ""+value);
+                    let cgfTexture = new CGFtexture(this.scene, "" + value);
                     this.parsedTextures.set(key, cgfTexture);
                 });
                 this.info('Parsed textures');
@@ -260,7 +278,7 @@ class MySceneGraph {
                 this.onXMLMinorError("tag <materials> out of order");
 
             let materials = new Materials(this);
-            if(materials.parse(nodes[index])) {
+            if (materials.parse(nodes[index])) {
                 return "Failed to parse the <materials> tag"
             } else {
                 let parsedMaterials = materials.getParsedMaterials();
@@ -277,7 +295,7 @@ class MySceneGraph {
                 });
                 this.info('Parsed materials');
             }
-            
+
         }
 
         // <transformations>
@@ -289,7 +307,7 @@ class MySceneGraph {
 
             //Parse texture block
             let transformations = new Transformations(this);
-            if(transformations.parse(nodes[index])) 
+            if (transformations.parse(nodes[index]))
                 return "Failed to parse the <transformations> tag. ABORT!";
             else {
                 this.parsedTransformations = transformations.getParsedTransformations();
@@ -306,7 +324,7 @@ class MySceneGraph {
 
             //Parse texture block
             let animations = new AnimationsParser(this);
-            if(animations.parse(nodes[index])) 
+            if (animations.parse(nodes[index]))
                 return "Failed to parse the <animations> tag. ABORT!";
             else {
                 this.parsedAnimations = animations.getParsedAnimations();
@@ -326,7 +344,7 @@ class MySceneGraph {
                 this.onXMLMinorError("tag <primitives> out of order");
             //Parse primitives block
             let primitives = new Primitives(this);
-            
+
             if (primitives.parse(nodes[index]))
                 return "Failed to parse the <primitives> tag. ABORT!";
             else {
@@ -346,7 +364,7 @@ class MySceneGraph {
             let components = new ComponentsParser(this);
             if (components.parse(nodes[index]))
                 return "Failed to parse the <transformations> tag. ABORT!";
-            
+
             let aux = components.getParsedComponents();
             this.parsedComponents = new Map();
             aux.forEach((value, key) => {
@@ -412,7 +430,7 @@ class MySceneGraph {
      */
     displayScene() {
         // Apply default material
-        
+
         // entry point for graph rendering
         //TODO: Render loop starting at root of graph
         this.parsedComponents.get(this.idRoot).display(null);

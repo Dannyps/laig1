@@ -70,6 +70,47 @@ class XMLscene extends CGFscene {
     }
 
     /**
+     * calculate incremented value
+     * @param {float} ov olf value
+     * @param {float} nv new value
+     */
+    civ(ov, nv, i, steps) {
+        let res = ov + ((nv - ov) / steps) * (i / 5);
+        return res;
+    }
+
+    sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async animateCamera(oldC, newC) {
+        //debugger;
+        let steps = 60;
+        for (let i = 0; i < steps; i++) {
+            this.camera.position[0] = this.civ(oldC.position[0], newC.position[0], i, steps);
+            this.camera.position[1] = this.civ(oldC.position[1], newC.position[1], i, steps);
+            this.camera.position[2] = this.civ(oldC.position[2], newC.position[2], i, steps);
+
+            this.camera.target[0] = this.civ(oldC.target[0], newC.target[0], i, steps);
+            this.camera.target[1] = this.civ(oldC.target[1], newC.target[1], i, steps);
+            this.camera.target[2] = this.civ(oldC.target[2], newC.target[2], i, steps);
+
+            this.camera._up[0] = this.civ(oldC._up[0], newC._up[0], i, steps);
+            this.camera._up[1] = this.civ(oldC._up[1], newC._up[1], i, steps);
+            this.camera._up[2] = this.civ(oldC._up[2], newC._up[2], i, steps);
+
+            this.camera.fov = this.civ(oldC.fov, newC.fov, i, steps);
+
+            this.interface.setActiveCamera(this.camera);
+            await this.sleep(500 / steps);
+        }
+        //debugger;
+        this.camera = newC;
+        this.interface.setActiveCamera(this.camera);
+
+        this.loadViews();
+    }
+    /**
      * Initializes the scene, setting some WebGL defaults, initializing the camera and the axis.
      * @param {CGFApplication} application
      */
@@ -92,10 +133,8 @@ class XMLscene extends CGFscene {
         this.setPickEnabled(true);
     }
 
-    /**
-     * Initializes the scene cameras.
-     */
-    initCameras() {
+
+    loadViews() {
         this.graph.views.forEach((view, id) => {
             if (view.type === 'perspective') {
                 this.views.set(id, new CGFcamera(
@@ -109,6 +148,12 @@ class XMLscene extends CGFscene {
                     vec3.fromValues(view.to.x, view.to.y, view.to.z), vec3.fromValues(0, 1, 0)));
             }
         });
+    }
+    /**
+     * Initializes the scene cameras.
+     */
+    initCameras() {
+        this.loadViews();
 
         // set the default camera
         this.activeCamera = this.graph.defaultView;
@@ -180,9 +225,9 @@ class XMLscene extends CGFscene {
             this.game = new KnightLine(this);
             console.log(this.gameBoardCGFObj);
             this.game.dummy_handshake();
-            
-        }, 1000);
-        
+
+        }, 1500);
+
     }
 
     /**
@@ -210,7 +255,7 @@ class XMLscene extends CGFscene {
      * Displays the scene.
      */
     display() {
-        if(this.gameBoardCGFObj)
+        if (this.gameBoardCGFObj)
             this.gameBoardCGFObj.updateState();
         // display log
         this.logPicking();

@@ -530,6 +530,34 @@
 					<primitiveref id="nFloor" />
 				</children>
 			</component>
+			<component id="wall3">
+				<transformation>
+					<translate x="30" y="5" z="0" />
+					<scale x="60" y="30" z="60" />
+					<rotate angle="-90" axis="y" />
+				</transformation>
+				<materials>
+					<material id="wall" />
+				</materials>
+				<texture id="wall" length_s="4" length_t="2" />
+				<children>
+					<primitiveref id="nFloor" />
+				</children>
+			</component>
+			<component id="wall4">
+				<transformation>
+					<translate x="0" y="5" z="30" />
+					<scale x="60" y="30" z="1" />
+					<rotate angle="180" axis="y" />
+				</transformation>
+				<materials>
+					<material id="wall" />
+				</materials>
+				<texture id="wall" length_s="4" length_t="2" />
+				<children>
+					<primitiveref id="nFloor" />
+				</children>
+			</component>
 			<component id="pieceW">
 				<transformation>
 					<scale x="0.7" y="0.7" z="0.7"/>
@@ -560,6 +588,8 @@
 					<componentref id="floor" />
 					<componentref id="wall1" />
 					<componentref id="wall2" />
+					<componentref id="wall3" />
+					<componentref id="wall4" />
 					<!--<componentref id="pieceW" />-->
 				</children>
 			</component>

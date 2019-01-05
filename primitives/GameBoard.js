@@ -84,15 +84,15 @@ class GameBoard extends CGFobject {
 
     readyForFirstGame() {
         for (let i = 0; i < 20; i++)
-        setTimeout(_=>{
-            this.board[0][0].pieces.push(new MyPiece(this.scene, 'white', 0, 0));
-        }, 50*i);
-            
+            setTimeout(_ => {
+                this.board[0][0].pieces.push(new MyPiece(this.scene, 'white'));
+            }, 50 * i);
+
 
         for (let i = 0; i < 20; i++)
-        setTimeout(_=>{
-            this.board[0][1].pieces.push(new MyPiece(this.scene, 'black', 0, 1));
-        }, 50*10 + 50*i);
+            setTimeout(_ => {
+                this.board[0][1].pieces.push(new MyPiece(this.scene, 'black'));
+            }, 50 * 10 + 50 * i);
     }
 
     updateState() {
@@ -102,7 +102,7 @@ class GameBoard extends CGFobject {
                 if (obj) {
                     let customId = this.scene.pickResults[i][1];
                     //console.log("Picked object: " + obj + ", with pick id " + customId);
-                    if(Math.trunc(customId / 1e3) == 2) {
+                    if (Math.trunc(customId / 1e3) == 2) {
                         console.log("Picked tile");
                         this.state = GameState.TILE_PICKING;
                         this.lastPickedPiece = obj;

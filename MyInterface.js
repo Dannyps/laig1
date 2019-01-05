@@ -62,8 +62,9 @@ class MyInterface extends CGFinterface {
 
         let ctrl = this.gui.add(this.scene, 'activeCamera', viewsID);
         ctrl.onChange(function (val) {
-            this.scene.camera = this.scene.views.get(val);
-            this.setActiveCamera(this.scene.camera);
+            let oldCam = this.scene.camera;
+            let newCam = this.scene.views.get(val);
+            this.scene.animateCamera(oldCam, newCam);
         }.bind(this));
 
         // force to update view
@@ -71,7 +72,7 @@ class MyInterface extends CGFinterface {
     }
 
     addGameControl(gc) {
-        
+
         let gg = this.gui.addFolder("Game Control");
         gg.open();
         gg.add(gc, 'status', {
@@ -83,4 +84,5 @@ class MyInterface extends CGFinterface {
 
         // todo disable select
     }
+
 }
