@@ -130,6 +130,9 @@ class GameBoard extends CGFobject {
         await Promise.all(promises);
     }
 
+    /**
+     * Updates the game state upon user interactions (clicks on spots or pieces)
+     */
     async updateState() {
         if (this.state == GameState.GAME_OVER) return;
 
@@ -138,75 +141,89 @@ class GameBoard extends CGFobject {
                 let obj = this.scene.pickResults[i][0];
                 if (obj) {
                     let customId = this.scene.pickResults[i][1];
-                    //console.log("Picked object: " + obj + ", with pick id " + customId);
-                    if (Math.trunc(customId / 1e3) == 2) {
-                        // validate moves
-                        if (this.state === GameState.WHITE_PLAYER_TURN || this.state === GameState.WHITE_PLAYER_PICKED_PIECE) {
-                            if (obj.colour === 'black') {
-                                this.scene.game.sgc_setMessage("Choose white pieces!");
-                                this.scene.game.blinkAccentLight(1, 0, 0, 3);
-                                continue;
-                            }
-                            this.state = GameState.WHITE_PLAYER_PICKED_PIECE;
-                            this.scene.game.sgc_setMessage("[White] Choose the spot");
-                        } else if (this.state === GameState.BLACK_PLAYER_TURN || this.state === GameState.BLACK_PLAYER_PICKED_PIECE) {
-                            if (obj.colour === 'white') {
-                                this.scene.game.sgc_setMessage("Choose black pieces!");
-                                this.scene.game.blinkAccentLight(1, 0, 0, 3);
-                                continue;
-                            }
-                            this.state = GameState.BLACK_PLAYER_PICKED_PIECE;
-                            this.scene.game.sgc_setMessage("[Black] Choose the spot");
-                        }
-
-                        // save the picked piece
-                        if (this.lastPickedPiece)
-                            this._removeHighlightStack();
-                        this.lastPickedPiece = obj;
-
-                        await this._getParsedValidMoves().then(result => {
-                            this.validMoves = result;
-                            if (result.length) this._highlightStack();
-                        });
-
-                    } else if (Math.trunc(customId / 1e3) == 1) {
-                        if (this.state == GameState.WHITE_PLAYER_PICKED_PIECE) {
-                            let spotCoords = this._pick_id_to_coords(customId);
-                            if (this._move_pieces(spotCoords)) {
-                                this.state = GameState.BLACK_PLAYER_TURN;
-                                this.scene.game.sgc_setMessage("[Black] Your turn");
-                                this.to = this.launchTimeout('black');
-                                this._removeHighlightStack();
-                                await this.getRoundWinner().then(winner => {
-                                    if (winner != "false") {
-                                        this.state = GameState.GAME_OVER;
-                                        this.scene.game.sgc_setMessage(`Winner: ${winner}`);
-                                    }
-                                });
-                            } else {
-                                this.scene.game.sgc_setMessage("[White] Invalid move");
-                                this.scene.game.blinkAccentLight(1, 0, 0, 3);
-                            }
-                        } else if (this.state == GameState.BLACK_PLAYER_PICKED_PIECE) {
-                            let spotCoords = this._pick_id_to_coords(customId);
-                            if (this._move_pieces(spotCoords)) {
-                                this.state = GameState.WHITE_PLAYER_TURN;
-                                this.scene.game.sgc_setMessage("[White] Your turn");
-                                this.to = this.launchTimeout('white');
-                                this._removeHighlightStack();
-                                await this.getRoundWinner().then(winner => {
-                                    if (winner != "false") {
-                                        this.state = GameState.GAME_OVER;
-                                        this.scene.game.sgc_setMessage(`Winner: ${winner}`);
-                                    }
-                                });
-                            } else {
-                                this.scene.game.sgc_setMessage("[Black] Invalid move");
-                                this.scene.game.blinkAccentLight(1, 0, 0, 3);
-                            }
-                        }
+                    if (Math.trunc(customId / 1e3) == 2)
+                        await this._handlePiecePicked(obj);
+                    else if (Math.trunc(customId / 1e3) == 1) {
+                        await this._handleSpotPicked(customId);
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * Updates game internal state when user picks pieces
+     * @param {MyPiece} pickedPiece 
+     */
+    async _handlePiecePicked(pickedPiece) {
+        // validate moves
+        if (this.state === GameState.WHITE_PLAYER_TURN || this.state === GameState.WHITE_PLAYER_PICKED_PIECE) {
+            if (pickedPiece.colour === 'black') {
+                this.scene.game.sgc_setMessage("Choose white pieces!");
+                this.scene.game.blinkAccentLight(1, 0, 0, 3);
+                return;
+            }
+            this.state = GameState.WHITE_PLAYER_PICKED_PIECE;
+            this.scene.game.sgc_setMessage("[White] Choose the spot");
+        } else if (this.state === GameState.BLACK_PLAYER_TURN || this.state === GameState.BLACK_PLAYER_PICKED_PIECE) {
+            if (pickedPiece.colour === 'white') {
+                this.scene.game.sgc_setMessage("Choose black pieces!");
+                this.scene.game.blinkAccentLight(1, 0, 0, 3);
+                return;
+            }
+            this.state = GameState.BLACK_PLAYER_PICKED_PIECE;
+            this.scene.game.sgc_setMessage("[Black] Choose the spot");
+        }
+
+        // save the picked piece
+        if (this.lastPickedPiece)
+            this._removeHighlightStack();
+        this.lastPickedPiece = pickedPiece;
+
+        await this._getParsedValidMoves().then(result => {
+            this.validMoves = result;
+            if (result.length) this._highlightStack();
+        });
+    }
+
+    /**
+     * Handles user clicks on game board spots
+     * @param {Number} customId The ID registered for the picked spot
+     */
+    async _handleSpotPicked(customId) {
+        if (this.state == GameState.WHITE_PLAYER_PICKED_PIECE) {
+            let spotCoords = this._pick_id_to_coords(customId);
+            if (this._move_pieces(spotCoords)) {
+                this.state = GameState.BLACK_PLAYER_TURN;
+                this.scene.game.sgc_setMessage("[Black] Your turn");
+                this.to = this.launchTimeout('black');
+                this._removeHighlightStack();
+                await this.getRoundWinner().then(winner => {
+                    if (winner != "false") {
+                        this.state = GameState.GAME_OVER;
+                        this.scene.game.sgc_setMessage(`Winner: ${winner}`);
+                    }
+                });
+            } else {
+                this.scene.game.sgc_setMessage("[White] Invalid move");
+                this.scene.game.blinkAccentLight(1, 0, 0, 3);
+            }
+        } else if (this.state == GameState.BLACK_PLAYER_PICKED_PIECE) {
+            let spotCoords = this._pick_id_to_coords(customId);
+            if (this._move_pieces(spotCoords)) {
+                this.state = GameState.WHITE_PLAYER_TURN;
+                this.scene.game.sgc_setMessage("[White] Your turn");
+                this.to = this.launchTimeout('white');
+                this._removeHighlightStack();
+                await this.getRoundWinner().then(winner => {
+                    if (winner != "false") {
+                        this.state = GameState.GAME_OVER;
+                        this.scene.game.sgc_setMessage(`Winner: ${winner}`);
+                    }
+                });
+            } else {
+                this.scene.game.sgc_setMessage("[Black] Invalid move");
+                this.scene.game.blinkAccentLight(1, 0, 0, 3);
             }
         }
     }
