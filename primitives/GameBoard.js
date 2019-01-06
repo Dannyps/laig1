@@ -111,10 +111,8 @@ class GameBoard extends CGFobject {
     }
 
     incBoardSize() {
-        this.size++;
-        //this.hasSizeChanged = true;
-
-        //please update mannually
+        this.size += 2;
+        this.hasSizeChanged = true;
     }
 
     setBoardSize(newSize) {
@@ -522,7 +520,12 @@ class GameBoard extends CGFobject {
         if (this.boardsHistory.length == 0) {
             alert("There's no history!");
             return;
-        } else this.board = this.boardsHistory.pop();
+        } else if (this.state = GameState.GAME_OVER) {
+            alert("Game is over. Can't undo!");
+            return
+        } else {
+            this.board = this.boardsHistory.pop();
+        }
 
         if (this.state == GameState.WHITE_PLAYER_PICKED_PIECE || this.state == GameState.WHITE_PLAYER_TURN) {
             this.state = GameState.BLACK_PLAYER_TURN;
