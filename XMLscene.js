@@ -108,6 +108,8 @@ class XMLscene extends CGFscene {
         this.camera = newC;
         this.interface.setActiveCamera(this.camera);
 
+        this.interface.resizeWindow();
+        
         this.loadViews();
     }
     /**

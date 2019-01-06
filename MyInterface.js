@@ -101,14 +101,25 @@ class MyInterface extends CGFinterface {
             'unset': -1
         });
         let statusStr = gg.add(gc, 'statusStr').listen()
-        
+
         gg.add(gc, 'undo');
 
         status.domElement.childNodes[0].disabled = true;
         difficulty.domElement.childNodes[0].disabled = true;
         statusStr.domElement.childNodes[0].disabled = true;
-
         // todo disable select
     }
+
+    resizeWindow() {
+        let subjects = document.getElementsByClassName("property-name");
+        for (let i = 0; i < subjects.length; i++) {
+            let element = subjects[i];
+            element.style.width = "25%";
+        }
+
+        document.getElementsByClassName("dg")[1].style.width="320px";
+        document.getElementsByClassName("close-button")[0].style.width="320px";
+
+}
 
 }
