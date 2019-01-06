@@ -107,7 +107,6 @@ class MyInterface extends CGFinterface {
         status.domElement.childNodes[0].disabled = true;
         difficulty.domElement.childNodes[0].disabled = true;
         statusStr.domElement.childNodes[0].disabled = true;
-        // todo disable select
     }
 
     resizeWindow() {
