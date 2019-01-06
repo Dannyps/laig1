@@ -552,7 +552,9 @@ class GameBoard extends CGFobject {
         let prologBoardStr = this._generatePrologBoard();
         let p = new Promise(resolve => {
             this.scene.game.requestGetWinner(prologBoardStr).then(function (response) {
-                console.log(response);
+                if(response === 'white' || response === 'black')
+                    clearTimeout(this.to);
+                
                 resolve(response);
             });
         });
