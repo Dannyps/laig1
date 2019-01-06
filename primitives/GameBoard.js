@@ -273,10 +273,9 @@ class GameBoard extends CGFobject {
      * @return Returns true if the move is valid, false otherwise 
      */
     _move_pieces(spotCoords) {
-        // clear the running timeout.
-        if (this.to)
-            clearTimeout(this.to);
-        // ensure it's a valid move
+        /**
+         * ensure it's a valid move
+         */
         let isValid = false;
         for (let position of this.validMoves) {
             if (position.i == spotCoords.i && position.j == spotCoords.j) {
@@ -285,7 +284,7 @@ class GameBoard extends CGFobject {
             }
         }
         if (!isValid) return false;
-
+        
         // get the number of pieces to move
         let n = this._getNumberOfPieces(this.lastPickedPiece);
         // if this is the first round, ensure a single piece is picked
@@ -295,6 +294,14 @@ class GameBoard extends CGFobject {
         } else {
             this._isFirstRound = false;
         }
+
+        /**
+         * Valid move
+         */
+
+        // clear the running timeout.
+        if (this.to)
+            clearTimeout(this.to);
 
         // clone current game state
         this.boardsHistory.push(this.clone());
@@ -573,6 +580,6 @@ class GameBoard extends CGFobject {
             alert("The " + looser + " player lost due to innactivity. The " + winner + " player has won the game!");
             this.state = GameState.GAME_OVER;
             this.scene.game.sgc_setMessage(`Winner: ${winner} player!`);
-        }, 30 * 1000);
+        }, 30 * 1000, currentPlayer);
     }
 };
