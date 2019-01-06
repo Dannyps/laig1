@@ -1,6 +1,7 @@
 class KnightLine {
 
 	constructor(scene) {
+		this.baseURL = 'http://localhost:8081';
 		this.gameBoard = scene.graph.parsedComponents.get('gameBoard').CGFprimitives.get('board');
 		window.board = this.gameBoard; // TODOP remove this
 		this.gameControl = scene.gc;
@@ -25,7 +26,7 @@ class KnightLine {
 
 	dummy_handshake() {
 		let request = new XMLHttpRequest();
-		request.open('GET', 'http://localhost:8081/initPlayerVsPlayer');
+		request.open('GET', this.baseURL+'/initPlayerVsPlayer');
 		this.sgc_waiting();
 		let that = this; // javascript is love
 		request.onload = function (ev) {
@@ -82,7 +83,7 @@ class KnightLine {
 
 	getValidMoves(player, boardStr) {
 		if (player != 'white' && player != 'black') throw "Unexpected player. Use 'white' or 'black'";
-		let baseUrl = `http://localhost:8081/get_valid_moves_${player}(${boardStr})`;
+		let baseUrl = this.baseURL+`/get_valid_moves_${player}(${boardStr})`;
 		let request = new XMLHttpRequest();
 		request.open('GET', baseUrl);
 		this.sgc_waiting();
