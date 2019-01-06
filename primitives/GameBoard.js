@@ -473,7 +473,10 @@ class GameBoard extends CGFobject {
     }
 
     undo() {
-        if(this.boardsHistory.length == 0) alert("There's no history!");
+        if(this.boardsHistory.length == 0) {
+            alert("There's no history!");
+            return;
+        }
         else this.board = this.boardsHistory.pop();
 
         if(this.state == GameState.WHITE_PLAYER_PICKED_PIECE || this.state == GameState.WHITE_PLAYER_TURN) {
