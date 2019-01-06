@@ -3,7 +3,6 @@ class KnightLine {
 	constructor(scene) {
 		this.baseURL = 'http://localhost:8081';
 		this.gameBoard = scene.graph.parsedComponents.get('gameBoard').CGFprimitives.get('board');
-		window.board = this.gameBoard; // TODOP remove this
 		this.gameControl = scene.gc;
 		this.boardSize = 10;
 	}
