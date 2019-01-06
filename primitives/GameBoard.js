@@ -37,6 +37,8 @@ class GameBoard extends CGFobject {
         this.state = GameState.WHITE_PLAYER_TURN;
         this.validMoves = []; /**> @type {Array<{{i: Number, j: Number}}>} Array of objects representing the valid moves for current turn */
         this.lastPickedPiece; /**> @type {MyPiece} @description Holds the last picked tile, if any */
+
+        this.boardsHistory = []; /**> All game boards .. */
     };
 
     fillBoard() {
@@ -232,7 +234,9 @@ class GameBoard extends CGFobject {
 
         if (!isValid) return false;
 
-        let prologBoardStr = this._generatePrologBoard();
+        // clone current game state
+        this.boardsHistory.push(this.clone());
+        
         let that = this;
 
         // get the coordinates of the last picked piece
@@ -431,5 +435,27 @@ class GameBoard extends CGFobject {
         }
 
         return result;
+    }
+
+    /**
+     * Clones the current game board
+     */
+    clone() {
+        let boardCopy = [];
+        let edgeCoord = this.size / 2;
+        for (let i = -edgeCoord; i < edgeCoord; i++) {
+            let arr = [];
+            for (let j = -edgeCoord; j < edgeCoord; j++) {
+                arr[j] = this.board[i][j].clone();
+            }
+            boardCopy[i] = arr;
+        }
+
+        return boardCopy;
+    }
+
+    undo() {
+        if(this.boardsHistory.length == 0) alert("There's no history!");
+        else this.board = this.boardsHistory.pop();
     }
 };

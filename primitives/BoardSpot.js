@@ -41,5 +41,15 @@ class BoardSpot extends CGFobject {
 
     }
 
+    clone() {
+        let clonePieces = [];
+        for(let piece of this.pieces)
+            clonePieces.push(piece.clone());
+        
+        let copy = Object.assign(Object.create( Object.getPrototypeOf(this)), this);
+        copy.pieces = clonePieces;
+        return copy;
+    }
+
 
 };

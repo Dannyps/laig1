@@ -218,15 +218,14 @@ class XMLscene extends CGFscene {
 
         // Add support for keys
         this.interface.initKeys();
-
+        let that = this;
         this.gc = {
             status: 0,
             type: -1,
             statusStr: "Loading...",
             difficulty: -1,
             undo: function(){
-                // todo
-                alert("replace me with real code");
+                that.gameBoardCGFObj.undo();
             }
         };
 

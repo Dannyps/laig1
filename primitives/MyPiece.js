@@ -109,4 +109,10 @@ class MyPiece extends CGFobject {
 	getId() {
 		return this.id;
 	}
+
+	clone() {
+		let copy = Object.assign(Object.create(this), this);
+		copy.selected = false;
+		return copy;
+	}
 };
