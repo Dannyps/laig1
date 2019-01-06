@@ -85,7 +85,7 @@ class XMLscene extends CGFscene {
 
     async animateCamera(oldC, newC) {
         //debugger;
-        let steps = 6;
+        let steps = 60;
         for (let i = 0; i < steps; i++) {
             this.camera.position[0] = this.civ(oldC.position[0], newC.position[0], i, steps);
             this.camera.position[1] = this.civ(oldC.position[1], newC.position[1], i, steps);
@@ -102,7 +102,7 @@ class XMLscene extends CGFscene {
             this.camera.fov = this.civ(oldC.fov, newC.fov, i, steps);
 
             this.interface.setActiveCamera(this.camera);
-            await this.sleep(50 / steps);
+            await this.sleep(1000 / steps);
         }
         //debugger;
         this.camera = newC;
