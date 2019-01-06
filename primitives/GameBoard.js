@@ -457,5 +457,14 @@ class GameBoard extends CGFobject {
     undo() {
         if(this.boardsHistory.length == 0) alert("There's no history!");
         else this.board = this.boardsHistory.pop();
+
+        if(this.state == GameState.WHITE_PLAYER_PICKED_PIECE || this.state == GameState.WHITE_PLAYER_TURN) {
+            this.state = GameState.BLACK_PLAYER_TURN;
+            this.scene.game.sgc_setMessage("[Black] Your turn");
+        }
+        else if(this.state == GameState.BLACK_PLAYER_PICKED_PIECE || this.state == GameState.BLACK_PLAYER_TURN) {
+            this.state = GameState.WHITE_PLAYER_TURN;
+            this.scene.game.sgc_setMessage("[White] Your turn");           
+        }
     }
 };
