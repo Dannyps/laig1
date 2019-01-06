@@ -144,6 +144,7 @@ class GameBoard extends CGFobject {
                         if (this.state === GameState.WHITE_PLAYER_TURN || this.state === GameState.WHITE_PLAYER_PICKED_PIECE) {
                             if (obj.colour === 'black') {
                                 this.scene.game.sgc_setMessage("Choose white pieces!");
+                                this.scene.game.blinkAccentLight(1, 0, 0, 3);
                                 continue;
                             }
                             this.state = GameState.WHITE_PLAYER_PICKED_PIECE;
@@ -151,6 +152,7 @@ class GameBoard extends CGFobject {
                         } else if (this.state === GameState.BLACK_PLAYER_TURN || this.state === GameState.BLACK_PLAYER_PICKED_PIECE) {
                             if (obj.colour === 'white') {
                                 this.scene.game.sgc_setMessage("Choose black pieces!");
+                                this.scene.game.blinkAccentLight(1, 0, 0, 3);
                                 continue;
                             }
                             this.state = GameState.BLACK_PLAYER_PICKED_PIECE;
@@ -182,6 +184,7 @@ class GameBoard extends CGFobject {
                                 });
                             } else {
                                 this.scene.game.sgc_setMessage("[White] Invalid move");
+                                this.scene.game.blinkAccentLight(1, 0, 0, 3);
                             }
                         } else if (this.state == GameState.BLACK_PLAYER_PICKED_PIECE) {
                             let spotCoords = this._pick_id_to_coords(customId);
@@ -197,6 +200,7 @@ class GameBoard extends CGFobject {
                                 });
                             } else {
                                 this.scene.game.sgc_setMessage("[Black] Invalid move");
+                                this.scene.game.blinkAccentLight(1, 0, 0, 3);
                             }
                         }
                     }
