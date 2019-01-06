@@ -13,25 +13,25 @@
 	<!--  -->
 	<!-- SCENE -->
 	<!--  -->
-	<scene root="root" axis_length="0" />
+	<scene root="root" axis_length="10" />
 	<!--  -->
 	<!-- VIEWS -->
 	<!--  -->
 	<views default="overview">
 		<perspective id="overview" near="0.1" far="500" angle="50">
-			<from x="25" y="30" z="25" />
+			<from x="25" y="40" z="25" />
 			<to x="0" y="0" z="0" />
 		</perspective>
 		<perspective id="player1" near="0.1" far="500" angle="55">
-			<from x="0" y="12" z="15" />
+			<from x="0" y="22" z="15" />
 			<to x="0" y="0" z="-10" />
 		</perspective>
 		<perspective id="player2" near="0.1" far="500" angle="55">
-			<from x="0" y="12" z="-15" />
+			<from x="0" y="22" z="-15" />
 			<to x="0" y="0" z="10" />
 		</perspective>
 		<ortho id="topView" near="0.1" far="500" left="-15" right="15" top="15" bottom="-15">
-			<from x="1" y="30" z="0" />
+			<from x="1" y="10" z="0" />
 			<to x="0" y="5" z="0" />
 		</ortho>
 	</views>
@@ -47,31 +47,31 @@
 	<!--  -->
 	<lights>
 		<omni id="hover1" enabled="1">
-			<location x="30" y="0" z="5" w="1" />
+			<location x="30" y="10" z="5" w="1" />
 			<ambient r="0.01" g="0.01" b="0.01" a="1" />
 			<diffuse r="0.3" g="0.3" b="0.28" a="1" />
 			<specular r="0.1" g="0.1" b="0.08" a="1" />
 		</omni>
 		<omni id="hover2" enabled="1">
-			<location x="-30" y="15" z="0" w="1" />
+			<location x="-30" y="25" z="0" w="1" />
 			<ambient r="0.01" g="0.01" b="0.01" a="1" />
 			<diffuse r="0.3" g="0.3" b="0.28" a="1" />
 			<specular r="0.1" g="0.1" b="0.08" a="1" />
 		</omni>
 		<omni id="hover3" enabled="1">
-			<location x="0" y="15" z="30" w="1" />
+			<location x="0" y="25" z="30" w="1" />
 			<ambient r="0.01" g="0.01" b="0.01" a="1" />
 			<diffuse r="0.3" g="0.3" b="0.28" a="1" />
 			<specular r="0.1" g="0.1" b="0.08" a="1" />
 		</omni>
 		<omni id="hover4" enabled="1">
-			<location x="0" y="15" z="-30" w="1" />
+			<location x="0" y="25" z="-30" w="1" />
 			<ambient r="0.01" g="0.01" b="0.01" a="1" />
 			<diffuse r="0.3" g="0.3" b="0.28" a="1" />
 			<specular r="0.1" g="0.1" b="0.08" a="1" />
 		</omni>
 		<spot id="ls1" enabled="1" angle="10" exponent="10">
-			<location x="0" y="15" z="0" w="1" />
+			<location x="0" y="25" z="0" w="1" />
 			<target x="0" y="0" z="0" />
 			<ambient r="0" g="0" b="0" a="0" />
 			<diffuse r="0.5" g="0.0" b="0.0" a="1" />
@@ -459,148 +459,160 @@
 			<children>
 				<componentref id="chair" />
 			</children>
-			<component id="chair3">
-				<transformation>
-					<translate x="-6" y="-1.75" z="10" />
-				</transformation>
-				<materials>
-					<material id="dwood" />
-				</materials>
-				<texture id="wood" length_s="1" length_t="1" />
-				<children>
-					<componentref id="chair" />
-				</children>
-			</component>
-			<component id="chair4">
-				<transformation>
-					<translate x="6" y="-1.75" z="-10" />
-					<rotate axis="y" angle="180" />
-				</transformation>
-				<materials>
-					<material id="dwood" />
-				</materials>
-				<texture id="wood" length_s="1" length_t="1" />
-				<children>
-					<componentref id="chair" />
-				</children>
-			</component>
-			<component id="gameBoard">
-				<transformation>
-					<rotate angle="-90" axis="x" />
-				</transformation>
-				<materials>
-					<material id="defaultAppearance" />
-				</materials>
-				<texture id="none" />
-				<children>
-					<primitiveref id="board" />
-				</children>
-			</component>
-			<component id="floor">
-				<transformation>
-					<translate x="0" y="-10" z="0" />
-					<scale x="60" y="1" z="60" />
-					<rotate angle="-90" axis="x" />
-				</transformation>
-				<materials>
-					<material id="defaultAppearance" />
-				</materials>
-				<texture id="floor" length_s="4" length_t="4" />
-				<children>
-					<primitiveref id="nFloor" />
-				</children>
-			</component>
-			<component id="wall1">
-				<transformation>
-					<translate x="-30" y="5" z="0" />
-					<scale x="1" y="30" z="60" />
-					<rotate angle="90" axis="y" />
-				</transformation>
-				<materials>
-					<material id="wall" />
-				</materials>
-				<texture id="wall" length_s="4" length_t="2" />
-				<children>
-					<primitiveref id="nFloor" />
-				</children>
-			</component>
-			<component id="wall2">
-				<transformation>
-					<translate x="0" y="5" z="-30" />
-					<scale x="60" y="30" z="1" />
-					<rotate angle="0" axis="y" />
-				</transformation>
-				<materials>
-					<material id="wall" />
-				</materials>
-				<texture id="wall" length_s="4" length_t="2" />
-				<children>
-					<primitiveref id="nFloor" />
-				</children>
-			</component>
-			<component id="wall3">
-				<transformation>
-					<translate x="30" y="5" z="0" />
-					<scale x="60" y="30" z="60" />
-					<rotate angle="-90" axis="y" />
-				</transformation>
-				<materials>
-					<material id="wall" />
-				</materials>
-				<texture id="wall" length_s="4" length_t="2" />
-				<children>
-					<primitiveref id="nFloor" />
-				</children>
-			</component>
-			<component id="wall4">
-				<transformation>
-					<translate x="0" y="5" z="30" />
-					<scale x="60" y="30" z="1" />
-					<rotate angle="180" axis="y" />
-				</transformation>
-				<materials>
-					<material id="wall" />
-				</materials>
-				<texture id="wall" length_s="4" length_t="2" />
-				<children>
-					<primitiveref id="nFloor" />
-				</children>
-			</component>
-			<component id="pieceW">
-				<transformation>
-					<scale x="0.7" y="0.7" z="0.7"/>
-					<translate x="2.15" y="0.05" z="2.15" />
-				</transformation>
-				<materials>
-					<material id="defaultAppearance" />
-				</materials>
-				<texture id="inherit" />
-				<children>
-					<primitiveref id="pieceW" />
-				</children>
-			</component>
-			<component id="root">
-				<transformation>
-				</transformation>
-				<materials>
-					<material id="defaultAppearance" />
-				</materials>
-				<texture id="none" />
-				<children>
-					<componentref id="table" />
-					<componentref id="gameBoard" />
-					<componentref id="chair1" />
-					<componentref id="chair2" />
-					<componentref id="chair3" />
-					<componentref id="chair4" />
-					<componentref id="floor" />
-					<componentref id="wall1" />
-					<componentref id="wall2" />
-					<componentref id="wall3" />
-					<componentref id="wall4" />
-					<!--<componentref id="pieceW" />-->
-				</children>
-			</component>
+		</component>
+		<component id="chair3">
+			<transformation>
+				<translate x="-6" y="-1.75" z="10" />
+			</transformation>
+			<materials>
+				<material id="dwood" />
+			</materials>
+			<texture id="wood" length_s="1" length_t="1" />
+			<children>
+				<componentref id="chair" />
+			</children>
+		</component>
+		<component id="chair4">
+			<transformation>
+				<translate x="6" y="-1.75" z="-10" />
+				<rotate axis="y" angle="180" />
+			</transformation>
+			<materials>
+				<material id="dwood" />
+			</materials>
+			<texture id="wood" length_s="1" length_t="1" />
+			<children>
+				<componentref id="chair" />
+			</children>
+		</component>
+		<component id="gameBoard">
+			<transformation>
+				<rotate angle="-90" axis="x" />
+			</transformation>
+			<materials>
+				<material id="defaultAppearance" />
+			</materials>
+			<texture id="none" />
+			<children>
+				<primitiveref id="board" />
+			</children>
+		</component>
+		<component id="floor">
+			<transformation>
+				<translate x="0" y="-10" z="0" />
+				<scale x="60" y="1" z="60" />
+				<rotate angle="-90" axis="x" />
+			</transformation>
+			<materials>
+				<material id="defaultAppearance" />
+			</materials>
+			<texture id="floor" length_s="4" length_t="4" />
+			<children>
+				<primitiveref id="nFloor" />
+			</children>
+		</component>
+		<component id="wall1">
+			<transformation>
+				<translate x="-30" y="5" z="0" />
+				<scale x="1" y="30" z="60" />
+				<rotate angle="90" axis="y" />
+			</transformation>
+			<materials>
+				<material id="wall" />
+			</materials>
+			<texture id="wall" length_s="4" length_t="2" />
+			<children>
+				<primitiveref id="nFloor" />
+			</children>
+		</component>
+		<component id="wall2">
+			<transformation>
+				<translate x="0" y="5" z="-30" />
+				<scale x="60" y="30" z="1" />
+				<rotate angle="0" axis="y" />
+			</transformation>
+			<materials>
+				<material id="wall" />
+			</materials>
+			<texture id="wall" length_s="4" length_t="2" />
+			<children>
+				<primitiveref id="nFloor" />
+			</children>
+		</component>
+		<component id="wall3">
+			<transformation>
+				<translate x="30" y="5" z="0" />
+				<scale x="60" y="30" z="60" />
+				<rotate angle="-90" axis="y" />
+			</transformation>
+			<materials>
+				<material id="wall" />
+			</materials>
+			<texture id="wall" length_s="4" length_t="2" />
+			<children>
+				<primitiveref id="nFloor" />
+			</children>
+		</component>
+		<component id="wall4">
+			<transformation>
+				<translate x="0" y="5" z="30" />
+				<scale x="60" y="30" z="1" />
+				<rotate angle="180" axis="y" />
+			</transformation>
+			<materials>
+				<material id="wall" />
+			</materials>
+			<texture id="wall" length_s="4" length_t="2" />
+			<children>
+				<primitiveref id="nFloor" />
+			</children>
+		</component>
+		<component id="pieceW">
+			<transformation>
+				<scale x="0.7" y="0.7" z="0.7" />
+				<translate x="2.15" y="0.05" z="2.15" />
+			</transformation>
+			<materials>
+				<material id="defaultAppearance" />
+			</materials>
+			<texture id="inherit" />
+			<children>
+				<primitiveref id="pieceW" />
+			</children>
+		</component>
+		<component id="wrapper">
+			<transformation>
+				<translate x="0" y="10" z="0" />
+			</transformation>
+			<materials>
+				<material id="defaultAppearance" />
+			</materials>
+			<texture id="none" />
+			<children>
+				<componentref id="table" />
+				<componentref id="gameBoard" />
+				<componentref id="chair1" />
+				<componentref id="chair2" />
+				<componentref id="chair3" />
+				<componentref id="chair4" />
+				<componentref id="floor" />
+				<componentref id="wall1" />
+				<componentref id="wall2" />
+				<componentref id="wall3" />
+				<componentref id="wall4" />
+				<!-- <componentref id="pieceW" /> -->
+			</children>
+		</component>
+		<component id="root">
+			<transformation>
+			</transformation>
+			<materials>
+				<material id="defaultAppearance" />
+			</materials>
+			<texture id="none" />
+			<children>
+				<componentref id="wrapper" />
+			</children>
 		</component>
 	</components>
 </yas>
