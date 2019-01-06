@@ -66,7 +66,7 @@ class KnightLine {
 
 	sgc_running() {
 		this.gameControl.status = 2;
-		this.accentLightControl(0.2, 1, 0.30);
+		this.accentLightControl(0.1, 0.8, 0.20);
 	}
 
 	sgc_end() {

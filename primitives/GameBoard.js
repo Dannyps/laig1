@@ -131,7 +131,7 @@ class GameBoard extends CGFobject {
     }
 
     async updateState() {
-        if(this.state == GameState.GAME_OVER) return;
+        if (this.state == GameState.GAME_OVER) return;
 
         if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
             for (let i = 0; i < this.scene.pickResults.length; i++) {
@@ -160,13 +160,13 @@ class GameBoard extends CGFobject {
                         }
 
                         // save the picked piece
-                        if(this.lastPickedPiece)
+                        if (this.lastPickedPiece)
                             this._removeHighlightStack();
                         this.lastPickedPiece = obj;
-                        
+
                         await this._getParsedValidMoves().then(result => {
                             this.validMoves = result;
-                            if(result.length) this._highlightStack();
+                            if (result.length) this._highlightStack();
                         });
 
                     } else if (Math.trunc(customId / 1e3) == 1) {
@@ -175,9 +175,10 @@ class GameBoard extends CGFobject {
                             if (this._move_pieces(spotCoords)) {
                                 this.state = GameState.BLACK_PLAYER_TURN;
                                 this.scene.game.sgc_setMessage("[Black] Your turn");
+                                this.to = this.launchTimeout('black');
                                 this._removeHighlightStack();
                                 await this.getRoundWinner().then(winner => {
-                                    if(winner != "false") {
+                                    if (winner != "false") {
                                         this.state = GameState.GAME_OVER;
                                         this.scene.game.sgc_setMessage(`Winner: ${winner}`);
                                     }
@@ -191,9 +192,10 @@ class GameBoard extends CGFobject {
                             if (this._move_pieces(spotCoords)) {
                                 this.state = GameState.WHITE_PLAYER_TURN;
                                 this.scene.game.sgc_setMessage("[White] Your turn");
+                                this.to = this.launchTimeout('white');
                                 this._removeHighlightStack();
                                 await this.getRoundWinner().then(winner => {
-                                    if(winner != "false") {
+                                    if (winner != "false") {
                                         this.state = GameState.GAME_OVER;
                                         this.scene.game.sgc_setMessage(`Winner: ${winner}`);
                                     }
@@ -241,6 +243,9 @@ class GameBoard extends CGFobject {
      * @return Returns true if the move is valid, false otherwise 
      */
     _move_pieces(spotCoords) {
+        // clear the running timeout.
+        if (this.to)
+            clearTimeout(this.to);
         // ensure it's a valid move
         let isValid = false;
         for (let position of this.validMoves) {
@@ -254,7 +259,7 @@ class GameBoard extends CGFobject {
 
         // clone current game state
         this.boardsHistory.push(this.clone());
-        
+
         let that = this;
 
         // get the coordinates of the last picked piece
@@ -292,16 +297,16 @@ class GameBoard extends CGFobject {
     _highlightStack() {
         let stackPosition = this.lastPickedPiece.getPosition();
         let stackPieces = this.board[stackPosition.i][stackPosition.j].pieces;
-        for(let i = stackPieces.length - 1; i >= 0; i--) {
+        for (let i = stackPieces.length - 1; i >= 0; i--) {
             stackPieces[i].setSelected(true);
-            if(stackPieces[i].getId() == this.lastPickedPiece.getId()) break;
+            if (stackPieces[i].getId() == this.lastPickedPiece.getId()) break;
         }
     }
 
     _removeHighlightStack() {
         let stackPosition = this.lastPickedPiece.getPosition();
         let stackPieces = this.board[stackPosition.i][stackPosition.j].pieces;
-        for(let stackPiece of stackPieces) {
+        for (let stackPiece of stackPieces) {
             stackPiece.setSelected(false);
         }
     }
@@ -316,12 +321,12 @@ class GameBoard extends CGFobject {
         else if (this.state === GameState.BLACK_PLAYER_TURN || this.state === GameState.BLACK_PLAYER_PICKED_PIECE)
             player = 'black';
 
-        
+
         /**
          * Ensure the pretended move will leave at least one tile behind
          */
         let pickedPosition = this.lastPickedPiece.getPosition();
-        if(this.lastPickedPiece.getId() == this.board[pickedPosition.i][pickedPosition.j].pieces[0].getId()) {
+        if (this.lastPickedPiece.getId() == this.board[pickedPosition.i][pickedPosition.j].pieces[0].getId()) {
             this.scene.game.sgc_setMessage("Can't move the whole stack");
             return [];
         }
@@ -334,16 +339,16 @@ class GameBoard extends CGFobject {
         let p = new Promise(resolve => {
             this.scene.game.getValidMoves(player, prologBoardStr).then(function (response) {
                 let parsedCoords = that._prolog_coords_to_board(response);
-                for(let i = 0; i < parsedCoords.length; i++) {
+                for (let i = 0; i < parsedCoords.length; i++) {
                     let coords = parsedCoords[i];
                     let diff_i = Math.abs(coords.i - pickedPosition.i);
-                    let diff_j = Math.abs(coords.j - pickedPosition.j); 
-                    if(diff_i*diff_i + diff_j*diff_j !== 5) {
+                    let diff_j = Math.abs(coords.j - pickedPosition.j);
+                    if (diff_i * diff_i + diff_j * diff_j !== 5) {
                         // not valid, remove it
                         let index = parsedCoords.indexOf(coords);
                         parsedCoords.splice(index, 1);
                         i--;
-                    } 
+                    }
                 }
                 resolve(parsedCoords);
             });
@@ -473,19 +478,19 @@ class GameBoard extends CGFobject {
     }
 
     undo() {
-        if(this.boardsHistory.length == 0) {
+        if (this.boardsHistory.length == 0) {
             alert("There's no history!");
             return;
-        }
-        else this.board = this.boardsHistory.pop();
+        } else this.board = this.boardsHistory.pop();
 
-        if(this.state == GameState.WHITE_PLAYER_PICKED_PIECE || this.state == GameState.WHITE_PLAYER_TURN) {
+        if (this.state == GameState.WHITE_PLAYER_PICKED_PIECE || this.state == GameState.WHITE_PLAYER_TURN) {
             this.state = GameState.BLACK_PLAYER_TURN;
             this.scene.game.sgc_setMessage("[Black] Your turn");
-        }
-        else if(this.state == GameState.BLACK_PLAYER_PICKED_PIECE || this.state == GameState.BLACK_PLAYER_TURN) {
+            this.to = this.launchTimeout('black');
+        } else if (this.state == GameState.BLACK_PLAYER_PICKED_PIECE || this.state == GameState.BLACK_PLAYER_TURN) {
             this.state = GameState.WHITE_PLAYER_TURN;
-            this.scene.game.sgc_setMessage("[White] Your turn");           
+            this.scene.game.sgc_setMessage("[White] Your turn");
+            this.to = this.launchTimeout('white');
         }
     }
 
@@ -498,5 +503,29 @@ class GameBoard extends CGFobject {
             });
         });
         return p;
+    }
+
+    /**
+     *
+     *
+     * @param {*} currentPlayer
+     * @returns
+     * @memberof GameBoard
+     */
+    launchTimeout(currentPlayer) {
+        return setTimeout((currentPlayer) => {
+            let winner = '',
+                looser = '';
+            if (currentPlayer == 'white') {
+                winner = "Black";
+                looser = "White";
+            } else {
+                winner = 'White';
+                looser = "Black"
+            }
+            alert("The " + looser + " player lost due to innactivity. The " + winner + " player has won the game!");
+            this.state = GameState.GAME_OVER;
+            this.scene.game.sgc_setMessage(`Winner: ${winner} player!`);
+        }, 30 * 1000);
     }
 };
