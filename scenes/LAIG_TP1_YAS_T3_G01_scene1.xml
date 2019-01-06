@@ -506,7 +506,7 @@
 			<materials>
 				<material id="defaultAppearance" />
 			</materials>
-			<texture id="floor" length_s="4" length_t="4" />
+			<texture id="floor" length_s="6" length_t="6" />
 			<children>
 				<primitiveref id="nFloor" />
 			</children>
