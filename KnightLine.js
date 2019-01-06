@@ -97,4 +97,20 @@ class KnightLine {
 		return p;
 	}
 
+	requestGetWinner(boardStr) {
+		let baseUrl = this.baseURL+`/is_game_over(${boardStr})`;
+		let request = new XMLHttpRequest();
+		request.open('GET', baseUrl);
+		this.sgc_waiting();
+		let that = this; // javascript is love
+		let p = new Promise(resolve => {
+			request.onload = function (ev) {
+				that.sgc_running();
+				resolve(request.responseText);
+			}
+		});
+		request.send();
+		return p;
+	}
+
 }

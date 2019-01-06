@@ -110,6 +110,7 @@ parse_input(quit, goodbye).
 parse_input(initPlayerVsPlayer, Board) :- initPlayerVsPlayer(Board).
 parse_input(get_valid_moves_white(Board), Moves) :- get_valid_moves_white(Board, Moves).
 parse_input(get_valid_moves_black(Board), Moves) :- get_valid_moves_black(Board, Moves).
+parse_input(is_game_over(Board), Winner) :- is_game_over(Board, Winner).
 
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
@@ -126,3 +127,12 @@ get_valid_moves_white(Board, Moves):-
 get_valid_moves_black(Board, Moves):-
     valid_moves(Board,b,Moves).
 
+/**
+ * Tells which player won the game for the given board. If there's no winner, the response is 'false' (without quotes)
+ * +Board
+ * -Winner
+ */
+is_game_over(Board, Winner):-
+	game_over(Board, Winner).
+
+is_game_over(Board, false).

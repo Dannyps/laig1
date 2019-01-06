@@ -10,7 +10,8 @@ const GameState = {
     BLACK_PLAYER_TURN: 1,
     WHITE_PLAYER_PICKED_PIECE: 2,
     BLACK_PLAYER_PICKED_PIECE: 3,
-    SPOT_PICKED: 4
+    SPOT_PICKED: 4,
+    GAME_OVER: 5
 };
 
 class GameBoard extends CGFobject {
@@ -130,6 +131,8 @@ class GameBoard extends CGFobject {
     }
 
     async updateState() {
+        if(this.state == GameState.GAME_OVER) return;
+
         if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
             for (let i = 0; i < this.scene.pickResults.length; i++) {
                 let obj = this.scene.pickResults[i][0];
@@ -171,6 +174,12 @@ class GameBoard extends CGFobject {
                                 this.state = GameState.BLACK_PLAYER_TURN;
                                 this.scene.game.sgc_setMessage("[Black] Your turn");
                                 this._removeHighlightStack();
+                                await this.getRoundWinner().then(winner => {
+                                    if(winner != "false") {
+                                        this.state = GameState.GAME_OVER;
+                                        this.scene.game.sgc_setMessage(`Winner: ${winner}`);
+                                    }
+                                });
                             } else {
                                 this.scene.game.sgc_setMessage("[White] Invalid move");
                             }
@@ -180,10 +189,15 @@ class GameBoard extends CGFobject {
                                 this.state = GameState.WHITE_PLAYER_TURN;
                                 this.scene.game.sgc_setMessage("[White] Your turn");
                                 this._removeHighlightStack();
+                                await this.getRoundWinner().then(winner => {
+                                    if(winner != "false") {
+                                        this.state = GameState.GAME_OVER;
+                                        this.scene.game.sgc_setMessage(`Winner: ${winner}`);
+                                    }
+                                });
                             } else {
                                 this.scene.game.sgc_setMessage("[Black] Invalid move");
                             }
-
                         }
                     }
                 }
@@ -466,5 +480,16 @@ class GameBoard extends CGFobject {
             this.state = GameState.WHITE_PLAYER_TURN;
             this.scene.game.sgc_setMessage("[White] Your turn");           
         }
+    }
+
+    getRoundWinner() {
+        let prologBoardStr = this._generatePrologBoard();
+        let p = new Promise(resolve => {
+            this.scene.game.requestGetWinner(prologBoardStr).then(function (response) {
+                console.log(response);
+                resolve(response);
+            });
+        });
+        return p;
     }
 };
