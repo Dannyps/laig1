@@ -158,7 +158,13 @@ class KnightLine {
 		let p = new Promise(resolve => {
 			request.onload = function (ev) {
 				that.sgc_running();
-				resolve(request.responseText);
+
+				if(request.responseText == "w")
+					resolve("white");
+				else if(request.responseText == "b")
+					resolve("black");
+				else
+					resolve("false");
 			}
 		});
 		request.send();
