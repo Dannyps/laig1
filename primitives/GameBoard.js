@@ -20,6 +20,9 @@ class GameBoard extends CGFobject {
         this.scene = scene;
         this.size = initialSize;
 
+        /**
+         * Materials
+         */
         this.whiteSpot = new CGFappearance(scene);
         this.whiteSpot.setDiffuse(1, 1, 1, 1);
 
@@ -32,14 +35,26 @@ class GameBoard extends CGFobject {
         this.highlightSpotDark = new CGFappearance(scene);
         this.highlightSpotDark.setDiffuse(0.2, 0, 0, 1);
 
-        this.board = []; // matrix
-        this.hasSizeChanged = true; // if true, build a new board, else use the current board
+        /** Board of pieces (matrix) */
+        this.board = [];
 
+        /** if true, build a new board, else use the current board */
+        this.hasSizeChanged = true;
+
+        /** The current game state  */
         this.state = GameState.WHITE_PLAYER_TURN;
-        this.validMoves = []; /**> @type {Array<{{i: Number, j: Number}}>} Array of objects representing the valid moves for current turn */
-        this.lastPickedPiece; /**> @type {MyPiece} @description Holds the last picked tile, if any */
 
-        this.boardsHistory = []; /**> All game boards .. */
+        /** Flag to handle the first round which requires a particular rule (move a single piece) */
+        this._isFirstRound = true;
+
+        /** @type {Array<{{i: Number, j: Number}}>} Array of objects representing the valid moves for current turn */
+        this.validMoves = [];
+        
+        /** @type {MyPiece} @description Holds the last picked tile, if any */
+        this.lastPickedPiece;
+
+        /** Buffer to store all boards during game lifetime */
+        this.boardsHistory = [];
     };
 
     fillBoard() {
@@ -271,18 +286,27 @@ class GameBoard extends CGFobject {
                 break;
             }
         }
-
         if (!isValid) return false;
+
+        // get the number of pieces to move
+        let n = this._getNumberOfPieces(this.lastPickedPiece);
+        // if this is the first round, ensure a single piece is picked
+        if(this._isFirstRound && n != 1) {
+            this.scene.game.sgc_setMessage("Select a single piece");
+            return false;
+        } else {
+            this._isFirstRound = false;
+        }
 
         // clone current game state
         this.boardsHistory.push(this.clone());
 
+        // Preserve this value for nested functions
         let that = this;
 
         // get the coordinates of the last picked piece
         let pieceCoords = that.lastPickedPiece.getPosition();
-        // get the number of pieces to move
-        let n = that._getNumberOfPieces(that.lastPickedPiece);
+        
         // iterate over the stack where the piece belongs
         for (let i = 0; i < n; i++) {
             // the default duration for each piece transition
@@ -508,6 +532,9 @@ class GameBoard extends CGFobject {
             this.state = GameState.WHITE_PLAYER_TURN;
             this.scene.game.sgc_setMessage("[White] Your turn");
             this.to = this.launchTimeout('white');
+
+            // also check if this is the first round and enable respective flag
+            this._isFirstRound = true;
         }
     }
 
