@@ -141,7 +141,7 @@
 	<!--  -->
 	<primitives>
 		<primitive id="board">
-			<gameboard size="10" />
+			<gameboard size="20" />
 		</primitive>
 		<primitive id="nPlane">
 			<plane npartsU="10" npartsV="10" />

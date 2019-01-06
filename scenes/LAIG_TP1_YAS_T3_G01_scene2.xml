@@ -188,7 +188,7 @@
 	<!--  -->
 	<primitives>
 		<primitive id="board">
-			<gameboard size="10" />
+			<gameboard size="20" />
 		</primitive>
 		<primitive id="pRect">
 			<rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />

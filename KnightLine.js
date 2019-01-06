@@ -4,7 +4,6 @@ class KnightLine {
 		this.baseURL = 'http://localhost:8081';
 		this.gameBoard = scene.graph.parsedComponents.get('gameBoard').CGFprimitives.get('board');
 		this.gameControl = scene.gc;
-		this.boardSize = 10;
 		this.scene = scene;
 		this.defaultAccentLightName = "ls1"
 	}
